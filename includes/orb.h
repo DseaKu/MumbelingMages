@@ -1,6 +1,7 @@
 #ifndef ORB_H
 #define ORB_H
 
+#include "player.h"
 #include "raylib.h"
 
 #define MAX_ORBS MAX_ENEMIES
@@ -17,4 +18,5 @@ void SpawnOrb(Orb *orbs, Vector2 position);
 void UpdateOrbs(Orb *orbs);
 void DrawOrbs(Orb *orbs);
 
+void CheckOrbPickup(Player *player, Orb *orbs, int *exp);
 #endif

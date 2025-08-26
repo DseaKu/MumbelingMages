@@ -1,7 +1,10 @@
 
 #include "player.h"
+#include "enemy.h"
 #include "raymath.h"
+#include "window.h"
 #include <raylib.h>
+#include <stdbool.h>
 
 Player InitPlayer() {
   Player player;
@@ -13,11 +16,11 @@ Player InitPlayer() {
   player.fireRate = 0.2f;
   player.pickupRange = 150.0f;
   player.texture = LoadTexture("assets/default_mage2.jpeg");
+  player.health = 100;
   return player;
 }
 
-void UpdatePlayer(Player *player, float fireTimer, int screen_width,
-                  int screen_height) {
+void UpdatePlayer(Player *player, float fireTimer) {
   float delta = GetFrameTime();
   Vector2 direction = {0, 0};
 
@@ -39,12 +42,12 @@ void UpdatePlayer(Player *player, float fireTimer, int screen_width,
 
   if (player->position.x - player->size.x / 2 < 0)
     player->position.x = player->size.x / 2;
-  if (player->position.x + player->size.x / 2 > screen_width)
-    player->position.x = screen_width - player->size.x / 2;
+  if (player->position.x + player->size.x / 2 > GetDisplayWidth())
+    player->position.x = GetDisplayWidth() - player->size.x / 2;
   if (player->position.y - player->size.y / 2 < 0)
     player->position.y = player->size.y / 2;
-  if (player->position.y + player->size.y / 2 > screen_height)
-    player->position.y = screen_height - player->size.y / 2;
+  if (player->position.y + player->size.y / 2 > GetDisplayHeigth())
+    player->position.y = GetDisplayHeigth() - player->size.y / 2;
 }
 
 void DrawPlayer(Player player) {
@@ -57,4 +60,20 @@ void DrawPlayer(Player player) {
                  (Rectangle){player.position.x, player.position.y,
                              player.size.x, player.size.y},
                  (Vector2){player.size.x / 2, player.size.y / 2}, 0, WHITE);
+}
+bool IsPlayerHit(Player player, Enemy *enemies, bool *game_over) {
+
+  // Check if player is hitted
+  for (int i = 0; i < MAX_ENEMIES; i++) {
+    if (enemies[i].active &&
+        CheckCollisionRecs((Rectangle){player.position.x - player.size.x / 2,
+                                       player.position.y - player.size.y / 2,
+                                       player.size.x, player.size.y},
+                           (Rectangle){enemies[i].position.x,
+                                       enemies[i].position.y, enemies[i].size.x,
+                                       enemies[i].size.y})) {
+      *game_over = true;
+    }
+  }
+  return true;
 }

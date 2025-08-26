@@ -15,6 +15,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/minimop/Workspace/MumbelingMages/src/orb.c" "CMakeFiles/game.dir/src/orb.c.o" "gcc" "CMakeFiles/game.dir/src/orb.c.o.d"
   "/Users/minimop/Workspace/MumbelingMages/src/player.c" "CMakeFiles/game.dir/src/player.c.o" "gcc" "CMakeFiles/game.dir/src/player.c.o.d"
   "/Users/minimop/Workspace/MumbelingMages/src/powerup.c" "CMakeFiles/game.dir/src/powerup.c.o" "gcc" "CMakeFiles/game.dir/src/powerup.c.o.d"
+  "/Users/minimop/Workspace/MumbelingMages/src/window.c" "CMakeFiles/game.dir/src/window.c.o" "gcc" "CMakeFiles/game.dir/src/window.c.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

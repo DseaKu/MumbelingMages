@@ -2,6 +2,8 @@
 #ifndef BULLET_H
 #define BULLET_H
 
+#include "enemy.h"
+#include "orb.h"
 #include "raylib.h"
 
 #define MAX_BULLETS 100
@@ -12,12 +14,14 @@ typedef struct Bullet {
   Color color;
   Vector2 speed;
   bool active;
+  int force;
 } Bullet;
 
 void InitBullets(Bullet *bullets);
 void FireBullet(Bullet *bullets, Vector2 playerPosition, float fireTimer,
-                float fireRate);
-void UpdateBullets(Bullet *bullets, int screen_width, int screen_height);
+                float fireRate, bool is_auto_aim);
+void UpdateBullets(Bullet *bullets);
 void DrawBullets(Bullet *bullets);
+void CheckBulletCollision(Bullet *bullets, Enemy *enemies, Orb *orbs);
 
 #endif

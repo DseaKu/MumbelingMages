@@ -11,6 +11,7 @@ CMakeFiles/game.dir/src/powerup.c.o: \
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/__stdarg_va_copy.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/stdbool.h \
   /Users/minimop/Workspace/MumbelingMages/includes/player.h \
+  /Users/minimop/Workspace/MumbelingMages/includes/enemy.h \
   /opt/homebrew/Cellar/raylib/5.5/include/raymath.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/math.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h \

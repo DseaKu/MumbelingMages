@@ -2,6 +2,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "enemy.h"
 #include "raylib.h"
 
 #define MAX_BULLETS 100
@@ -14,11 +15,12 @@ typedef struct Player {
   float fireRate;
   float pickupRange;
   Texture2D texture;
+  int health;
 } Player;
 
 Player InitPlayer();
-void UpdatePlayer(Player *player, float fireTimer, int screen_width,
-                  int screen_height);
+void UpdatePlayer(Player *player, float fireTimer);
 void DrawPlayer(Player player);
+bool IsPlayerHit(Player player, Enemy *enemies, bool *game_over);
 
 #endif

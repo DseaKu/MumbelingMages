@@ -1,5 +1,6 @@
 
 #include "bullet.h"
+#include "window.h"
 #include <math.h>
 #include <raylib.h>
 
@@ -10,7 +11,7 @@ void InitBullets(Bullet *bullets) {
 }
 
 void FireBullet(Bullet *bullets, Vector2 playerPosition, float fireTimer,
-                float fireRate) {
+                float fireRate, bool is_auto_aim) {
   if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) && fireTimer >= fireRate) {
     for (int i = 0; i < MAX_BULLETS; i++) {
       if (!bullets[i].active) {
@@ -33,15 +34,17 @@ void FireBullet(Bullet *bullets, Vector2 playerPosition, float fireTimer,
   }
 }
 
-void UpdateBullets(Bullet *bullets, int screen_width, int screen_height) {
+void UpdateBullets(Bullet *bullets) {
   float delta = GetFrameTime();
   for (int i = 0; i < MAX_BULLETS; i++) {
     if (bullets[i].active) {
       bullets[i].position.x += bullets[i].speed.x * delta;
       bullets[i].position.y += bullets[i].speed.y * delta;
 
-      if (bullets[i].position.x < 0 || bullets[i].position.x > screen_width ||
-          bullets[i].position.y < 0 || bullets[i].position.y > screen_height) {
+      if (bullets[i].position.x < 0 ||
+          bullets[i].position.x > GetDisplayWidth() ||
+          bullets[i].position.y < 0 ||
+          bullets[i].position.y > GetDisplayHeigth()) {
         bullets[i].active = false;
       }
     }
@@ -52,6 +55,24 @@ void DrawBullets(Bullet *bullets) {
   for (int i = 0; i < MAX_BULLETS; i++) {
     if (bullets[i].active) {
       DrawRectangleV(bullets[i].position, bullets[i].size, bullets[i].color);
+    }
+  }
+}
+void CheckBulletCollision(Bullet *bullets, Enemy *enemies, Orb *orbs) {
+  for (int i = 0; i < MAX_BULLETS; i++) {
+    if (bullets[i].active) {
+      for (int j = 0; j < MAX_ENEMIES; j++) {
+        if (enemies[j].active &&
+            CheckCollisionRecs(
+                (Rectangle){bullets[i].position.x, bullets[i].position.y,
+                            bullets[i].size.x, bullets[i].size.y},
+                (Rectangle){enemies[j].position.x, enemies[j].position.y,
+                            enemies[j].size.x, enemies[j].size.y})) {
+          bullets[i].active = false;
+          enemies[j].active = false;
+          SpawnOrb(orbs, enemies[j].position);
+        }
+      }
     }
   }
 }

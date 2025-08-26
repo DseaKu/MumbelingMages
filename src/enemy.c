@@ -1,5 +1,6 @@
 #include "enemy.h"
 #include "raymath.h"
+#include "window.h"
 #include <raylib.h>
 #include <stdlib.h>
 
@@ -12,13 +13,13 @@ void InitEnemies(Enemy *enemies) {
   }
 }
 
-void SpawnEnemy(Enemy *enemies, int screen_width, int screen_height) {
+void SpawnEnemy(Enemy *enemies) {
   for (int i = 0; i < MAX_ENEMIES; i++) {
     if (!enemies[i].active && !enemies[i].spawning) {
       enemies[i].spawning = true;
       enemies[i].spawnTimer = 1.0f;
       enemies[i].position =
-          (Vector2){rand() % screen_width, rand() % screen_height};
+          (Vector2){rand() % GetDisplayWidth(), rand() % GetDisplayHeigth()};
       enemies[i].size = (Vector2){30, 30};
       enemies[i].color = BLUE;
       break;

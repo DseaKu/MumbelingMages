@@ -1,6 +1,7 @@
 CMakeFiles/game.dir/src/player.c.o: \
   /Users/minimop/Workspace/MumbelingMages/src/player.c \
   /Users/minimop/Workspace/MumbelingMages/includes/player.h \
+  /Users/minimop/Workspace/MumbelingMages/includes/enemy.h \
   /opt/homebrew/Cellar/raylib/5.5/include/raylib.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/stdarg.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/__stdarg_header_macro.h \
@@ -19,4 +20,5 @@ CMakeFiles/game.dir/src/player.c.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/Availability.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/AvailabilityVersions.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/AvailabilityInternal.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/AvailabilityInternalLegacy.h
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/AvailabilityInternalLegacy.h \
+  /Users/minimop/Workspace/MumbelingMages/includes/window.h

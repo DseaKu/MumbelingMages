@@ -1,5 +1,5 @@
 #include "orb.h"
-#include "enemy.h"
+#include "raymath.h"
 #include <raylib.h>
 
 void InitOrbs(Orb *orbs) {
@@ -28,6 +28,17 @@ void DrawOrbs(Orb *orbs) {
   for (int i = 0; i < MAX_ORBS; i++) {
     if (orbs[i].active) {
       DrawRectangleV(orbs[i].position, orbs[i].size, orbs[i].color);
+    }
+  }
+}
+void CheckOrbPickup(Player *player, Orb *orbs, int *exp) {
+  for (int i = 0; i < MAX_ORBS; i++) {
+    if (orbs[i].active) {
+      float distance = Vector2Distance(player->position, orbs[i].position);
+      if (distance < player->pickupRange) {
+        orbs[i].active = false;
+        *exp += 10;
+      }
     }
   }
 }

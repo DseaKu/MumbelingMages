@@ -17,7 +17,7 @@ typedef struct Enemy {
 } Enemy;
 
 void InitEnemies(Enemy *enemies);
-void SpawnEnemy(Enemy *enemies, int screen_width, int screen_height);
+void SpawnEnemy(Enemy *enemies);
 void UpdateEnemies(Enemy *enemies, Vector2 playerPosition);
 void DrawEnemies(Enemy *enemies);
 

@@ -7,13 +7,17 @@
 #include "orb.h"
 #include "player.h"
 #include "powerup.h"
+typedef struct Map {
+  int width;
+  int height;
+  float map_size_multiplier;
+} Map;
 
 void GameLoop();
 void InitGame(Bullet *bullets, Enemy *enemies, PowerUp *powerUps, Orb *orbs,
-              int *exp, bool *gameOver);
+              int *exp, Map *map);
 void DrawGame(Player player, Bullet *bullets, Enemy *enemies, PowerUp *powerUps,
-              Orb *orbs, int exp, bool gameOver, int screen_width,
-              int screen_height);
+              Orb *orbs, int exp, bool gameOver);
 
 void CheckBulletCollision(Bullet *bullets, Enemy *enemies, Orb *orbs);
 void CheckOrbPickup(Player *player, Orb *orbs, int *exp);

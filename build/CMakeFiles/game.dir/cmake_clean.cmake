@@ -13,6 +13,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/game.dir/src/player.c.o.d"
   "CMakeFiles/game.dir/src/powerup.c.o"
   "CMakeFiles/game.dir/src/powerup.c.o.d"
+  "CMakeFiles/game.dir/src/window.c.o"
+  "CMakeFiles/game.dir/src/window.c.o.d"
   "game"
   "game.pdb"
 )

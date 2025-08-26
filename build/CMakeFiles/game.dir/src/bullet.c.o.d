@@ -1,6 +1,7 @@
 CMakeFiles/game.dir/src/bullet.c.o: \
   /Users/minimop/Workspace/MumbelingMages/src/bullet.c \
   /Users/minimop/Workspace/MumbelingMages/includes/bullet.h \
+  /Users/minimop/Workspace/MumbelingMages/includes/enemy.h \
   /opt/homebrew/Cellar/raylib/5.5/include/raylib.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/stdarg.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/__stdarg_header_macro.h \
@@ -10,6 +11,9 @@ CMakeFiles/game.dir/src/bullet.c.o: \
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/__stdarg___va_copy.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/__stdarg_va_copy.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/stdbool.h \
+  /Users/minimop/Workspace/MumbelingMages/includes/orb.h \
+  /Users/minimop/Workspace/MumbelingMages/includes/player.h \
+  /Users/minimop/Workspace/MumbelingMages/includes/window.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/math.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_symbol_aliasing.h \
