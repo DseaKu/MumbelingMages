@@ -1,0 +1,12 @@
+.cache/
+
+# Build artifacts
+*.o
+*.out
+*.exe
+RoguedDeluxe
+
+# IDE-specific files
+.vscode/
+.idea/
+
