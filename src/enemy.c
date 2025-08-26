@@ -6,23 +6,18 @@
 void InitEnemies(Enemy *enemies) {
   for (int i = 0; i < MAX_ENEMIES; i++) {
     enemies[i].active = false;
+    enemies[i].spawning = false;
+    enemies[i].spawnTimer = 0;
     enemies[i].speed = 200.0f;
   }
 }
 
-void SpawnEnemy(Enemy *enemies) {
+void SpawnEnemy(Enemy *enemies, int screen_width, int screen_height) {
   for (int i = 0; i < MAX_ENEMIES; i++) {
-    if (!enemies[i].active) {
-      enemies[i].active = true;
-      int side = rand() % 4;
-      if (side == 0)
-        enemies[i].position = (Vector2){-20, rand() % 450};
-      else if (side == 1)
-        enemies[i].position = (Vector2){820, rand() % 450};
-      else if (side == 2)
-        enemies[i].position = (Vector2){rand() % 800, -20};
-      else
-        enemies[i].position = (Vector2){rand() % 800, 470};
+    if (!enemies[i].active && !enemies[i].spawning) {
+      enemies[i].spawning = true;
+      enemies[i].spawnTimer = 1.0f;
+      enemies[i].position = (Vector2){rand() % screen_width, rand() % screen_height};
       enemies[i].size = (Vector2){30, 30};
       enemies[i].color = BLUE;
       break;
@@ -33,7 +28,13 @@ void SpawnEnemy(Enemy *enemies) {
 void UpdateEnemies(Enemy *enemies, Vector2 playerPosition) {
   float delta = GetFrameTime();
   for (int i = 0; i < MAX_ENEMIES; i++) {
-    if (enemies[i].active) {
+    if (enemies[i].spawning) {
+      enemies[i].spawnTimer -= delta;
+      if (enemies[i].spawnTimer <= 0) {
+        enemies[i].spawning = false;
+        enemies[i].active = true;
+      }
+    } else if (enemies[i].active) {
       Vector2 direction = {playerPosition.x - enemies[i].position.x,
                            playerPosition.y - enemies[i].position.y};
       float length =
@@ -48,7 +49,10 @@ void UpdateEnemies(Enemy *enemies, Vector2 playerPosition) {
 
 void DrawEnemies(Enemy *enemies) {
   for (int i = 0; i < MAX_ENEMIES; i++) {
-    if (enemies[i].active) {
+    if (enemies[i].spawning) {
+      DrawCircle(enemies[i].position.x, enemies[i].position.y,
+                 enemies[i].size.x / 2 * (1 - enemies[i].spawnTimer), RED);
+    } else if (enemies[i].active) {
       DrawRectangleV(enemies[i].position, enemies[i].size, enemies[i].color);
     }
   }

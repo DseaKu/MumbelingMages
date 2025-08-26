@@ -48,7 +48,7 @@ void GameLoop() {
     }
 
     if (enemySpawnTimer >= 1.0f) {
-      SpawnEnemy(enemies);
+      SpawnEnemy(enemies, screen_width, screen_height);
       enemySpawnTimer = 0.0f;
     }
     if (powerUpSpawnTimer >= 10.0f) {
