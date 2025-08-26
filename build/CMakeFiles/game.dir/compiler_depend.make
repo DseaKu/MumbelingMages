@@ -107,7 +107,8 @@ CMakeFiles/game.dir/src/enemy.c.o: /Users/minimop/Workspace/MumbelingMages/src/e
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/stdbool.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/stdint.h \
   /Users/minimop/Workspace/MumbelingMages/includes/enemy.h \
-  /opt/homebrew/Cellar/raylib/5.5/include/raylib.h
+  /opt/homebrew/Cellar/raylib/5.5/include/raylib.h \
+  /opt/homebrew/Cellar/raylib/5.5/include/raymath.h
 
 CMakeFiles/game.dir/src/game.c.o: /Users/minimop/Workspace/MumbelingMages/src/game.c \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/Availability.h \
@@ -305,6 +306,7 @@ CMakeFiles/game.dir/src/powerup.c.o: /Users/minimop/Workspace/MumbelingMages/src
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/malloc/_malloc.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/malloc/_malloc_type.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/malloc/_ptrcheck.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/math.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/stdint.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/stdlib.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/__endian.h \
@@ -355,7 +357,8 @@ CMakeFiles/game.dir/src/powerup.c.o: /Users/minimop/Workspace/MumbelingMages/src
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/stdint.h \
   /Users/minimop/Workspace/MumbelingMages/includes/player.h \
   /Users/minimop/Workspace/MumbelingMages/includes/powerup.h \
-  /opt/homebrew/Cellar/raylib/5.5/include/raylib.h
+  /opt/homebrew/Cellar/raylib/5.5/include/raylib.h \
+  /opt/homebrew/Cellar/raylib/5.5/include/raymath.h
 
 
 /Users/minimop/Workspace/MumbelingMages/src/powerup.c:
@@ -369,6 +372,10 @@ CMakeFiles/game.dir/src/powerup.c.o: /Users/minimop/Workspace/MumbelingMages/src
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_time_t.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_ssize_t.h:
+
+/Users/minimop/Workspace/MumbelingMages/includes/powerup.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_clock_t.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/stdio.h:
 
@@ -417,6 +424,10 @@ CMakeFiles/game.dir/src/powerup.c.o: /Users/minimop/Workspace/MumbelingMages/src
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_pid_t.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_null.h:
+
+/Library/Developer/CommandLineTools/usr/lib/clang/17/include/ptrcheck.h:
+
+/opt/homebrew/Cellar/raylib/5.5/include/raymath.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/stdio.h:
 
@@ -540,10 +551,6 @@ CMakeFiles/game.dir/src/powerup.c.o: /Users/minimop/Workspace/MumbelingMages/src
 
 /Library/Developer/CommandLineTools/usr/lib/clang/17/include/__stdarg_va_copy.h:
 
-/Users/minimop/Workspace/MumbelingMages/includes/powerup.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_clock_t.h:
-
 /Library/Developer/CommandLineTools/usr/lib/clang/17/include/__stdarg___gnuc_va_list.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/time.h:
@@ -579,9 +586,5 @@ CMakeFiles/game.dir/src/powerup.c.o: /Users/minimop/Workspace/MumbelingMages/src
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/math.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_u_int8_t.h:
-
-/opt/homebrew/Cellar/raylib/5.5/include/raymath.h:
-
-/Library/Developer/CommandLineTools/usr/lib/clang/17/include/ptrcheck.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/Availability.h:

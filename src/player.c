@@ -9,9 +9,9 @@ Player InitPlayer() {
   player.position = (Vector2){400, 225};
   player.size = (Vector2){50, 50};
   player.color = MAROON;
-  player.speed = 800.0f;
+  player.speed = 500.0f;
   player.fireRate = 0.2f;
-  player.pickupRange = 50.0f;
+  player.pickupRange = 150.0f;
   return player;
 }
 
@@ -36,16 +36,19 @@ void UpdatePlayer(Player *player, float fireTimer, int screen_width,
   player->position.x += direction.x * player->speed * delta;
   player->position.y += direction.y * player->speed * delta;
 
-  if (player->position.x < 0)
-    player->position.x = 0;
-  if (player->position.x + player->size.x > screen_width)
-    player->position.x = screen_width - player->size.x;
-  if (player->position.y < 0)
-    player->position.y = 0;
-  if (player->position.y + player->size.y > screen_height)
-    player->position.y = screen_height - player->size.y;
+  if (player->position.x - player->size.x / 2 < 0)
+    player->position.x = player->size.x / 2;
+  if (player->position.x + player->size.x / 2 > screen_width)
+    player->position.x = screen_width - player->size.x / 2;
+  if (player->position.y - player->size.y / 2 < 0)
+    player->position.y = player->size.y / 2;
+  if (player->position.y + player->size.y / 2 > screen_height)
+    player->position.y = screen_height - player->size.y / 2;
 }
 
 void DrawPlayer(Player player) {
-  DrawRectangleV(player.position, player.size, player.color);
+  DrawRectangleV(
+      (Vector2){player.position.x - player.size.x / 2,
+                player.position.y - player.size.y / 2},
+      player.size, player.color);
 }

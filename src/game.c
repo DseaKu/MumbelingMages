@@ -43,6 +43,7 @@ void GameLoop() {
     fireTimer += GetFrameTime();
     enemySpawnTimer += GetFrameTime();
     powerUpSpawnTimer += GetFrameTime();
+
     UpdatePlayer(&player, fireTimer, screen_width, screen_height);
 
     FireBullet(bullets, player.position, fireTimer, player.fireRate);
@@ -69,7 +70,8 @@ void GameLoop() {
     for (int i = 0; i < MAX_ENEMIES; i++) {
       if (enemies[i].active &&
           CheckCollisionRecs(
-              (Rectangle){player.position.x, player.position.y, player.size.x,
+              (Rectangle){player.position.x - player.size.x / 2,
+                          player.position.y - player.size.y / 2, player.size.x,
                           player.size.y},
               (Rectangle){enemies[i].position.x, enemies[i].position.y,
                           enemies[i].size.x, enemies[i].size.y})) {
@@ -136,23 +138,20 @@ void DrawGame(Player player, Bullet *bullets, Enemy *enemies, PowerUp *powerUps,
   ClearBackground(RAYWHITE);
 
   if (!gameOver) {
-    DrawPlayer(player);
-    DrawEnemies(enemies);
     DrawBullets(bullets);
     DrawPowerUps(powerUps);
+    DrawEnemies(enemies);
     DrawOrbs(orbs);
+    DrawPlayer(player);
     DrawFPS(screen_width - 100, 10);
 
     char expText[20];
     sprintf(expText, "EXP: %d", exp);
     DrawText(expText, 10, 10, 20, LIGHTGRAY);
   } else {
-    DrawText("GAME OVER", screen_width / 2 - MeasureText("GAME OVER", 40) / 2,
+    DrawText("Nice try, noob!",
+             screen_width / 2 - MeasureText("Nice try, noob!", 40) / 2,
              screen_height / 2 - 20, 40, RED);
-    DrawText("Press 'R' to restart",
-             screen_width / 2 - MeasureText("Press 'R' to restart", 20) / 2,
-             screen_height / 2 + 20, 20, GRAY);
   }
-
   EndDrawing();
 }
