@@ -13,7 +13,8 @@ Player InitPlayer() {
   return player;
 }
 
-void UpdatePlayer(Player *player, float fireTimer) {
+void UpdatePlayer(Player *player, float fireTimer, int screen_width,
+                  int screen_height) {
   float delta = GetFrameTime();
 
   if (IsKeyDown(KEY_W))
@@ -24,6 +25,15 @@ void UpdatePlayer(Player *player, float fireTimer) {
     player->position.x -= player->speed * delta;
   if (IsKeyDown(KEY_D))
     player->position.x += player->speed * delta;
+
+  if (player->position.x < 0)
+    player->position.x = 0;
+  if (player->position.x + player->size.x > screen_width)
+    player->position.x = screen_width - player->size.x;
+  if (player->position.y < 0)
+    player->position.y = 0;
+  if (player->position.y + player->size.y > screen_height)
+    player->position.y = screen_height - player->size.y;
 }
 
 void DrawPlayer(Player player) {

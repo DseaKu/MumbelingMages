@@ -15,7 +15,8 @@ typedef struct Player {
 } Player;
 
 Player InitPlayer();
-void UpdatePlayer(Player *player, float fireTimer);
+void UpdatePlayer(Player *player, float fireTimer, int screen_width,
+                  int screen_height);
 void DrawPlayer(Player player);
 
 #endif

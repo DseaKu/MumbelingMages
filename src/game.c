@@ -40,7 +40,7 @@ void GameLoop() {
     fireTimer += GetFrameTime();
     enemySpawnTimer += GetFrameTime();
     powerUpSpawnTimer += GetFrameTime();
-    UpdatePlayer(&player, fireTimer);
+    UpdatePlayer(&player, fireTimer, screen_width, screen_height);
 
     FireBullet(bullets, player.position, fireTimer, player.fireRate);
     if (fireTimer >= player.fireRate && IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
