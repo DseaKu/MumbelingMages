@@ -17,4 +17,5 @@ void DrawGame(Player player, Bullet *bullets, Enemy *enemies, PowerUp *powerUps,
 
 void CheckBulletCollision(Bullet *bullets, Enemy *enemies, Orb *orbs);
 void CheckOrbPickup(Player *player, Orb *orbs, int *exp);
+void UnloadGame(Player player);
 #endif

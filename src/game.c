@@ -87,8 +87,11 @@ void GameLoop() {
 
   } while (!WindowShouldClose());
 
+  UnloadGame(player);
   CloseWindow();
 }
+
+void UnloadGame(Player player) { UnloadTexture(player.texture); }
 void InitGame(Bullet *bullets, Enemy *enemies, PowerUp *powerUps, Orb *orbs,
               int *exp, bool *gameOver) {
   InitBullets(bullets);
@@ -140,9 +143,9 @@ void DrawGame(Player player, Bullet *bullets, Enemy *enemies, PowerUp *powerUps,
   if (!gameOver) {
     DrawBullets(bullets);
     DrawPowerUps(powerUps);
-    DrawEnemies(enemies);
     DrawOrbs(orbs);
     DrawPlayer(player);
+    DrawEnemies(enemies);
     DrawFPS(screen_width - 100, 10);
 
     char expText[20];

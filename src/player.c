@@ -7,11 +7,12 @@ Player InitPlayer() {
   Player player;
 
   player.position = (Vector2){400, 225};
-  player.size = (Vector2){50, 50};
+  player.size = (Vector2){120, 135};
   player.color = MAROON;
   player.speed = 500.0f;
   player.fireRate = 0.2f;
   player.pickupRange = 150.0f;
+  player.texture = LoadTexture("assets/default_mage2.jpeg");
   return player;
 }
 
@@ -47,8 +48,13 @@ void UpdatePlayer(Player *player, float fireTimer, int screen_width,
 }
 
 void DrawPlayer(Player player) {
-  DrawRectangleV(
-      (Vector2){player.position.x - player.size.x / 2,
-                player.position.y - player.size.y / 2},
-      player.size, player.color);
+  float texture_width = (float)player.texture.width;
+  if (GetMousePosition().x < player.position.x) {
+    texture_width = -texture_width;
+  }
+  DrawTexturePro(player.texture,
+                 (Rectangle){0, 0, texture_width, (float)player.texture.height},
+                 (Rectangle){player.position.x, player.position.y,
+                             player.size.x, player.size.y},
+                 (Vector2){player.size.x / 2, player.size.y / 2}, 0, WHITE);
 }

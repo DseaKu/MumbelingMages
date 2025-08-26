@@ -13,6 +13,7 @@ typedef struct Player {
   float speed;
   float fireRate;
   float pickupRange;
+  Texture2D texture;
 } Player;
 
 Player InitPlayer();
