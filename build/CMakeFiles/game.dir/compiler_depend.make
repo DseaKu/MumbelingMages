@@ -148,6 +148,7 @@ CMakeFiles/game.dir/src/game.c.o: /Users/minimop/Workspace/MumbelingMages/src/ga
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/malloc/_malloc.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/malloc/_malloc_type.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/malloc/_ptrcheck.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/math.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/secure/_common.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/secure/_stdio.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/stdint.h \
@@ -211,9 +212,11 @@ CMakeFiles/game.dir/src/game.c.o: /Users/minimop/Workspace/MumbelingMages/src/ga
   /Users/minimop/Workspace/MumbelingMages/includes/bullet.h \
   /Users/minimop/Workspace/MumbelingMages/includes/enemy.h \
   /Users/minimop/Workspace/MumbelingMages/includes/game.h \
+  /Users/minimop/Workspace/MumbelingMages/includes/orb.h \
   /Users/minimop/Workspace/MumbelingMages/includes/player.h \
   /Users/minimop/Workspace/MumbelingMages/includes/powerup.h \
-  /opt/homebrew/Cellar/raylib/5.5/include/raylib.h
+  /opt/homebrew/Cellar/raylib/5.5/include/raylib.h \
+  /opt/homebrew/Cellar/raylib/5.5/include/raymath.h
 
 CMakeFiles/game.dir/src/main.c.o: /Users/minimop/Workspace/MumbelingMages/src/main.c \
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/__stdarg___gnuc_va_list.h \
@@ -227,8 +230,22 @@ CMakeFiles/game.dir/src/main.c.o: /Users/minimop/Workspace/MumbelingMages/src/ma
   /Users/minimop/Workspace/MumbelingMages/includes/bullet.h \
   /Users/minimop/Workspace/MumbelingMages/includes/enemy.h \
   /Users/minimop/Workspace/MumbelingMages/includes/game.h \
+  /Users/minimop/Workspace/MumbelingMages/includes/orb.h \
   /Users/minimop/Workspace/MumbelingMages/includes/player.h \
   /Users/minimop/Workspace/MumbelingMages/includes/powerup.h \
+  /opt/homebrew/Cellar/raylib/5.5/include/raylib.h
+
+CMakeFiles/game.dir/src/orb.c.o: /Users/minimop/Workspace/MumbelingMages/src/orb.c \
+  /Library/Developer/CommandLineTools/usr/lib/clang/17/include/__stdarg___gnuc_va_list.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/17/include/__stdarg___va_copy.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/17/include/__stdarg_header_macro.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/17/include/__stdarg_va_arg.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/17/include/__stdarg_va_copy.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/17/include/__stdarg_va_list.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/17/include/stdarg.h \
+  /Library/Developer/CommandLineTools/usr/lib/clang/17/include/stdbool.h \
+  /Users/minimop/Workspace/MumbelingMages/includes/enemy.h \
+  /Users/minimop/Workspace/MumbelingMages/includes/orb.h \
   /opt/homebrew/Cellar/raylib/5.5/include/raylib.h
 
 CMakeFiles/game.dir/src/player.c.o: /Users/minimop/Workspace/MumbelingMages/src/player.c \
@@ -344,6 +361,8 @@ CMakeFiles/game.dir/src/powerup.c.o: /Users/minimop/Workspace/MumbelingMages/src
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_ssize_t.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/stdio.h:
+
+/Users/minimop/Workspace/MumbelingMages/src/orb.c:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/secure/_common.h:
 
@@ -461,6 +480,8 @@ CMakeFiles/game.dir/src/powerup.c.o: /Users/minimop/Workspace/MumbelingMages/src
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_int32_t.h:
 
+/Users/minimop/Workspace/MumbelingMages/includes/orb.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/libkern/arm/_OSByteOrder.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/machine/_endian.h:
@@ -548,6 +569,8 @@ CMakeFiles/game.dir/src/powerup.c.o: /Users/minimop/Workspace/MumbelingMages/src
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/math.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_u_int8_t.h:
+
+/opt/homebrew/Cellar/raylib/5.5/include/raymath.h:
 
 /Library/Developer/CommandLineTools/usr/lib/clang/17/include/ptrcheck.h:
 

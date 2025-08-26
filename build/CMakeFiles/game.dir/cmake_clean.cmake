@@ -7,6 +7,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/game.dir/src/game.c.o.d"
   "CMakeFiles/game.dir/src/main.c.o"
   "CMakeFiles/game.dir/src/main.c.o.d"
+  "CMakeFiles/game.dir/src/orb.c.o"
+  "CMakeFiles/game.dir/src/orb.c.o.d"
   "CMakeFiles/game.dir/src/player.c.o"
   "CMakeFiles/game.dir/src/player.c.o.d"
   "CMakeFiles/game.dir/src/powerup.c.o"

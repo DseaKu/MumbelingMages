@@ -12,6 +12,7 @@ typedef struct Player {
   Color color;
   float speed;
   float fireRate;
+  float pickupRange;
 } Player;
 
 Player InitPlayer();

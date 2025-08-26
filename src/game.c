@@ -1,6 +1,8 @@
 #include "game.h"
 #include "bullet.h"
 #include "enemy.h"
+#include "orb.h"
+#include "raymath.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -19,12 +21,13 @@ void GameLoop() {
   Bullet bullets[MAX_BULLETS];
   Enemy enemies[MAX_ENEMIES];
   PowerUp powerUps[MAX_POWERUPS];
-  int score;
+  Orb orbs[MAX_ORBS];
+  int exp;
   bool gameOver;
 
   srand(time(NULL));
 
-  InitGame(bullets, enemies, powerUps, &score, &gameOver);
+  InitGame(bullets, enemies, powerUps, orbs, &exp, &gameOver);
 
   float fireTimer = 0.0f;
   float enemySpawnTimer = 0.0f;
@@ -58,7 +61,9 @@ void GameLoop() {
     UpdateEnemies(enemies, player.position);
     UpdatePowerUps(powerUps, &player);
     UpdateBullets(bullets, screen_width, screen_height);
-    CheckBulletCollision(bullets, enemies, &score);
+    UpdateOrbs(orbs);
+    CheckBulletCollision(bullets, enemies, orbs);
+    CheckOrbPickup(&player, orbs, &exp);
 
     // Check if player is hitted
     for (int i = 0; i < MAX_ENEMIES; i++) {
@@ -75,23 +80,24 @@ void GameLoop() {
     //----------------------------------------------------------------------------------
     // Draw
     //----------------------------------------------------------------------------------
-    DrawGame(player, bullets, enemies, powerUps, score, gameOver, screen_width,
-             screen_height);
+    DrawGame(player, bullets, enemies, powerUps, orbs, exp, gameOver,
+             screen_width, screen_height);
 
   } while (!WindowShouldClose());
 
   CloseWindow();
 }
-void InitGame(Bullet *bullets, Enemy *enemies, PowerUp *powerUps, int *score,
-              bool *gameOver) {
+void InitGame(Bullet *bullets, Enemy *enemies, PowerUp *powerUps, Orb *orbs,
+              int *exp, bool *gameOver) {
   InitBullets(bullets);
   InitEnemies(enemies);
   InitPowerUps(powerUps);
-  *score = 0;
+  InitOrbs(orbs);
+  *exp = 0;
   *gameOver = false;
 }
 
-void CheckBulletCollision(Bullet *bullets, Enemy *enemies, int *score) {
+void CheckBulletCollision(Bullet *bullets, Enemy *enemies, Orb *orbs) {
 
   for (int i = 0; i < MAX_BULLETS; i++) {
     if (bullets[i].active) {
@@ -104,15 +110,28 @@ void CheckBulletCollision(Bullet *bullets, Enemy *enemies, int *score) {
                             enemies[j].size.x, enemies[j].size.y})) {
           bullets[i].active = false;
           enemies[j].active = false;
-          *score += 10;
+          SpawnOrb(orbs, enemies[j].position);
         }
       }
     }
   }
 }
 
+void CheckOrbPickup(Player *player, Orb *orbs, int *exp) {
+  for (int i = 0; i < MAX_ORBS; i++) {
+    if (orbs[i].active) {
+      float distance = Vector2Distance(player->position, orbs[i].position);
+      if (distance < player->pickupRange) {
+        orbs[i].active = false;
+        *exp += 10;
+      }
+    }
+  }
+}
+
 void DrawGame(Player player, Bullet *bullets, Enemy *enemies, PowerUp *powerUps,
-              int score, bool gameOver, int screen_width, int screen_height) {
+              Orb *orbs, int exp, bool gameOver, int screen_width,
+              int screen_height) {
   BeginDrawing();
   ClearBackground(RAYWHITE);
 
@@ -121,11 +140,12 @@ void DrawGame(Player player, Bullet *bullets, Enemy *enemies, PowerUp *powerUps,
     DrawEnemies(enemies);
     DrawBullets(bullets);
     DrawPowerUps(powerUps);
+    DrawOrbs(orbs);
     DrawFPS(screen_width - 100, 10);
 
-    char scoreText[20];
-    sprintf(scoreText, "Score: %d", score);
-    DrawText(scoreText, 10, 10, 20, LIGHTGRAY);
+    char expText[20];
+    sprintf(expText, "EXP: %d", exp);
+    DrawText(expText, 10, 10, 20, LIGHTGRAY);
   } else {
     DrawText("GAME OVER", screen_width / 2 - MeasureText("GAME OVER", 40) / 2,
              screen_height / 2 - 20, 40, RED);

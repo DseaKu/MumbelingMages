@@ -225,6 +225,30 @@ src/main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/src/main.c.s
 .PHONY : src/main.c.s
 
+src/orb.o: src/orb.c.o
+.PHONY : src/orb.o
+
+# target to build an object file
+src/orb.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/src/orb.c.o
+.PHONY : src/orb.c.o
+
+src/orb.i: src/orb.c.i
+.PHONY : src/orb.i
+
+# target to preprocess a source file
+src/orb.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/src/orb.c.i
+.PHONY : src/orb.c.i
+
+src/orb.s: src/orb.c.s
+.PHONY : src/orb.s
+
+# target to generate assembly for a file
+src/orb.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/game.dir/build.make CMakeFiles/game.dir/src/orb.c.s
+.PHONY : src/orb.c.s
+
 src/player.o: src/player.c.o
 .PHONY : src/player.o
 
@@ -294,6 +318,9 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/orb.o"
+	@echo "... src/orb.i"
+	@echo "... src/orb.s"
 	@echo "... src/player.o"
 	@echo "... src/player.i"
 	@echo "... src/player.s"

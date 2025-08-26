@@ -10,6 +10,7 @@ Player InitPlayer() {
   player.color = MAROON;
   player.speed = 800.0f;
   player.fireRate = 0.2f;
+  player.pickupRange = 50.0f;
   return player;
 }
 
