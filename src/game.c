@@ -40,6 +40,10 @@ void GameLoop() {
     //----------------------------------------------------------------------------------
     // Update
     //----------------------------------------------------------------------------------
+
+    if (IsKeyPressed(KEY_F)) {
+      ToggleFullscreen();
+    }
     fireTimer += GetFrameTime();
     enemySpawnTimer += GetFrameTime();
     powerUpSpawnTimer += GetFrameTime();
