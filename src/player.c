@@ -1,5 +1,6 @@
 
 #include "player.h"
+#include "raymath.h"
 #include <raylib.h>
 
 Player InitPlayer() {
@@ -17,15 +18,23 @@ Player InitPlayer() {
 void UpdatePlayer(Player *player, float fireTimer, int screen_width,
                   int screen_height) {
   float delta = GetFrameTime();
+  Vector2 direction = {0, 0};
 
   if (IsKeyDown(KEY_W))
-    player->position.y -= player->speed * delta;
+    direction.y = -1;
   if (IsKeyDown(KEY_S))
-    player->position.y += player->speed * delta;
+    direction.y = 1;
   if (IsKeyDown(KEY_A))
-    player->position.x -= player->speed * delta;
+    direction.x = -1;
   if (IsKeyDown(KEY_D))
-    player->position.x += player->speed * delta;
+    direction.x = 1;
+
+  if (Vector2Length(direction) > 0) {
+    direction = Vector2Normalize(direction);
+  }
+
+  player->position.x += direction.x * player->speed * delta;
+  player->position.y += direction.y * player->speed * delta;
 
   if (player->position.x < 0)
     player->position.x = 0;
