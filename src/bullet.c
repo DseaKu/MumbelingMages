@@ -33,15 +33,15 @@ void FireBullet(Bullet *bullets, Vector2 playerPosition, float fireTimer,
   }
 }
 
-void UpdateBullets(Bullet *bullets) {
+void UpdateBullets(Bullet *bullets, int screen_width, int screen_height) {
   float delta = GetFrameTime();
   for (int i = 0; i < MAX_BULLETS; i++) {
     if (bullets[i].active) {
       bullets[i].position.x += bullets[i].speed.x * delta;
       bullets[i].position.y += bullets[i].speed.y * delta;
 
-      if (bullets[i].position.x < 0 || bullets[i].position.x > 800 ||
-          bullets[i].position.y < 0 || bullets[i].position.y > 450) {
+      if (bullets[i].position.x < 0 || bullets[i].position.x > screen_width ||
+          bullets[i].position.y < 0 || bullets[i].position.y > screen_height) {
         bullets[i].active = false;
       }
     }

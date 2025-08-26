@@ -12,6 +12,8 @@ typedef struct Enemy {
   Color color;
   bool active;
   float speed;
+  bool spawning;
+  float spawnTimer;
 } Enemy;
 
 void InitEnemies(Enemy *enemies);

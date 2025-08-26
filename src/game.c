@@ -10,10 +10,10 @@ void GameLoop() {
   //----------------------------------------------------------------------------------
   // INIT
   //----------------------------------------------------------------------------------
-  const int screenWidth = 1300;
-  const int screenHeight = 900;
+  const int screen_width = 1300;
+  const int screen_height = 900;
 
-  InitWindow(screenWidth, screenHeight, "Mumbeling Mages");
+  InitWindow(screen_width, screen_height, "Mumbeling Mages");
 
   Player player = InitPlayer();
   Bullet bullets[MAX_BULLETS];
@@ -57,7 +57,7 @@ void GameLoop() {
     }
     UpdateEnemies(enemies, player.position);
     UpdatePowerUps(powerUps, &player);
-    UpdateBullets(bullets);
+    UpdateBullets(bullets, screen_width, screen_height);
     CheckBulletCollision(bullets, enemies, &score);
 
     // Check if player is hitted
@@ -75,7 +75,8 @@ void GameLoop() {
     //----------------------------------------------------------------------------------
     // Draw
     //----------------------------------------------------------------------------------
-    DrawGame(player, bullets, enemies, powerUps, score, gameOver);
+    DrawGame(player, bullets, enemies, powerUps, score, gameOver, screen_width,
+             screen_height);
 
   } while (!WindowShouldClose());
 
@@ -90,9 +91,7 @@ void InitGame(Bullet *bullets, Enemy *enemies, PowerUp *powerUps, int *score,
   *gameOver = false;
 }
 
-void CheckBulletCollision(Bullet *bullets, Enemy *enemies, int *score
-
-) {
+void CheckBulletCollision(Bullet *bullets, Enemy *enemies, int *score) {
 
   for (int i = 0; i < MAX_BULLETS; i++) {
     if (bullets[i].active) {
@@ -113,7 +112,7 @@ void CheckBulletCollision(Bullet *bullets, Enemy *enemies, int *score
 }
 
 void DrawGame(Player player, Bullet *bullets, Enemy *enemies, PowerUp *powerUps,
-              int score, bool gameOver) {
+              int score, bool gameOver, int screen_width, int screen_height) {
   BeginDrawing();
   ClearBackground(RAYWHITE);
 
@@ -122,16 +121,17 @@ void DrawGame(Player player, Bullet *bullets, Enemy *enemies, PowerUp *powerUps,
     DrawEnemies(enemies);
     DrawBullets(bullets);
     DrawPowerUps(powerUps);
+    DrawFPS(screen_width - 100, 10);
 
     char scoreText[20];
     sprintf(scoreText, "Score: %d", score);
     DrawText(scoreText, 10, 10, 20, LIGHTGRAY);
   } else {
-    DrawText("GAME OVER", 800 / 2 - MeasureText("GAME OVER", 40) / 2,
-             450 / 2 - 20, 40, RED);
+    DrawText("GAME OVER", screen_width / 2 - MeasureText("GAME OVER", 40) / 2,
+             screen_height / 2 - 20, 40, RED);
     DrawText("Press 'R' to restart",
-             800 / 2 - MeasureText("Press 'R' to restart", 20) / 2,
-             450 / 2 + 20, 20, GRAY);
+             screen_width / 2 - MeasureText("Press 'R' to restart", 20) / 2,
+             screen_height / 2 + 20, 20, GRAY);
   }
 
   EndDrawing();
