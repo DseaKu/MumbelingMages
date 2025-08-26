@@ -7,10 +7,11 @@
 #define MAX_ENEMIES 20
 
 typedef struct Enemy {
-    Vector2 position;
-    Vector2 size;
-    Color color;
-    bool active;
+  Vector2 position;
+  Vector2 size;
+  Color color;
+  bool active;
+  float speed;
 } Enemy;
 
 void InitEnemies(Enemy *enemies);
