@@ -57,7 +57,7 @@ void GameLoop() {
     if (IsKeyPressed(KEY_SPACE)) {
       is_pause_game = !is_pause_game;
     }
-    if (IsKeyPressed(KEY_T)) {
+    if (IsKeyPressed(KEY_F)) {
       ToggleRealFullscreen(screen_width, screen_height);
     }
     if (IsKeyPressed(KEY_E)) {
@@ -105,7 +105,12 @@ void GameLoop() {
     //----------------------------------------------------------------------------------
     CheckBulletCollision(bullets, enemies, orbs);
     CheckOrbPickup(&player, orbs, &exp);
-    IsPlayerHit(player, enemies, &is_game_over);
+    if (!is_game_over) {
+      CheckPlayerCollision(&player, enemies);
+      if (player.health <= 0) {
+        is_game_over = true;
+      }
+    }
 
     //----------------------------------------------------------------------------------
     // Draw
@@ -122,7 +127,13 @@ void GameLoop() {
       DrawOrbs(orbs);
       DrawEnemies(enemies);
       EndMode2D();
+
+      // Draw UI
       DrawFPS(GetDisplayWidth() - 100, 10);
+      char healthText[20];
+      sprintf(healthText, "Health: %d", player.health);
+      DrawText(healthText, 20, 20, 20, GREEN);
+
       if (is_auto_aim) {
         DrawText("Auto Aim", 20, 60, 20, GREEN);
       } else {
@@ -137,7 +148,8 @@ void GameLoop() {
       }
       char expText[20];
       sprintf(expText, "EXP: %d", exp);
-      DrawText(expText, 10, 10, 20, LIGHTGRAY);
+      DrawText(expText, GetDisplayWidth() / 2 - MeasureText("EXP:", 20), 10, 20,
+               LIGHTGRAY);
     } else {
       DrawText("Nice try, noob!",
                GetDisplayWidth() / 2 - MeasureText("Nice try, noob!", 40) / 2,

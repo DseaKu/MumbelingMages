@@ -31,6 +31,8 @@ Enemy GetEnemyProperties(EnemyID id) {
     enemy.spawn_distance = 10.0f;
     enemy.speed = 300.0f;
     enemy.size = (Vector2){45, 45};
+    enemy.damage = 10;
+    enemy.attack_speed = 1.0f;
 
     // Visual
     enemy.frameCount = 8;
@@ -45,6 +47,8 @@ Enemy GetEnemyProperties(EnemyID id) {
     enemy.spawn_distance = 10.0f;
     enemy.speed = 200.0f;
     enemy.size = (Vector2){45, 45};
+    enemy.damage = 10;
+    enemy.attack_speed = 1.0f;
 
     // Visual
     enemy.frameCount = 8;
@@ -59,6 +63,8 @@ Enemy GetEnemyProperties(EnemyID id) {
     enemy.spawn_distance = 10.0f;
     enemy.speed = 200.0f;
     enemy.size = (Vector2){45, 45};
+    enemy.damage = 10;
+    enemy.attack_speed = 1.0f;
 
     // Visual
     enemy.frameCount = 1;
@@ -76,6 +82,8 @@ Enemy GetEnemyProperties(EnemyID id) {
     enemy.spawn_distance = 10.0f;
     enemy.speed = 200.0f;
     enemy.size = (Vector2){45, 45};
+    enemy.damage = 10;
+    enemy.attack_speed = 1.0f;
 
     // Visual
     enemy.frameCount = 1;

@@ -23,6 +23,9 @@ typedef struct Enemy {
   float spawnTimer;
   float spawn_distance;
   int health;
+  int damage;
+  float hit_cooldown;
+  float attack_speed;
 
   // Visual
   int currentFrame;

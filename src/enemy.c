@@ -22,6 +22,7 @@ void SpawnEnemy(Enemy *enemies, Map map, Vector2 player_position) {
       enemies[i].spawning = true;
       enemies[i].currentFrame = 0;
       enemies[i].frameTimer = 0.0f;
+      enemies[i].hit_cooldown = 0.0f;
       Vector2 spawn_position;
       do {
         spawn_position = (Vector2){rand() % map.width, rand() % map.height};
@@ -38,6 +39,7 @@ void SpawnEnemy(Enemy *enemies, Map map, Vector2 player_position) {
 
 void UpdateEnemies(Enemy *enemies, Vector2 playerPosition) {
   float delta = GetFrameTime();
+  float safe_zone_distance = 80.0f;
   for (int i = 0; i < MAX_ENEMIES; i++) {
     if (enemies[i].spawning) {
       enemies[i].spawnTimer -= delta;
@@ -48,9 +50,16 @@ void UpdateEnemies(Enemy *enemies, Vector2 playerPosition) {
     } else if (enemies[i].active) {
       Vector2 direction = Vector2Subtract(playerPosition, enemies[i].position);
       enemies[i].is_facing_right = (direction.x > 0);
-      direction = Vector2Normalize(direction);
-      enemies[i].position.x += direction.x * delta * enemies[i].speed;
-      enemies[i].position.y += direction.y * delta * enemies[i].speed;
+
+      if (Vector2Length(direction) > safe_zone_distance) {
+        direction = Vector2Normalize(direction);
+        enemies[i].position.x += direction.x * delta * enemies[i].speed;
+        enemies[i].position.y += direction.y * delta * enemies[i].speed;
+      }
+
+      if (enemies[i].hit_cooldown > 0) {
+        enemies[i].hit_cooldown -= delta;
+      }
 
       enemies[i].frameTimer += delta;
       if (enemies[i].frameTimer >= enemies[i].frameDuration) {

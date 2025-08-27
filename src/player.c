@@ -11,12 +11,12 @@ Player InitPlayer(int screen_width, int screen_height) {
   Player player;
 
   player.position = (Vector2){400, 225};
-  player.size = (Vector2){120, 135};
+  player.size = (Vector2){120, 160};
   player.color = MAROON;
   player.speed = 500.0f;
   player.fireRate = 0.2f;
   player.pickupRange = 150.0f;
-  player.texture = LoadTexture("assets/default_mage2.jpeg");
+  player.texture = LoadTexture("assets/mage.png");
   player.health = 100;
   player.camera.target = player.position;
   player.camera.offset =
@@ -84,19 +84,28 @@ void DrawPlayer(Player player) {
                              player.size.x, player.size.y},
                  (Vector2){player.size.x / 2, player.size.y / 2}, 0, WHITE);
 }
-bool IsPlayerHit(Player player, Enemy *enemies, bool *game_over) {
+
+void CheckPlayerCollision(Player *player, Enemy *enemies) {
 
   // Check if player is hitted
   for (int i = 0; i < MAX_ENEMIES; i++) {
     if (enemies[i].active &&
-        CheckCollisionRecs((Rectangle){player.position.x - player.size.x / 2,
-                                       player.position.y - player.size.y / 2,
-                                       player.size.x, player.size.y},
+        CheckCollisionRecs((Rectangle){player->position.x - player->size.x / 2,
+                                       player->position.y - player->size.y / 2,
+                                       player->size.x, player->size.y},
                            (Rectangle){enemies[i].position.x,
                                        enemies[i].position.y, enemies[i].size.x,
                                        enemies[i].size.y})) {
-      *game_over = true;
+      if (enemies[i].hit_cooldown <= 0) {
+        player->health -= enemies[i].damage;
+        enemies[i].hit_cooldown = enemies[i].attack_speed;
+
+        // Push enemy back slightly to prevent continuous damage
+        Vector2 push_direction = Vector2Normalize(
+            Vector2Subtract(enemies[i].position, player->position));
+        enemies[i].position = Vector2Add(enemies[i].position,
+                                         Vector2Scale(push_direction, 100.0f));
+      }
     }
   }
-  return true;
 }
