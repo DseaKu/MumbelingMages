@@ -2,6 +2,7 @@ CMakeFiles/game.dir/src/bullet.c.o: \
   /Users/minimop/Workspace/MumbelingMages/src/bullet.c \
   /Users/minimop/Workspace/MumbelingMages/includes/bullet.h \
   /Users/minimop/Workspace/MumbelingMages/includes/enemy.h \
+  /Users/minimop/Workspace/MumbelingMages/includes/map.h \
   /opt/homebrew/Cellar/raylib/5.5/include/raylib.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/stdarg.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/__stdarg_header_macro.h \

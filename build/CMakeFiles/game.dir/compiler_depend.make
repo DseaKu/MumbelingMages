@@ -21,6 +21,7 @@ CMakeFiles/game.dir/src/bullet.c.o: /Users/minimop/Workspace/MumbelingMages/src/
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/stdbool.h \
   /Users/minimop/Workspace/MumbelingMages/includes/bullet.h \
   /Users/minimop/Workspace/MumbelingMages/includes/enemy.h \
+  /Users/minimop/Workspace/MumbelingMages/includes/map.h \
   /Users/minimop/Workspace/MumbelingMages/includes/orb.h \
   /Users/minimop/Workspace/MumbelingMages/includes/player.h \
   /Users/minimop/Workspace/MumbelingMages/includes/window.h \
@@ -112,7 +113,7 @@ CMakeFiles/game.dir/src/enemy.c.o: /Users/minimop/Workspace/MumbelingMages/src/e
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/stdbool.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/stdint.h \
   /Users/minimop/Workspace/MumbelingMages/includes/enemy.h \
-  /Users/minimop/Workspace/MumbelingMages/includes/window.h \
+  /Users/minimop/Workspace/MumbelingMages/includes/map.h \
   /opt/homebrew/Cellar/raylib/5.5/include/raylib.h \
   /opt/homebrew/Cellar/raylib/5.5/include/raymath.h
 
@@ -155,6 +156,7 @@ CMakeFiles/game.dir/src/game.c.o: /Users/minimop/Workspace/MumbelingMages/src/ga
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/malloc/_malloc.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/malloc/_malloc_type.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/malloc/_ptrcheck.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/math.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/secure/_common.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/secure/_stdio.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/stdint.h \
@@ -218,6 +220,7 @@ CMakeFiles/game.dir/src/game.c.o: /Users/minimop/Workspace/MumbelingMages/src/ga
   /Users/minimop/Workspace/MumbelingMages/includes/bullet.h \
   /Users/minimop/Workspace/MumbelingMages/includes/enemy.h \
   /Users/minimop/Workspace/MumbelingMages/includes/game.h \
+  /Users/minimop/Workspace/MumbelingMages/includes/map.h \
   /Users/minimop/Workspace/MumbelingMages/includes/orb.h \
   /Users/minimop/Workspace/MumbelingMages/includes/player.h \
   /Users/minimop/Workspace/MumbelingMages/includes/powerup.h \
@@ -236,6 +239,7 @@ CMakeFiles/game.dir/src/main.c.o: /Users/minimop/Workspace/MumbelingMages/src/ma
   /Users/minimop/Workspace/MumbelingMages/includes/bullet.h \
   /Users/minimop/Workspace/MumbelingMages/includes/enemy.h \
   /Users/minimop/Workspace/MumbelingMages/includes/game.h \
+  /Users/minimop/Workspace/MumbelingMages/includes/map.h \
   /Users/minimop/Workspace/MumbelingMages/includes/orb.h \
   /Users/minimop/Workspace/MumbelingMages/includes/player.h \
   /Users/minimop/Workspace/MumbelingMages/includes/powerup.h \
@@ -260,6 +264,7 @@ CMakeFiles/game.dir/src/orb.c.o: /Users/minimop/Workspace/MumbelingMages/src/orb
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/stdarg.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/stdbool.h \
   /Users/minimop/Workspace/MumbelingMages/includes/enemy.h \
+  /Users/minimop/Workspace/MumbelingMages/includes/map.h \
   /Users/minimop/Workspace/MumbelingMages/includes/orb.h \
   /Users/minimop/Workspace/MumbelingMages/includes/player.h \
   /opt/homebrew/Cellar/raylib/5.5/include/raylib.h \
@@ -284,6 +289,7 @@ CMakeFiles/game.dir/src/player.c.o: /Users/minimop/Workspace/MumbelingMages/src/
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/stdarg.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/stdbool.h \
   /Users/minimop/Workspace/MumbelingMages/includes/enemy.h \
+  /Users/minimop/Workspace/MumbelingMages/includes/map.h \
   /Users/minimop/Workspace/MumbelingMages/includes/player.h \
   /Users/minimop/Workspace/MumbelingMages/includes/window.h \
   /opt/homebrew/Cellar/raylib/5.5/include/raylib.h \
@@ -374,6 +380,7 @@ CMakeFiles/game.dir/src/powerup.c.o: /Users/minimop/Workspace/MumbelingMages/src
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/stdbool.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/stdint.h \
   /Users/minimop/Workspace/MumbelingMages/includes/enemy.h \
+  /Users/minimop/Workspace/MumbelingMages/includes/map.h \
   /Users/minimop/Workspace/MumbelingMages/includes/player.h \
   /Users/minimop/Workspace/MumbelingMages/includes/powerup.h \
   /opt/homebrew/Cellar/raylib/5.5/include/raylib.h \
@@ -411,10 +418,6 @@ CMakeFiles/game.dir/src/window.c.o: /Users/minimop/Workspace/MumbelingMages/src/
 /Users/minimop/Workspace/MumbelingMages/src/orb.c:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/secure/_common.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/malloc/_malloc.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_time.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/appleapiopts.h:
 
@@ -469,8 +472,6 @@ CMakeFiles/game.dir/src/window.c.o: /Users/minimop/Workspace/MumbelingMages/src/
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_types.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/__endian.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/stdlib.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/stdint.h:
 
@@ -536,6 +537,14 @@ CMakeFiles/game.dir/src/window.c.o: /Users/minimop/Workspace/MumbelingMages/src/
 
 /opt/homebrew/Cellar/raylib/5.5/include/raymath.h:
 
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_int64_t.h:
+
+/Users/minimop/Workspace/MumbelingMages/includes/window.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/stdlib.h:
+
+/Users/minimop/Workspace/MumbelingMages/includes/map.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/AvailabilityInternalLegacy.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_int32_t.h:
@@ -574,6 +583,10 @@ CMakeFiles/game.dir/src/window.c.o: /Users/minimop/Workspace/MumbelingMages/src/
 
 /Library/Developer/CommandLineTools/usr/lib/clang/17/include/__stdarg_va_copy.h:
 
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_time.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/malloc/_malloc.h:
+
 /Users/minimop/Workspace/MumbelingMages/src/window.c:
 
 /Library/Developer/CommandLineTools/usr/lib/clang/17/include/__stdarg___gnuc_va_list.h:
@@ -587,10 +600,6 @@ CMakeFiles/game.dir/src/window.c.o: /Users/minimop/Workspace/MumbelingMages/src/
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_u_int32_t.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_posix_availability.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_int64_t.h:
-
-/Users/minimop/Workspace/MumbelingMages/includes/window.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_printf.h:
 

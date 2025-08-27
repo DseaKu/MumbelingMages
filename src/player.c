@@ -1,8 +1,8 @@
 
 #include "player.h"
 #include "enemy.h"
+#include "map.h"
 #include "raymath.h"
-#include "window.h"
 #include <raylib.h>
 #include <stdbool.h>
 
@@ -20,8 +20,10 @@ Player InitPlayer() {
   return player;
 }
 
-void UpdatePlayer(Player *player, float fireTimer, bool is_auto_aim) {
+void UpdatePlayer(Player *player, float fireTimer, bool is_auto_aim, Map map) {
   float delta = GetFrameTime();
+
+  //------ Movement --------------
   Vector2 direction = {0, 0};
 
   if (IsKeyDown(KEY_W))
@@ -42,13 +44,14 @@ void UpdatePlayer(Player *player, float fireTimer, bool is_auto_aim) {
 
   if (player->position.x - player->size.x / 2 < 0)
     player->position.x = player->size.x / 2;
-  if (player->position.x + player->size.x / 2 > GetDisplayWidth())
-    player->position.x = GetDisplayWidth() - player->size.x / 2;
+  if (player->position.x + player->size.x / 2 > map.width)
+    player->position.x = map.width - player->size.x / 2;
   if (player->position.y - player->size.y / 2 < 0)
     player->position.y = player->size.y / 2;
-  if (player->position.y + player->size.y / 2 > GetDisplayHeigth())
-    player->position.y = GetDisplayHeigth() - player->size.y / 2;
+  if (player->position.y + player->size.y / 2 > map.height)
+    player->position.y = map.height - player->size.y / 2;
 
+  //---- Face direction --------------
   if (!is_auto_aim) {
     if (GetMousePosition().x < player->position.x) {
       player->is_facing_right = false;
@@ -56,6 +59,10 @@ void UpdatePlayer(Player *player, float fireTimer, bool is_auto_aim) {
       player->is_facing_right = true;
     }
   }
+  //------- Camera ---------
+  player->camera.target =
+      (Vector2){player->position.x + 20.0f, player->position.y + 20.0f};
+  player->camera.offset = (Vector2){map.width / 2.0f, map.height / 2.0f};
 }
 
 void DrawPlayer(Player player) {

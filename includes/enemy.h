@@ -2,6 +2,7 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
+#include "map.h"
 #include "raylib.h"
 
 #define MAX_ENEMIES 20
@@ -17,7 +18,7 @@ typedef struct Enemy {
 } Enemy;
 
 void InitEnemies(Enemy *enemies);
-void SpawnEnemy(Enemy *enemies);
+void SpawnEnemy(Enemy *enemies, Map map);
 void UpdateEnemies(Enemy *enemies, Vector2 playerPosition);
 void DrawEnemies(Enemy *enemies);
 int GetClosestEnemy(Enemy *enemies, Vector2 position);

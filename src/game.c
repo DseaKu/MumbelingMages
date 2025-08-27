@@ -36,6 +36,11 @@ void GameLoop() {
   bool is_pause_game = false;
   bool is_auto_aim = true;
 
+  Camera2D camera = {0};
+  camera.offset = (Vector2){screen_width / 2.0f, screen_height / 2.0f};
+  camera.rotation = 0.0f;
+  camera.zoom = 1.0f;
+
   srand(time(NULL));
 
   InitGame(bullets, enemies, powerUps, orbs, &exp, &map);
@@ -73,7 +78,7 @@ void GameLoop() {
     }
 
     if (enemySpawnTimer >= 1.0f) {
-      SpawnEnemy(enemies);
+      SpawnEnemy(enemies, map);
       enemySpawnTimer = 0.0f;
     }
     if (powerUpSpawnTimer >= 10.0f) {
@@ -93,12 +98,14 @@ void GameLoop() {
       fireTimer += GetFrameTime();
       enemySpawnTimer += GetFrameTime();
       powerUpSpawnTimer += GetFrameTime();
-      UpdatePlayer(&player, fireTimer, is_auto_aim);
+      UpdatePlayer(&player, fireTimer, is_auto_aim, map);
       UpdateEnemies(enemies, player.position);
       UpdatePowerUps(powerUps, &player);
-      UpdateBullets(bullets);
+      UpdateBullets(bullets, map);
       UpdateOrbs(orbs);
     }
+
+    camera.target = player.position;
 
     //----------------------------------------------------------------------------------
     // Collision
@@ -114,11 +121,13 @@ void GameLoop() {
     ClearBackground(RAYWHITE);
 
     if (!is_game_over) {
+      BeginMode2D(camera);
       DrawBullets(bullets);
       DrawPlayer(player);
       DrawPowerUps(powerUps);
       DrawOrbs(orbs);
       DrawEnemies(enemies);
+      EndMode2D();
       DrawFPS(GetDisplayWidth() - 100, 10);
       if (is_auto_aim) {
         DrawText("Auto Aim", 20, 60, 20, GREEN);

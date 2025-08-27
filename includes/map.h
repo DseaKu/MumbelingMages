@@ -6,4 +6,5 @@ typedef struct Map {
   int height;
   float map_size_multiplier;
 } Map;
+void UpdateMap(Map *map);
 #endif // !MAP_H

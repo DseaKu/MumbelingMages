@@ -1,6 +1,5 @@
 #include "enemy.h"
 #include "raymath.h"
-#include "window.h"
 #include <raylib.h>
 #include <stdlib.h>
 
@@ -10,15 +9,14 @@ void InitEnemies(Enemy *enemies) {
   }
 }
 
-void SpawnEnemy(Enemy *enemies) {
+void SpawnEnemy(Enemy *enemies, Map map) {
   // Block enemy[0] to spawn, this index is reserved for other logic e.g.
   // auto-aim
   for (int i = 1; i < MAX_ENEMIES; i++) {
     if (!enemies[i].active && !enemies[i].spawning) {
       enemies[i].spawning = true;
       enemies[i].spawnTimer = 2.0f;
-      enemies[i].position =
-          (Vector2){rand() % GetDisplayWidth(), rand() % GetDisplayHeigth()};
+      enemies[i].position = (Vector2){rand() % map.width, rand() % map.height};
       enemies[i].size = (Vector2){30, 30};
       enemies[i].color = BLUE;
       break;

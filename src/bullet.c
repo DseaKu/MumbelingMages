@@ -9,6 +9,7 @@
 
 void InitBullets(Bullet *bullets) {
   for (int i = 0; i < MAX_BULLETS; i++) {
+    bullets[i].active = false;
   }
 }
 
@@ -52,17 +53,15 @@ void FireBullet(Bullet *bullets, Player *player, float fireRate,
   }
 }
 
-void UpdateBullets(Bullet *bullets) {
+void UpdateBullets(Bullet *bullets, Map map) {
   float delta = GetFrameTime();
   for (int i = 0; i < MAX_BULLETS; i++) {
     if (bullets[i].active) {
       bullets[i].position.x += bullets[i].speed.x * delta;
       bullets[i].position.y += bullets[i].speed.y * delta;
 
-      if (bullets[i].position.x < 0 ||
-          bullets[i].position.x > GetDisplayWidth() ||
-          bullets[i].position.y < 0 ||
-          bullets[i].position.y > GetDisplayHeigth()) {
+      if (bullets[i].position.x < 0 || bullets[i].position.x > map.width ||
+          bullets[i].position.y < 0 || bullets[i].position.y > map.height) {
         bullets[i].active = false;
       }
     }

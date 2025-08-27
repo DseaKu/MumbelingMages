@@ -3,6 +3,7 @@
 #define PLAYER_H
 
 #include "enemy.h"
+#include "map.h"
 #include "raylib.h"
 
 #define MAX_BULLETS 100
@@ -17,10 +18,11 @@ typedef struct Player {
   Texture2D texture;
   int health;
   bool is_facing_right;
+  Camera2D camera;
 } Player;
 
 Player InitPlayer();
-void UpdatePlayer(Player *player, float fireTimer, bool is_auto_aim);
+void UpdatePlayer(Player *player, float fireTimer, bool is_auto_aim, Map map);
 void DrawPlayer(Player player);
 bool IsPlayerHit(Player player, Enemy *enemies, bool *game_over);
 
