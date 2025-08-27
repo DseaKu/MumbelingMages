@@ -6,10 +6,12 @@
 #include <math.h>
 #include <raylib.h>
 #include <raymath.h>
+#include <stdbool.h>
 
 void InitBullets(Bullet *bullets) {
   for (int i = 0; i < MAX_BULLETS; i++) {
     bullets[i].active = false;
+    bullets[i].last_hitted_enemy = -1;
   }
 }
 
@@ -17,19 +19,21 @@ void FireBullet(Bullet *bullets, Player *player, float fireRate,
                 bool is_auto_aim, Enemy *enemies) {
   Vector2 playerPosition = player->position;
 
-  float range = 0.3f;
+  int pierce = 3;
+  float range = 0.5f;
   for (int i = 0; i < MAX_BULLETS; i++) {
     if (!bullets[i].active) {
       bullets[i].position = playerPosition;
       bullets[i].size = (Vector2){10, 10};
       bullets[i].color = BLACK;
       bullets[i].force = 0;
+      bullets[i].last_hitted_enemy = -1;
       Vector2 direction;
 
       if (is_auto_aim) {
         int closest_enemy = GetClosestEnemy(enemies, playerPosition);
-        // No enemies avctive
-        if (closest_enemy == 0) {
+        // No enemies active
+        if (closest_enemy == -1) {
           return;
           // Aim closest_enemy
         } else {
@@ -47,8 +51,9 @@ void FireBullet(Bullet *bullets, Player *player, float fireRate,
         direction = Vector2Subtract(
             (Vector2){mouse_pos.x * 2.0f, mouse_pos.y * 2.0f}, playerPosition);
       }
-      bullets[i].range = range;
       bullets[i].active = true;
+      bullets[i].range = range;
+      bullets[i].pierce = pierce;
       float length =
           sqrt(direction.x * direction.x + direction.y * direction.y);
       direction.x /= length;
@@ -91,6 +96,7 @@ void DrawBullets(Bullet *bullets) {
   }
 }
 void CheckBulletCollision(Bullet *bullets, Enemy *enemies, Orb *orbs) {
+  int bullet_demage = 19;
   for (int i = 0; i < MAX_BULLETS; i++) {
     if (bullets[i].active) {
       for (int j = 0; j < MAX_ENEMIES; j++) {
@@ -100,9 +106,26 @@ void CheckBulletCollision(Bullet *bullets, Enemy *enemies, Orb *orbs) {
                             bullets[i].size.x, bullets[i].size.y},
                 (Rectangle){enemies[j].position.x, enemies[j].position.y,
                             enemies[j].size.x, enemies[j].size.y})) {
-          bullets[i].active = false;
-          enemies[j].active = false;
-          SpawnOrb(orbs, enemies[j].position);
+
+          // If bullet has already hit this enemy, skip.
+          if (bullets[i].last_hitted_enemy == j) {
+            continue;
+          }
+
+          // Process the hit
+          enemies[j].health -= bullet_demage;
+          bullets[i].last_hitted_enemy = j;
+          bullets[i].pierce--;
+
+          if (enemies[j].health <= 0) {
+            enemies[j].active = false;
+            SpawnOrb(orbs, enemies[j].position);
+          }
+
+          if (bullets[i].pierce <= 0) {
+            bullets[i].active = false;
+            break; // Exit enemy loop, bullet is done.
+          }
         }
       }
     }

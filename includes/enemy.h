@@ -14,9 +14,11 @@ typedef struct Enemy {
   Color color;
   bool active;
   bool spawning;
+  bool is_hit;
   float speed;
   float spawnTimer;
   float spawn_distance;
+  int health;
 } Enemy;
 
 void InitEnemies(Enemy *enemies);

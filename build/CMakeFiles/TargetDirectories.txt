@@ -1,3 +1,0 @@
-/Users/minimop/Workspace/MumbelingMages/build/CMakeFiles/game.dir
-/Users/minimop/Workspace/MumbelingMages/build/CMakeFiles/edit_cache.dir
-/Users/minimop/Workspace/MumbelingMages/build/CMakeFiles/rebuild_cache.dir

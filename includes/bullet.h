@@ -15,6 +15,8 @@ typedef struct Bullet {
   Vector2 speed;
   bool active;
   int force;
+  int pierce;
+  int last_hitted_enemy;
   float range;
 } Bullet;
 

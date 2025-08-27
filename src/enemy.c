@@ -1,5 +1,6 @@
 #include "enemy.h"
 #include "raymath.h"
+#include <float.h>
 #include <raylib.h>
 #include <stdlib.h>
 
@@ -13,10 +14,11 @@ void SpawnEnemy(Enemy *enemies, Map map, Vector2 player_position) {
   // Block enemy[0] to spawn, this index is reserved for other logic e.g.
   float spawn_distance = 10.0f;
   float time2spawn = 2.0f;
-
+  int health = 100;
   for (int i = 1; i < MAX_ENEMIES; i++) {
     if (!enemies[i].active && !enemies[i].spawning) {
       enemies[i].spawning = true;
+      enemies[i].health = health;
       enemies[i].spawnTimer = time2spawn;
       Vector2 spawn_position;
       do {
@@ -62,14 +64,15 @@ void DrawEnemies(Enemy *enemies) {
   }
 }
 int GetClosestEnemy(Enemy *enemies, Vector2 position) {
+  float closest_distance_sq = FLT_MAX;
+  int closest_enemy_index = -1;
 
-  float closest_enemy_position = 0;
-  int closest_enemy_index;
   for (int i = 0; i < MAX_ENEMIES; i++) {
     Enemy enemy = enemies[i];
     if (enemy.active) {
-      float current_distance = Vector2DistanceSqr(enemy.position, position);
-      if (current_distance > closest_enemy_position) {
+      float current_distance_sq = Vector2DistanceSqr(enemy.position, position);
+      if (current_distance_sq < closest_distance_sq) {
+        closest_distance_sq = current_distance_sq;
         closest_enemy_index = i;
       }
     }
