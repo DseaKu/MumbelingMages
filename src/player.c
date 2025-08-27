@@ -3,10 +3,11 @@
 #include "enemy.h"
 #include "map.h"
 #include "raymath.h"
+#include "window.h"
 #include <raylib.h>
 #include <stdbool.h>
 
-Player InitPlayer() {
+Player InitPlayer(int screen_width, int screen_height) {
   Player player;
 
   player.position = (Vector2){400, 225};
@@ -17,6 +18,11 @@ Player InitPlayer() {
   player.pickupRange = 150.0f;
   player.texture = LoadTexture("assets/default_mage2.jpeg");
   player.health = 100;
+  player.camera.target = player.position;
+  player.camera.offset =
+      (Vector2){GetDisplayWidth() / 2.0f, GetDisplayHeigth() / 2.0f};
+  player.camera.rotation = 0.0f;
+  player.camera.zoom = 1.0f;
   return player;
 }
 
@@ -62,7 +68,8 @@ void UpdatePlayer(Player *player, float fireTimer, bool is_auto_aim, Map map) {
   //------- Camera ---------
   player->camera.target =
       (Vector2){player->position.x + 20.0f, player->position.y + 20.0f};
-  player->camera.offset = (Vector2){map.width / 2.0f, map.height / 2.0f};
+  player->camera.offset =
+      (Vector2){GetDisplayWidth() / 2.0f, GetDisplayHeigth() / 2.0f};
 }
 
 void DrawPlayer(Player player) {

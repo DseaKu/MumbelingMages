@@ -46,5 +46,11 @@
   "command": "/usr/bin/cc  -I/Users/minimop/Workspace/MumbelingMages/includes -isystem /opt/homebrew/Cellar/raylib/5.5/include -g -std=gnu99 -arch arm64 -I/opt/homebrew/Cellar/raylib/5.5/include -o CMakeFiles/game.dir/src/window.c.o -c /Users/minimop/Workspace/MumbelingMages/src/window.c",
   "file": "/Users/minimop/Workspace/MumbelingMages/src/window.c",
   "output": "CMakeFiles/game.dir/src/window.c.o"
+},
+{
+  "directory": "/Users/minimop/Workspace/MumbelingMages/build",
+  "command": "/usr/bin/cc  -I/Users/minimop/Workspace/MumbelingMages/includes -isystem /opt/homebrew/Cellar/raylib/5.5/include -g -std=gnu99 -arch arm64 -I/opt/homebrew/Cellar/raylib/5.5/include -o CMakeFiles/game.dir/src/map.c.o -c /Users/minimop/Workspace/MumbelingMages/src/map.c",
+  "file": "/Users/minimop/Workspace/MumbelingMages/src/map.c",
+  "output": "CMakeFiles/game.dir/src/map.c.o"
 }
 ]

@@ -1,9 +1,11 @@
 #include "map.h"
-#include "math.h"
 #include "window.h"
+#include <stdlib.h>
+#include <time.h>
 
-void UpdateMap(Map *map) {
+void InitMap(Map *map) {
 
-  map->width = floorf(GetDisplayWidth() * map->map_size_multiplier);
-  map->height = floorf(GetDisplayHeigth() * map->map_size_multiplier);
+  map->map_multiplier = 2.0f;
+  map->width = GetDisplayWidth() * map->map_multiplier;
+  map->height = map->width * XY_RATIO;
 }

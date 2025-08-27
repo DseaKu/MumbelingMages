@@ -2,7 +2,6 @@
 #include "bullet.h"
 #include "enemy.h"
 #include "player.h"
-#include "window.h"
 #include <math.h>
 #include <raylib.h>
 #include <raymath.h>

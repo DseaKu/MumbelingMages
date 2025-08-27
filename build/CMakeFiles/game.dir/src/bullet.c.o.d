@@ -14,7 +14,6 @@ CMakeFiles/game.dir/src/bullet.c.o: \
   /Library/Developer/CommandLineTools/usr/lib/clang/17/include/stdbool.h \
   /Users/minimop/Workspace/MumbelingMages/includes/orb.h \
   /Users/minimop/Workspace/MumbelingMages/includes/player.h \
-  /Users/minimop/Workspace/MumbelingMages/includes/window.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/math.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_symbol_aliasing.h \

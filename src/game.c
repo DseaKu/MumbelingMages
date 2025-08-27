@@ -5,7 +5,6 @@
 #include "orb.h"
 #include "player.h"
 #include "window.h"
-#include <math.h>
 #include <raylib.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -27,7 +26,7 @@ void GameLoop() {
 
   InitWindow(screen_width, screen_height, "Mumbeling Mages");
 
-  Player player = InitPlayer();
+  Player player = InitPlayer(screen_width, screen_height);
   Bullet bullets[MAX_BULLETS] = {0};
   Enemy enemies[MAX_ENEMIES] = {0};
   PowerUp powerUps[MAX_POWERUPS];
@@ -35,11 +34,6 @@ void GameLoop() {
   bool is_game_over = false;
   bool is_pause_game = false;
   bool is_auto_aim = true;
-
-  Camera2D camera = {0};
-  camera.offset = (Vector2){screen_width / 2.0f, screen_height / 2.0f};
-  camera.rotation = 0.0f;
-  camera.zoom = 1.0f;
 
   srand(time(NULL));
 
@@ -59,7 +53,7 @@ void GameLoop() {
     //----------------------------------------------------------------------------------
     // Check inputs
     //----------------------------------------------------------------------------------
-    if (IsKeyPressed(KEY_F)) {
+    if (IsKeyPressed(KEY_SPACE)) {
       is_pause_game = !is_pause_game;
     }
     if (IsKeyPressed(KEY_T)) {
@@ -105,8 +99,6 @@ void GameLoop() {
       UpdateOrbs(orbs);
     }
 
-    camera.target = player.position;
-
     //----------------------------------------------------------------------------------
     // Collision
     //----------------------------------------------------------------------------------
@@ -121,7 +113,7 @@ void GameLoop() {
     ClearBackground(RAYWHITE);
 
     if (!is_game_over) {
-      BeginMode2D(camera);
+      BeginMode2D(player.camera);
       DrawBullets(bullets);
       DrawPlayer(player);
       DrawPowerUps(powerUps);
@@ -164,8 +156,6 @@ void InitGame(Bullet *bullets, Enemy *enemies, PowerUp *powerUps, Orb *orbs,
   InitPowerUps(powerUps);
   InitOrbs(orbs);
   *exp = 0;
-  map->map_size_multiplier = 1.5;
-  map->width = floorf(GetDisplayWidth() * map->map_size_multiplier);
-  map->height = floorf(GetDisplayHeigth() * map->map_size_multiplier);
+  InitMap(map);
 }
 void UnloadGame(Player player) { UnloadTexture(player.texture); }
