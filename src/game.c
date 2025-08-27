@@ -72,7 +72,7 @@ void GameLoop() {
     }
 
     if (enemySpawnTimer >= 1.0f) {
-      SpawnEnemy(enemies, map);
+      SpawnEnemy(enemies, map, player.position);
       enemySpawnTimer = 0.0f;
     }
     if (powerUpSpawnTimer >= 10.0f) {
@@ -114,6 +114,7 @@ void GameLoop() {
 
     if (!is_game_over) {
       BeginMode2D(player.camera);
+      DrawMap(map);
       DrawBullets(bullets);
       DrawPlayer(player);
       DrawPowerUps(powerUps);
@@ -145,7 +146,7 @@ void GameLoop() {
 
   } while (!WindowShouldClose());
 
-  UnloadGame(player);
+  UnloadGame(player, map);
   CloseWindow();
 }
 
@@ -158,4 +159,7 @@ void InitGame(Bullet *bullets, Enemy *enemies, PowerUp *powerUps, Orb *orbs,
   *exp = 0;
   InitMap(map);
 }
-void UnloadGame(Player player) { UnloadTexture(player.texture); }
+void UnloadGame(Player player, Map map) {
+  UnloadTexture(player.texture);
+  UnloadMap(map);
+}

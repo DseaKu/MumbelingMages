@@ -8,6 +8,7 @@
 #define MAX_ENEMIES 20
 
 typedef struct Enemy {
+
   Vector2 position;
   Vector2 size;
   Color color;
@@ -15,10 +16,11 @@ typedef struct Enemy {
   bool spawning;
   float speed;
   float spawnTimer;
+  float spawn_distance;
 } Enemy;
 
 void InitEnemies(Enemy *enemies);
-void SpawnEnemy(Enemy *enemies, Map map);
+void SpawnEnemy(Enemy *enemies, Map map, Vector2 player_position);
 void UpdateEnemies(Enemy *enemies, Vector2 playerPosition);
 void DrawEnemies(Enemy *enemies);
 int GetClosestEnemy(Enemy *enemies, Vector2 position);

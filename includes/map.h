@@ -12,4 +12,6 @@ typedef struct Map {
 } Map;
 
 void InitMap(Map *map);
+void DrawMap(Map map);
+void UnloadMap(Map map);
 #endif // !MAP_H

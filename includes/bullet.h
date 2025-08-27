@@ -15,6 +15,7 @@ typedef struct Bullet {
   Vector2 speed;
   bool active;
   int force;
+  float range;
 } Bullet;
 
 void InitBullets(Bullet *bullets);

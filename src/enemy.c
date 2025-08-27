@@ -9,16 +9,25 @@ void InitEnemies(Enemy *enemies) {
   }
 }
 
-void SpawnEnemy(Enemy *enemies, Map map) {
+void SpawnEnemy(Enemy *enemies, Map map, Vector2 player_position) {
   // Block enemy[0] to spawn, this index is reserved for other logic e.g.
-  // auto-aim
+  float spawn_distance = 10.0f;
+  float time2spawn = 2.0f;
+
   for (int i = 1; i < MAX_ENEMIES; i++) {
     if (!enemies[i].active && !enemies[i].spawning) {
       enemies[i].spawning = true;
-      enemies[i].spawnTimer = 2.0f;
-      enemies[i].position = (Vector2){rand() % map.width, rand() % map.height};
+      enemies[i].spawnTimer = time2spawn;
+      Vector2 spawn_position;
+      do {
+        spawn_position = (Vector2){rand() % map.width, rand() % map.height};
+      } while (Vector2DistanceSqr(player_position, spawn_position) <
+               spawn_distance * spawn_distance);
+
+      enemies[i].position = spawn_position;
       enemies[i].size = (Vector2){30, 30};
-      enemies[i].color = BLUE;
+      enemies[i].color = RED;
+
       break;
     }
   }
@@ -46,7 +55,7 @@ void DrawEnemies(Enemy *enemies) {
   for (int i = 0; i < MAX_ENEMIES; i++) {
     if (enemies[i].spawning) {
       DrawCircle(enemies[i].position.x, enemies[i].position.y,
-                 enemies[i].size.x / 2 * (1 - enemies[i].spawnTimer), BLUE);
+                 enemies[i].size.x / 2 * (1 - enemies[i].spawnTimer), RED);
     } else if (enemies[i].active) {
       DrawRectangleV(enemies[i].position, enemies[i].size, enemies[i].color);
     }
@@ -59,9 +68,7 @@ int GetClosestEnemy(Enemy *enemies, Vector2 position) {
   for (int i = 0; i < MAX_ENEMIES; i++) {
     Enemy enemy = enemies[i];
     if (enemy.active) {
-      float dx = enemy.position.x - position.x;
-      float dy = enemy.position.y - position.y;
-      float current_distance = (dx * dx) + (dy * dy);
+      float current_distance = Vector2DistanceSqr(enemy.position, position);
       if (current_distance > closest_enemy_position) {
         closest_enemy_index = i;
       }
