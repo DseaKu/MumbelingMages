@@ -6,18 +6,17 @@
 
 void InitEnemies(Enemy *enemies) {
   for (int i = 0; i < MAX_ENEMIES; i++) {
-    enemies[i].active = false;
-    enemies[i].spawning = false;
-    enemies[i].spawnTimer = 0;
     enemies[i].speed = 150.0f;
   }
 }
 
 void SpawnEnemy(Enemy *enemies) {
-  for (int i = 0; i < MAX_ENEMIES; i++) {
+  // Block enemy[0] to spawn, this index is reserved for other logic e.g.
+  // auto-aim
+  for (int i = 1; i < MAX_ENEMIES; i++) {
     if (!enemies[i].active && !enemies[i].spawning) {
       enemies[i].spawning = true;
-      enemies[i].spawnTimer = 1.0f;
+      enemies[i].spawnTimer = 2.0f;
       enemies[i].position =
           (Vector2){rand() % GetDisplayWidth(), rand() % GetDisplayHeigth()};
       enemies[i].size = (Vector2){30, 30};
@@ -54,4 +53,22 @@ void DrawEnemies(Enemy *enemies) {
       DrawRectangleV(enemies[i].position, enemies[i].size, enemies[i].color);
     }
   }
+}
+int GetClosestEnemy(Enemy *enemies, Vector2 position) {
+
+  float closest_enemy_position = 0;
+  int closest_enemy_index;
+  for (int i = 0; i < MAX_ENEMIES; i++) {
+    Enemy enemy = enemies[i];
+    if (enemy.active) {
+      float dx = enemy.position.x - position.x;
+      float dy = enemy.position.y - position.y;
+      float current_distance = (dx * dx) + (dy * dy);
+      if (current_distance > closest_enemy_position) {
+        closest_enemy_index = i;
+      }
+    }
+  }
+
+  return closest_enemy_index;
 }

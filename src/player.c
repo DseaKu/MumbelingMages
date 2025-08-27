@@ -20,7 +20,7 @@ Player InitPlayer() {
   return player;
 }
 
-void UpdatePlayer(Player *player, float fireTimer) {
+void UpdatePlayer(Player *player, float fireTimer, bool is_auto_aim) {
   float delta = GetFrameTime();
   Vector2 direction = {0, 0};
 
@@ -48,13 +48,22 @@ void UpdatePlayer(Player *player, float fireTimer) {
     player->position.y = player->size.y / 2;
   if (player->position.y + player->size.y / 2 > GetDisplayHeigth())
     player->position.y = GetDisplayHeigth() - player->size.y / 2;
+
+  if (!is_auto_aim) {
+    if (GetMousePosition().x < player->position.x) {
+      player->is_facing_right = false;
+    } else {
+      player->is_facing_right = true;
+    }
+  }
 }
 
 void DrawPlayer(Player player) {
   float texture_width = (float)player.texture.width;
-  if (GetMousePosition().x < player.position.x) {
+  if (!player.is_facing_right) {
     texture_width = -texture_width;
   }
+
   DrawTexturePro(player.texture,
                  (Rectangle){0, 0, texture_width, (float)player.texture.height},
                  (Rectangle){player.position.x, player.position.y,

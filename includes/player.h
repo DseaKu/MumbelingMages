@@ -16,10 +16,11 @@ typedef struct Player {
   float pickupRange;
   Texture2D texture;
   int health;
+  bool is_facing_right;
 } Player;
 
 Player InitPlayer();
-void UpdatePlayer(Player *player, float fireTimer);
+void UpdatePlayer(Player *player, float fireTimer, bool is_auto_aim);
 void DrawPlayer(Player player);
 bool IsPlayerHit(Player player, Enemy *enemies, bool *game_over);
 

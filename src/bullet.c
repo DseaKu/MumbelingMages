@@ -1,35 +1,53 @@
 
 #include "bullet.h"
+#include "enemy.h"
+#include "player.h"
 #include "window.h"
 #include <math.h>
 #include <raylib.h>
+#include <raymath.h>
 
 void InitBullets(Bullet *bullets) {
   for (int i = 0; i < MAX_BULLETS; i++) {
-    bullets[i].active = false;
   }
 }
 
-void FireBullet(Bullet *bullets, Vector2 playerPosition, float fireTimer,
-                float fireRate, bool is_auto_aim) {
-  if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) && fireTimer >= fireRate) {
-    for (int i = 0; i < MAX_BULLETS; i++) {
-      if (!bullets[i].active) {
-        bullets[i].active = true;
-        bullets[i].position = playerPosition;
-        bullets[i].size = (Vector2){10, 10};
-        bullets[i].color = BLACK;
-        Vector2 mousePos = GetMousePosition();
-        Vector2 direction = {mousePos.x - playerPosition.x,
-                             mousePos.y - playerPosition.y};
-        float length =
-            sqrt(direction.x * direction.x + direction.y * direction.y);
-        direction.x /= length;
-        direction.y /= length;
-        bullets[i].speed =
-            (Vector2){direction.x * 2000.0f, direction.y * 2000.0f};
-        break;
+void FireBullet(Bullet *bullets, Player *player, float fireRate,
+                bool is_auto_aim, Enemy *enemies) {
+  Vector2 playerPosition = player->position;
+
+  for (int i = 0; i < MAX_BULLETS; i++) {
+    if (!bullets[i].active) {
+      bullets[i].position = playerPosition;
+      bullets[i].size = (Vector2){10, 10};
+      bullets[i].color = BLACK;
+      bullets[i].force = 0;
+      Vector2 direction;
+
+      if (is_auto_aim) {
+        int closest_enemy = GetClosestEnemy(enemies, playerPosition);
+        if (closest_enemy == 0) {
+          return;
+        } else {
+          direction =
+              Vector2Subtract(enemies[closest_enemy].position, playerPosition);
+          if (direction.x > 0) {
+            player->is_facing_right = true;
+          } else {
+            player->is_facing_right = false;
+          }
+        }
+      } else {
+        direction = Vector2Subtract(GetMousePosition(), playerPosition);
       }
+      bullets[i].active = true;
+      float length =
+          sqrt(direction.x * direction.x + direction.y * direction.y);
+      direction.x /= length;
+      direction.y /= length;
+      bullets[i].speed =
+          (Vector2){direction.x * 2000.0f, direction.y * 2000.0f};
+      break;
     }
   }
 }

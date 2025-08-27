@@ -18,8 +18,8 @@ typedef struct Bullet {
 } Bullet;
 
 void InitBullets(Bullet *bullets);
-void FireBullet(Bullet *bullets, Vector2 playerPosition, float fireTimer,
-                float fireRate, bool is_auto_aim);
+void FireBullet(Bullet *bullets, Player *player, float fireRate,
+                bool is_auto_aim, Enemy *enemies);
 void UpdateBullets(Bullet *bullets);
 void DrawBullets(Bullet *bullets);
 void CheckBulletCollision(Bullet *bullets, Enemy *enemies, Orb *orbs);

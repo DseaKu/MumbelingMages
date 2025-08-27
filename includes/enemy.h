@@ -11,8 +11,8 @@ typedef struct Enemy {
   Vector2 size;
   Color color;
   bool active;
-  float speed;
   bool spawning;
+  float speed;
   float spawnTimer;
 } Enemy;
 
@@ -20,5 +20,6 @@ void InitEnemies(Enemy *enemies);
 void SpawnEnemy(Enemy *enemies);
 void UpdateEnemies(Enemy *enemies, Vector2 playerPosition);
 void DrawEnemies(Enemy *enemies);
+int GetClosestEnemy(Enemy *enemies, Vector2 position);
 
 #endif

@@ -24,7 +24,8 @@ CMakeFiles/game.dir/src/bullet.c.o: /Users/minimop/Workspace/MumbelingMages/src/
   /Users/minimop/Workspace/MumbelingMages/includes/orb.h \
   /Users/minimop/Workspace/MumbelingMages/includes/player.h \
   /Users/minimop/Workspace/MumbelingMages/includes/window.h \
-  /opt/homebrew/Cellar/raylib/5.5/include/raylib.h
+  /opt/homebrew/Cellar/raylib/5.5/include/raylib.h \
+  /opt/homebrew/Cellar/raylib/5.5/include/raymath.h
 
 CMakeFiles/game.dir/src/enemy.c.o: /Users/minimop/Workspace/MumbelingMages/src/enemy.c \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/Availability.h \
@@ -451,16 +452,6 @@ CMakeFiles/game.dir/src/window.c.o: /Users/minimop/Workspace/MumbelingMages/src/
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_null.h:
 
-/Library/Developer/CommandLineTools/usr/lib/clang/17/include/ptrcheck.h:
-
-/opt/homebrew/Cellar/raylib/5.5/include/raymath.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/stdio.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/machine/endian.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_int8_t.h:
-
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_bounds.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/machine/_mcontext.h:
@@ -495,15 +486,29 @@ CMakeFiles/game.dir/src/window.c.o: /Users/minimop/Workspace/MumbelingMages/src/
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/machine/signal.h:
 
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/stdio.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_int8_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/machine/endian.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/machine/_types.h:
+
+/Users/minimop/Workspace/MumbelingMages/includes/orb.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/libkern/arm/_OSByteOrder.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_types/_uint32_t.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/machine/_endian.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/wait.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/arm/signal.h:
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_rune_t.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/mach/arm/_structs.h:
 
-/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_rune_t.h:
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/arm/signal.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/AvailabilityVersions.h:
 
@@ -514,14 +519,6 @@ CMakeFiles/game.dir/src/window.c.o: /Users/minimop/Workspace/MumbelingMages/src/
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/AvailabilityInternal.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_types/_uint16_t.h:
-
-/Users/minimop/Workspace/MumbelingMages/includes/orb.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/libkern/arm/_OSByteOrder.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/_types/_uint32_t.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/machine/_endian.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_u_int64_t.h:
 
@@ -534,6 +531,10 @@ CMakeFiles/game.dir/src/window.c.o: /Users/minimop/Workspace/MumbelingMages/src/
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:
 
 /Users/minimop/Workspace/MumbelingMages/src/enemy.c:
+
+/Library/Developer/CommandLineTools/usr/lib/clang/17/include/ptrcheck.h:
+
+/opt/homebrew/Cellar/raylib/5.5/include/raymath.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/AvailabilityInternalLegacy.h:
 

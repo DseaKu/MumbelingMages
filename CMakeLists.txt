@@ -19,6 +19,7 @@ src/player.c
 src/powerup.c
 src/orb.c
 src/window.c
+src/map.c
 )
 
 add_executable(game src/main.c ${SOURCES})

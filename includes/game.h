@@ -4,14 +4,10 @@
 
 #include "bullet.h"
 #include "enemy.h"
+#include "map.h"
 #include "orb.h"
 #include "player.h"
 #include "powerup.h"
-typedef struct Map {
-  int width;
-  int height;
-  float map_size_multiplier;
-} Map;
 
 void GameLoop();
 void InitGame(Bullet *bullets, Enemy *enemies, PowerUp *powerUps, Orb *orbs,
