@@ -1,6 +1,7 @@
 #include "game.h"
 #include "bullet.h"
 #include "enemy.h"
+#include "enemy_properties.h"
 #include "map.h"
 #include "orb.h"
 #include "player.h"
@@ -158,8 +159,10 @@ void InitGame(Bullet *bullets, Enemy *enemies, PowerUp *powerUps, Orb *orbs,
   InitOrbs(orbs);
   *exp = 0;
   InitMap(map);
+  LoadEnemyTextures();
 }
 void UnloadGame(Player player, Map map) {
   UnloadTexture(player.texture);
+  UnloadEnemyTextures();
   UnloadMap(map);
 }

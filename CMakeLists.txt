@@ -20,6 +20,7 @@ src/powerup.c
 src/orb.c
 src/window.c
 src/map.c
+src/enemy_properties.c
 )
 
 add_executable(game src/main.c ${SOURCES})
