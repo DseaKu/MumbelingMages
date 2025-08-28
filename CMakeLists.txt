@@ -22,6 +22,7 @@ src/window.c
 src/map.c
 src/enemy_properties.c
 src/IO_handler.c
+src/animation_handler.c
 )
 
 add_executable(game src/main.c ${SOURCES})

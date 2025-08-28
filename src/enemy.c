@@ -1,4 +1,5 @@
 #include "enemy.h"
+#include "animation_handler.h"
 #include "enemy_properties.h"
 #include "raymath.h"
 #include <float.h>
@@ -110,7 +111,11 @@ void DrawEnemies(Enemy *enemies) {
       DrawCircle(enemies[i].position.x, enemies[i].position.y,
                  enemies[i].size.x / 2 * (1 - enemies[i].spawnTimer), RED);
     } else if (enemies[i].active) {
-      Texture2D texture = GetEnemyTexture(enemies[i].id);
+
+      Texture2D texture =
+          GetEnemyTexture(enemies[i].id, enemies[i].anmimation_id);
+
+      // Change drawing size of enemy animation
       float frameWidth = (float)texture.width / enemies[i].frameCount;
       Rectangle sourceRec = {(float)enemies[i].currentFrame * frameWidth, 0,
                              frameWidth, (float)texture.height};

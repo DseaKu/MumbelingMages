@@ -6,7 +6,13 @@
 #include "raylib.h"
 
 #define MAX_ENEMIES 20
-typedef enum { GOBLIN = 0, SKELLETON, BAT, ENEMY_ID_COUNT } EnemyID;
+typedef enum { GOBLIN = 0, SKELLETON, BAT } EnemyID;
+typedef enum {
+  WALK = 1 << 0,
+  Idle = 1 << 1,
+  IS_HITTED = 1 << 2,
+  DEAD = 1 << 3,
+} AnimationID;
 
 typedef struct Enemy {
   EnemyID id;
@@ -28,11 +34,13 @@ typedef struct Enemy {
   float attack_speed;
 
   // Visual
+  AnimationID anmimation_id;
   int currentFrame;
   int frameCount;
   float frameTimer;
   float frameDuration;
   float texture_scale;
+
 } Enemy;
 
 void InitEnemies(Enemy *enemies);
