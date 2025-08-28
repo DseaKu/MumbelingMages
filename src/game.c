@@ -172,10 +172,10 @@ void InitGame(Bullet *bullets, Enemy *enemies, PowerUp *powerUps, Orb *orbs,
   InitOrbs(orbs);
   *exp = 0;
   InitMap(map);
-  LoadEnemyTextures();
+  LoadTextures();
 }
 void UnloadGame(Player player, Map map) {
   UnloadTexture(player.texture);
-  UnloadEnemyTextures();
+  UnloadTextures();
   UnloadMap(map);
 }

@@ -1,18 +1,13 @@
 
 #ifndef ENEMY_H
 #define ENEMY_H
+#include "animation_handler.h"
 
 #include "map.h"
 #include "raylib.h"
+#include "sprite.h"
 
-#define MAX_ENEMIES 20
-typedef enum { GOBLIN = 0, SKELLETON, BAT } EnemyID;
-typedef enum {
-  WALK = 1 << 0,
-  Idle = 1 << 1,
-  IS_HITTED = 1 << 2,
-  DEAD = 1 << 3,
-} AnimationID;
+#define MAX_ENEMIES 2
 
 typedef struct DynamicPath {
   bool is_active;
@@ -24,19 +19,17 @@ typedef struct DynamicPath {
 } DynamicPath;
 
 typedef struct Enemy {
-  EnemyID id;
+  SpriteID sprite;
+  StateID state;
   DynamicPath dynamic_path;
   Vector2 position;
-  Vector2 size;
   Color color;
   bool active;
-  bool spawning;
-  bool is_hit;
-  bool is_facing_right;
 
   // Properties
+  Vector2 hit_box;
   float speed;
-  float spawnTimer;
+  float spawn_timer;
   float spawn_distance;
   int health;
   int damage;
@@ -44,12 +37,7 @@ typedef struct Enemy {
   float attack_speed;
 
   // Visual
-  AnimationID anmimation_id;
-  int currentFrame;
-  int frameCount;
-  float frameTimer;
-  float frameDuration;
-  float texture_scale;
+  Animation animation;
 
 } Enemy;
 

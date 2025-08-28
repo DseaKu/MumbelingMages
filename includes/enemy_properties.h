@@ -4,6 +4,6 @@
 #include "enemy.h"
 #include <raylib.h>
 
-Enemy GetEnemyProperties(EnemyID id);
+Enemy GetEnemyProperties(int enemy_id);
 
 #endif // !ENEMY_PROPERTIES_H

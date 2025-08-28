@@ -90,12 +90,12 @@ void CheckPlayerCollision(Player *player, Enemy *enemies) {
   // Check if player is hitted
   for (int i = 0; i < MAX_ENEMIES; i++) {
     if (enemies[i].active &&
-        CheckCollisionRecs((Rectangle){player->position.x - player->size.x / 2,
-                                       player->position.y - player->size.y / 2,
-                                       player->size.x, player->size.y},
-                           (Rectangle){enemies[i].position.x,
-                                       enemies[i].position.y, enemies[i].size.x,
-                                       enemies[i].size.y})) {
+        CheckCollisionRecs(
+            (Rectangle){player->position.x - player->size.x / 2,
+                        player->position.y - player->size.y / 2, player->size.x,
+                        player->size.y},
+            (Rectangle){enemies[i].position.x, enemies[i].position.y,
+                        enemies[i].hit_box.x, enemies[i].hit_box.y})) {
       if (enemies[i].hit_cooldown <= 0) {
         player->health -= enemies[i].damage;
         enemies[i].hit_cooldown = enemies[i].attack_speed;
