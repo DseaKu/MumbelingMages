@@ -21,6 +21,7 @@ src/orb.c
 src/window.c
 src/map.c
 src/enemy_properties.c
+src/IO_handler.c
 )
 
 add_executable(game src/main.c ${SOURCES})

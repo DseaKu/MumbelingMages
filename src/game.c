@@ -1,4 +1,5 @@
 #include "game.h"
+#include "IO_handler.h"
 #include "bullet.h"
 #include "enemy.h"
 #include "enemy_properties.h"
@@ -32,13 +33,12 @@ void GameLoop() {
   Enemy enemies[MAX_ENEMIES] = {0};
   PowerUp powerUps[MAX_POWERUPS];
   Orb orbs[MAX_ORBS];
+  IO_Flags io_flags = 0;
   bool is_game_over = false;
-  bool is_pause_game = false;
-  bool is_auto_aim = true;
 
   srand(time(NULL));
 
-  InitGame(bullets, enemies, powerUps, orbs, &exp, &map);
+  InitGame(bullets, enemies, powerUps, orbs, &exp, &map, &io_flags);
 
   float fireTimer = 0.0f;
   float enemySpawnTimer = 0.0f;
@@ -54,21 +54,15 @@ void GameLoop() {
     //----------------------------------------------------------------------------------
     // Check inputs
     //----------------------------------------------------------------------------------
-    if (IsKeyPressed(KEY_SPACE)) {
-      is_pause_game = !is_pause_game;
-    }
-    if (IsKeyPressed(KEY_F)) {
-      ToggleRealFullscreen(screen_width, screen_height);
-    }
-    if (IsKeyPressed(KEY_E)) {
-      is_auto_aim = !is_auto_aim;
-    }
+    GetInputs(&io_flags);
+
     //----------------------------------------------------------------------------------
     // Spawning
     //----------------------------------------------------------------------------------
     if (fireTimer >= player.fireRate &&
-        ((IsMouseButtonDown(MOUSE_LEFT_BUTTON)) || is_auto_aim)) {
-      FireBullet(bullets, &player, player.fireRate, is_auto_aim, enemies);
+        ((IsMouseButtonDown(MOUSE_LEFT_BUTTON)) || io_flags & AUTO_AIM)) {
+      FireBullet(bullets, &player, player.fireRate, io_flags & AUTO_AIM,
+                 enemies);
       fireTimer = 0;
     }
 
@@ -84,16 +78,20 @@ void GameLoop() {
     //----------------------------------------------------------------------------------
     // Update
     //----------------------------------------------------------------------------------
-    if (is_auto_aim) {
+    if (io_flags & TOGGLE_FULLSCREEN) {
+      ToggleRealFullscreen(screen_width, screen_height);
+      io_flags -= TOGGLE_FULLSCREEN;
+    }
+    if (io_flags & AUTO_AIM) {
       HideCursor();
     } else {
       ShowCursor();
     }
-    if (!is_pause_game) {
+    if (!(io_flags & PAUSE_GAME)) {
       fireTimer += GetFrameTime();
       enemySpawnTimer += GetFrameTime();
       powerUpSpawnTimer += GetFrameTime();
-      UpdatePlayer(&player, fireTimer, is_auto_aim, map);
+      UpdatePlayer(&player, fireTimer, io_flags & AUTO_AIM, map);
       UpdateEnemies(enemies, player.position);
       UpdatePowerUps(powerUps, &player);
       UpdateBullets(bullets, map);
@@ -134,12 +132,14 @@ void GameLoop() {
       sprintf(healthText, "Health: %d", player.health);
       DrawText(healthText, 20, 20, 20, GREEN);
 
-      if (is_auto_aim) {
+      DrawDebugText();
+
+      if (io_flags & AUTO_AIM) {
         DrawText("Auto Aim", 20, 60, 20, GREEN);
       } else {
         DrawText("Auto Aim", 20, 60, 20, MAROON);
       }
-      if (is_pause_game) {
+      if (io_flags & PAUSE_GAME) {
         DrawText("PAUSED",
                  GetDisplayWidth() / 2 - MeasureText("PAUSED", 40) / 2,
                  GetDisplayHeigth() / 2 - 20, 40, RED);
@@ -164,7 +164,8 @@ void GameLoop() {
 }
 
 void InitGame(Bullet *bullets, Enemy *enemies, PowerUp *powerUps, Orb *orbs,
-              int *exp, Map *map) {
+              int *exp, Map *map, IO_Flags *io_flags) {
+  InitIO_Flags(io_flags);
   InitBullets(bullets);
   InitEnemies(enemies);
   InitPowerUps(powerUps);
