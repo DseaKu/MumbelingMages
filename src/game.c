@@ -1,8 +1,8 @@
 #include "game.h"
 #include "IO_handler.h"
+#include "animation_handler.h"
 #include "bullet.h"
 #include "enemy.h"
-#include "enemy_properties.h"
 #include "map.h"
 #include "orb.h"
 #include "player.h"
@@ -23,8 +23,8 @@ void GameLoop() {
   //----------------------------------------------------------------------------------
   // INIT
   //----------------------------------------------------------------------------------
-  int screen_width = 1300;
-  int screen_height = 800;
+  int screen_width = GetDisplayWidth();
+  int screen_height = GetDisplayHeigth();
 
   InitWindow(screen_width, screen_height, "Mumbeling Mages");
 

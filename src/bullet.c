@@ -19,7 +19,7 @@ void FireBullet(Bullet *bullets, Player *player, float fireRate,
                 bool is_auto_aim, Enemy *enemies) {
   Vector2 playerPosition = player->position;
 
-  int pierce = 3;
+  int pierce = 1;
   float range = 0.5f;
   for (int i = 0; i < MAX_BULLETS; i++) {
     if (!bullets[i].active) {
