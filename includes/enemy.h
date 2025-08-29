@@ -6,6 +6,7 @@
 #include "map.h"
 #include "raylib.h"
 #include "sprite.h"
+#include "std_includes.h"
 
 #define MAX_ENEMIES 20
 
@@ -40,6 +41,13 @@ typedef struct Enemy {
   Animation animation;
 
 } Enemy;
+
+typedef u8 EnemyState;
+
+typedef struct EnemyData {
+  Enemy enemies[MAX_ENEMIES];
+  EnemyState state[MAX_ENEMIES];
+} EnemyData;
 
 void InitEnemies(Enemy *enemies);
 void SpawnEnemy(Enemy *enemies, Map map, Vector2 player_position);
