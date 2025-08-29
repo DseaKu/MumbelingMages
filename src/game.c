@@ -30,7 +30,7 @@ void GameLoop() {
 
   Player player = InitPlayer(screen_width, screen_height);
   Bullet bullets[MAX_BULLETS] = {0};
-  Enemy enemies[MAX_ENEMIES] = {0};
+  // Enemy enemies[MAX_ENEMIES] = {0};
   EnemyData enemy_data = {0};
   PowerUp powerUps[MAX_POWERUPS];
   Orb orbs[MAX_ORBS];
@@ -39,7 +39,7 @@ void GameLoop() {
 
   srand(time(NULL));
 
-  InitGame(bullets, enemies, powerUps, orbs, &exp, &map, &io_flags);
+  InitGame(bullets, &enemy_data, powerUps, orbs, &exp, &map, &io_flags);
 
   float fireTimer = 0.0f;
   float enemySpawnTimer = 0.0f;
@@ -63,12 +63,12 @@ void GameLoop() {
     if (fireTimer >= player.fireRate &&
         ((IsMouseButtonDown(MOUSE_LEFT_BUTTON)) || io_flags & AUTO_AIM)) {
       FireBullet(bullets, &player, player.fireRate, io_flags & AUTO_AIM,
-                 enemies);
+                 &enemy_data);
       fireTimer = 0;
     }
 
     if (enemySpawnTimer >= 1.0f) {
-      SpawnEnemy(enemies, map, player.position);
+      SpawnEnemy(&enemy_data, map, player.position);
       enemySpawnTimer = 0.0f;
     }
     if (powerUpSpawnTimer >= 10.0f) {
@@ -93,7 +93,7 @@ void GameLoop() {
       enemySpawnTimer += GetFrameTime();
       powerUpSpawnTimer += GetFrameTime();
       UpdatePlayer(&player, fireTimer, io_flags & AUTO_AIM, map);
-      UpdateEnemies(enemies_data, player.position);
+      UpdateEnemies(&enemy_data, player.position);
       UpdatePowerUps(powerUps, &player);
       UpdateBullets(bullets, map);
       UpdateOrbs(orbs);
@@ -102,10 +102,10 @@ void GameLoop() {
     //----------------------------------------------------------------------------------
     // Collision
     //----------------------------------------------------------------------------------
-    CheckBulletCollision(bullets, enemies_data, orbs);
+    CheckBulletCollision(bullets, &enemy_data, orbs);
     CheckOrbPickup(&player, orbs, &exp);
     if (!is_game_over) {
-      CheckPlayerCollision(&player, enemies_data);
+      CheckPlayerCollision(&player, &enemy_data);
       if (player.health <= 0) {
         is_game_over = true;
       }
@@ -124,7 +124,7 @@ void GameLoop() {
       DrawPlayer(player);
       DrawPowerUps(powerUps);
       DrawOrbs(orbs);
-      DrawEnemies(enemies_data);
+      DrawEnemies(&enemy_data);
       EndMode2D();
 
       // Draw UI
@@ -164,11 +164,11 @@ void GameLoop() {
   CloseWindow();
 }
 
-void InitGame(Bullet *bullets, Enemy *enemies, PowerUp *powerUps, Orb *orbs,
-              int *exp, Map *map, IO_Flags *io_flags) {
+void InitGame(Bullet *bullets, EnemyData *enemy_data, PowerUp *powerUps,
+              Orb *orbs, int *exp, Map *map, IO_Flags *io_flags) {
   InitIO_Flags(io_flags);
   InitBullets(bullets);
-  InitEnemies(enemies);
+  InitEnemies(enemy_data);
   InitPowerUps(powerUps);
   InitOrbs(orbs);
   *exp = 0;

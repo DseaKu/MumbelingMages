@@ -3,6 +3,7 @@
 #include "enemy.h"
 #include "map.h"
 #include "raymath.h"
+#include "sprite.h"
 #include "window.h"
 #include <raylib.h>
 #include <stdbool.h>
@@ -85,11 +86,12 @@ void DrawPlayer(Player player) {
                  (Vector2){player.size.x / 2, player.size.y / 2}, 0, WHITE);
 }
 
-void CheckPlayerCollision(Player *player, Enemy *enemies) {
+void CheckPlayerCollision(Player *player, EnemyData *enemy_data) {
+  Enemy *enemies = enemy_data->enemies;
 
   // Check if player is hitted
   for (int i = 0; i < MAX_ENEMIES; i++) {
-    if (enemies[i].active &&
+    if (enemy_data->state[i] != INACTIVE &&
         CheckCollisionRecs(
             (Rectangle){player->position.x - player->size.x / 2,
                         player->position.y - player->size.y / 2, player->size.x,

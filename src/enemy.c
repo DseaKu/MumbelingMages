@@ -9,19 +9,23 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-void InitEnemies(Enemy *enemies) {
+void InitEnemies(EnemyData *enemy_data) {
+
   for (int i = 0; i < MAX_ENEMIES; i++) {
-    enemies[i].sprite = GOBLIN;
+    enemy_data->state[i] = INACTIVE;
+    enemy_data->enemies[i].sprite = GOBLIN;
   }
 }
 
-void SpawnEnemy(Enemy *enemies, Map map, Vector2 player_position) {
+void SpawnEnemy(EnemyData *enemy_data, Map map, Vector2 player_position) {
 
+  Enemy *enemies = enemy_data->enemies;
   // Block enemy[0] to spawn, this index is reserved for other logic e.g.
   for (int i = 1; i < MAX_ENEMIES; i++) {
-    if (!enemies[i].active && enemies[i].state != SPAWNING) {
+
+    if (enemy_data->state[i] == INACTIVE) {
       enemies[i] = GetEnemyProperties(enemies[i].sprite);
-      enemies[i].state = SPAWNING;
+      enemy_data->state[i] = SPAWNING;
       Vector2 spawn_position;
       do {
         spawn_position = (Vector2){rand() % map.width, rand() % map.height};
@@ -36,23 +40,23 @@ void SpawnEnemy(Enemy *enemies, Map map, Vector2 player_position) {
   }
 }
 
-void UpdateEnemies(Enemy *enemies, Vector2 playerPosition) {
+void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition) {
   float delta = GetFrameTime();
+  Enemy *enemies = enemy_data->enemies;
   float safe_zone_distance = 80.0f;
   for (int i = 0; i < MAX_ENEMIES; i++) {
 
     // Spawning
-    if (enemies[i].state == SPAWNING) {
+    if (enemy_data->state[i] == SPAWNING) {
       enemies[i].spawn_timer -= delta;
       // Spawning finshed
       if (enemies[i].spawn_timer <= 0) {
-        enemies[i].state = WALK;
-        enemies[i].active = true;
+        enemy_data->state[i] = WALK;
       }
     }
 
     // Walking
-    if (enemies[i].active) {
+    if (enemy_data->state[i] == WALK) {
       Vector2 direction = Vector2Subtract(playerPosition, enemies[i].position);
       enemies[i].animation.is_facing_right = (direction.x > 0);
 
@@ -71,10 +75,10 @@ void UpdateEnemies(Enemy *enemies, Vector2 playerPosition) {
   // Enemy collision logic to prevent stacking
   float separation_force = 1.5f;
   for (int i = 0; i < MAX_ENEMIES; i++) {
-    if (!enemies[i].active)
+    if (enemy_data->state[i] == INACTIVE)
       continue;
     for (int j = i + 1; j < MAX_ENEMIES; j++) {
-      if (!enemies[j].active)
+      if (enemy_data->state[j] == INACTIVE)
         continue;
 
       Rectangle rect_i = {enemies[i].position.x, enemies[i].position.y,
@@ -100,22 +104,25 @@ void UpdateEnemies(Enemy *enemies, Vector2 playerPosition) {
   }
 }
 
-void DrawEnemies(Enemy *enemies) {
+void DrawEnemies(EnemyData *enemy_data) {
+  Enemy *enemies = enemy_data->enemies;
   for (int i = 0; i < MAX_ENEMIES; i++) {
-    if (enemies[i].active) {
+    if (enemy_data->state[i] != INACTIVE) {
       PlayAnimation(enemies[i].hit_box, enemies[i].position,
-                    &enemies[i].animation, enemies[i].sprite, enemies[i].state);
+                    &enemies[i].animation, enemies[i].sprite,
+                    enemy_data->state[i]);
     }
   }
 }
-int GetClosestEnemy(Enemy *enemies, Vector2 position) {
+int GetClosestEnemy(EnemyData *enemy_data, Vector2 position) {
+  Enemy *enemies = enemy_data->enemies;
   float closest_distance_sq = FLT_MAX;
   int closest_enemy_index = -1;
 
   for (int i = 0; i < MAX_ENEMIES; i++) {
-    Enemy enemy = enemies[i];
-    if (enemy.active) {
-      float current_distance_sq = Vector2DistanceSqr(enemy.position, position);
+    if (enemy_data->state[i] != INACTIVE) {
+      float current_distance_sq =
+          Vector2DistanceSqr(enemies->position, position);
       if (current_distance_sq < closest_distance_sq) {
         closest_distance_sq = current_distance_sq;
         closest_enemy_index = i;

@@ -21,11 +21,9 @@ typedef struct DynamicPath {
 
 typedef struct Enemy {
   SpriteID sprite;
-  StateID state;
   DynamicPath dynamic_path;
   Vector2 position;
   Color color;
-  bool active;
 
   // Properties
   Vector2 hit_box;
@@ -49,10 +47,10 @@ typedef struct EnemyData {
   EnemyState state[MAX_ENEMIES];
 } EnemyData;
 
-void InitEnemies(Enemy *enemies);
-void SpawnEnemy(Enemy *enemies, Map map, Vector2 player_position);
-void UpdateEnemies(Enemy *enemies, Vector2 playerPosition);
-void DrawEnemies(Enemy *enemies);
-int GetClosestEnemy(Enemy *enemies, Vector2 position);
+void InitEnemies(EnemyData *enemy_data);
+void SpawnEnemy(EnemyData *enemy_data, Map map, Vector2 player_position);
+void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition);
+void DrawEnemies(EnemyData *enemy_data);
+int GetClosestEnemy(EnemyData *enemy_data, Vector2 position);
 
 #endif

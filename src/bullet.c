@@ -17,8 +17,9 @@ void InitBullets(Bullet *bullets) {
 }
 
 void FireBullet(Bullet *bullets, Player *player, float fireRate,
-                bool is_auto_aim, Enemy *enemies) {
+                bool is_auto_aim, EnemyData *enemy_data) {
   Vector2 playerPosition = player->position;
+  Enemy *enemies = enemy_data->enemies;
 
   int pierce = 1;
   float range = 0.5f;
@@ -32,7 +33,7 @@ void FireBullet(Bullet *bullets, Player *player, float fireRate,
       Vector2 direction;
 
       if (is_auto_aim) {
-        int closest_enemy = GetClosestEnemy(enemies, playerPosition);
+        int closest_enemy = GetClosestEnemy(enemy_data, playerPosition);
         // No enemies active
         if (closest_enemy == -1) {
           return;
@@ -96,12 +97,13 @@ void DrawBullets(Bullet *bullets) {
     }
   }
 }
-void CheckBulletCollision(Bullet *bullets, Enemy *enemies, Orb *orbs) {
+void CheckBulletCollision(Bullet *bullets, EnemyData *enemy_data, Orb *orbs) {
+  Enemy *enemies = enemy_data->enemies;
   int bullet_demage = 19;
   for (int i = 0; i < MAX_BULLETS; i++) {
     if (bullets[i].active) {
       for (int j = 0; j < MAX_ENEMIES; j++) {
-        if (enemies[j].active &&
+        if (enemy_data->state[j] != INACTIVE &&
             CheckCollisionRecs(
                 (Rectangle){bullets[i].position.x, bullets[i].position.y,
                             bullets[i].size.x, bullets[i].size.y},
@@ -119,8 +121,7 @@ void CheckBulletCollision(Bullet *bullets, Enemy *enemies, Orb *orbs) {
           bullets[i].pierce--;
 
           if (enemies[j].health <= 0) {
-            enemies[j].active = false;
-            enemies[j].state = INACTIVE;
+            enemy_data->state[j] = INACTIVE;
             SpawnOrb(orbs, enemies[j].position);
           }
 
