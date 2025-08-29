@@ -49,7 +49,13 @@ void LoadTextures(void) {
   sprite_textures[GOBLIN][WALK] = (SpriteTexture){
       LoadTexture("assets/goblin/Run.png"), 150, 150, 8, 8.0f, 1.0f / 10.0f};
   sprite_textures[GOBLIN][TAKE_DEMAGE] = (SpriteTexture){
-      LoadTexture("assets/goblin/Run.png"), 150, 150, 4, 8.0f, 1.0f / 10.0f};
+      LoadTexture("assets/goblin/Take Hit.png"), 150, 150, 4, 8.0f, 1.0f / 10.0f};
+  sprite_textures[GOBLIN][SPAWNING] = (SpriteTexture){
+      LoadTexture("assets/goblin/Idle.png"), 150, 150, 4, 8.0f, 1.0f / 10.0f};
+  sprite_textures[GOBLIN][IDLE] = (SpriteTexture){
+      LoadTexture("assets/goblin/Idle.png"), 150, 150, 4, 8.0f, 1.0f / 10.0f};
+  sprite_textures[GOBLIN][DYING] = (SpriteTexture){
+      LoadTexture("assets/goblin/Death.png"), 150, 150, 4, 8.0f, 1.0f / 10.0f};
 }
 
 void UnloadTextures(void) {

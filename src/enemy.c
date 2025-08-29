@@ -122,7 +122,7 @@ int GetClosestEnemy(EnemyData *enemy_data, Vector2 position) {
   for (int i = 0; i < MAX_ENEMIES; i++) {
     if (enemy_data->state[i] != INACTIVE) {
       float current_distance_sq =
-          Vector2DistanceSqr(enemies->position, position);
+          Vector2DistanceSqr(enemies[i].position, position);
       if (current_distance_sq < closest_distance_sq) {
         closest_distance_sq = current_distance_sq;
         closest_enemy_index = i;

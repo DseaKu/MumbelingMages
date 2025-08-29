@@ -21,8 +21,8 @@ void FireBullet(Bullet *bullets, Player *player, float fireRate,
   Vector2 playerPosition = player->position;
   Enemy *enemies = enemy_data->enemies;
 
-  int pierce = 1;
-  float range = 0.5f;
+  int pierce = 5;
+  float range = 0.3f;
   for (int i = 0; i < MAX_BULLETS; i++) {
     if (!bullets[i].active) {
       bullets[i].position = playerPosition;
