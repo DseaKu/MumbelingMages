@@ -3,6 +3,7 @@
 #include "animation_handler.h"
 #include "bullet.h"
 #include "enemy.h"
+#include "enemy_properties.h"
 #include "map.h"
 #include "orb.h"
 #include "player.h"
@@ -174,6 +175,7 @@ void InitGame(Bullet *bullets, EnemyData *enemy_data, PowerUp *powerUps,
   *exp = 0;
   InitMap(map);
   LoadTextures();
+  LoadEnemyProperties();
 }
 void UnloadGame(Player player, Map map) {
   UnloadTexture(player.texture);

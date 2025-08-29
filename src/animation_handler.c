@@ -105,7 +105,5 @@ void UnloadTextures(void) {
 }
 
 AnimationData GetAnimationData(int sprite_id, int animation_id) {
-
-  // return textures[enemy_id][animation_id];
   return sprite_textures[sprite_id][animation_id];
 }

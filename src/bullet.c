@@ -100,7 +100,7 @@ void DrawBullets(Bullet *bullets) {
 void CheckBulletCollision(Bullet *bullets, EnemyData *enemy_data, Orb *orbs) {
   Enemy *enemies = enemy_data->enemies;
   int bullet_demage = 20;
-  float force = 3;
+  float force = 9;
 
   for (int i = 0; i < MAX_BULLETS; i++) {
     if (bullets[i].active) {

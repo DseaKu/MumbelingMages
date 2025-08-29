@@ -99,6 +99,14 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map) {
       enemies[i].timer += delta;
       enemy_data->state[i] = DYING;
       if (enemies[i].timer >= enemies[i].dying_duration) {
+        enemy_data->state[i] = DEAD;
+        enemies[i].timer = 0;
+      }
+      break;
+    case DEAD:
+      enemies[i].timer += delta;
+      enemy_data->state[i] = DEAD;
+      if (enemies[i].timer >= enemies[i].dying_duration) {
         enemies[i] = GetEnemyProperties(enemies[i].sprite);
         enemy_data->state[i] = SPAWNING;
         enemies[i].position = GenerateSpawnPosition(map, playerPosition,
