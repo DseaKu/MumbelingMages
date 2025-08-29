@@ -20,7 +20,7 @@ void GetInputs(IO_Flags *io_flags) {
 }
 void InitIO_Flags(IO_Flags *io_flags) {
 
-  *io_flags |= TOGGLE_FULLSCREEN;
+  // *io_flags |= TOGGLE_FULLSCREEN;
   *io_flags |= AUTO_AIM;
 }
 void DrawDebugText() {}

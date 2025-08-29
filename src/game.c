@@ -23,8 +23,8 @@ void GameLoop() {
   //----------------------------------------------------------------------------------
   // INIT
   //----------------------------------------------------------------------------------
-  int screen_width = 1300;
-  int screen_height = 800;
+  int screen_width = GetDisplayWidth();
+  int screen_height = GetDisplayHeigth();
 
   InitWindow(screen_width, screen_height, "Mumbeling Mages");
 
@@ -172,10 +172,10 @@ void InitGame(Bullet *bullets, Enemy *enemies, PowerUp *powerUps, Orb *orbs,
   InitOrbs(orbs);
   *exp = 0;
   InitMap(map);
-  LoadEnemyTextures();
+  LoadTextures();
 }
 void UnloadGame(Player player, Map map) {
   UnloadTexture(player.texture);
-  UnloadEnemyTextures();
+  UnloadTextures();
   UnloadMap(map);
 }

@@ -19,7 +19,7 @@ void FireBullet(Bullet *bullets, Player *player, float fireRate,
                 bool is_auto_aim, Enemy *enemies) {
   Vector2 playerPosition = player->position;
 
-  int pierce = 3;
+  int pierce = 1;
   float range = 0.5f;
   for (int i = 0; i < MAX_BULLETS; i++) {
     if (!bullets[i].active) {
@@ -105,7 +105,7 @@ void CheckBulletCollision(Bullet *bullets, Enemy *enemies, Orb *orbs) {
                 (Rectangle){bullets[i].position.x, bullets[i].position.y,
                             bullets[i].size.x, bullets[i].size.y},
                 (Rectangle){enemies[j].position.x, enemies[j].position.y,
-                            enemies[j].size.x, enemies[j].size.y})) {
+                            enemies[j].hit_box.x, enemies[j].hit_box.y})) {
 
           // If bullet has already hit this enemy, skip.
           if (bullets[i].last_hitted_enemy == j) {
