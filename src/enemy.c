@@ -1,6 +1,7 @@
 #include "enemy.h"
 #include "animation_handler.h"
 #include "enemy_properties.h"
+#include "orb.h"
 #include "raymath.h"
 #include "sprite.h"
 #include <float.h>
@@ -44,20 +45,25 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition) {
   float delta = GetFrameTime();
   Enemy *enemies = enemy_data->enemies;
   float safe_zone_distance = 80.0f;
+  Vector2 direction;
   for (int i = 0; i < MAX_ENEMIES; i++) {
 
-    // Spawning
-    if (enemy_data->state[i] == SPAWNING) {
-      enemies[i].spawn_timer -= delta;
-      // Spawning finshed
-      if (enemies[i].spawn_timer <= 0) {
-        enemy_data->state[i] = WALK;
-      }
-    }
+    switch (enemy_data->state[i]) {
+    case IDLE:
+      enemy_data->state[i] = WALKING;
+      break;
 
-    // Walking
-    if (enemy_data->state[i] == WALK) {
-      Vector2 direction = Vector2Subtract(playerPosition, enemies[i].position);
+    case SPAWNING:
+      enemies[i].timer += delta;
+      enemy_data->state[i] = SPAWNING;
+      if (enemies[i].timer >= enemies[i].spawn_duration) {
+        enemy_data->state[i] = IDLE;
+        enemies[i].timer = 0;
+      }
+      break;
+
+    case WALKING:
+      direction = Vector2Subtract(playerPosition, enemies[i].position);
       enemies[i].animation.is_facing_right = (direction.x > 0);
 
       if (Vector2Length(direction) > safe_zone_distance) {
@@ -68,6 +74,25 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition) {
 
       if (enemies[i].hit_cooldown > 0) {
         enemies[i].hit_cooldown -= delta;
+      }
+      break;
+
+    case TAKE_DEMAGE:
+      enemies[i].timer += delta;
+      enemy_data->state[i] = TAKE_DEMAGE;
+      // Generating pushback
+      if (enemies[i].timer >= enemies[i].stagger_duration) {
+        enemy_data->state[i] = IDLE;
+        enemies[i].timer = 0;
+      }
+      break;
+
+    case DYING:
+      enemies[i].timer += delta;
+      enemy_data->state[i] = DYING;
+      if (enemies[i].timer >= enemies[i].dying_duration) {
+        enemy_data->state[i] = INACTIVE;
+        enemies[i].timer = 0;
       }
     }
   }
@@ -107,10 +132,16 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition) {
 void DrawEnemies(EnemyData *enemy_data) {
   Enemy *enemies = enemy_data->enemies;
   for (int i = 0; i < MAX_ENEMIES; i++) {
+
+    // Reset animations if animations are switched
+    if (enemies[i].last_state != enemy_data->state[i]) {
+      enemies[i].animation.current_frame = 0;
+    }
     if (enemy_data->state[i] != INACTIVE) {
       PlayAnimation(enemies[i].hit_box, enemies[i].position,
                     &enemies[i].animation, enemies[i].sprite,
                     enemy_data->state[i]);
+      enemies[i].last_state = enemy_data->state[i];
     }
   }
 }

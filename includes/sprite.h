@@ -2,11 +2,12 @@
 #define SPRITE_H
 typedef enum {
   INACTIVE = 0,
-  WALK,
+  WALKING,
   IDLE,
   TAKE_DEMAGE,
   DYING,
   SPAWNING,
+  PROCESSES_ACTING_FORCES,
   SIZE_STATE_ID,
 } StateID;
 

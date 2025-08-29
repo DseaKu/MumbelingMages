@@ -43,13 +43,18 @@ void PlayAnimation(Vector2 hit_box, Vector2 position, Animation *animation,
 
 void LoadTextures(void) {
   // Mage
-  sprite_textures[MAGE][WALK] =
+  sprite_textures[MAGE][WALKING] =
       (SpriteTexture){LoadTexture("assets/mage.png"), 100, 100, 1, 2.0f};
 
-  sprite_textures[GOBLIN][WALK] = (SpriteTexture){
+  sprite_textures[GOBLIN][WALKING] = (SpriteTexture){
       LoadTexture("assets/goblin/Run.png"), 150, 150, 8, 8.0f, 1.0f / 10.0f};
-  sprite_textures[GOBLIN][TAKE_DEMAGE] = (SpriteTexture){
-      LoadTexture("assets/goblin/Take Hit.png"), 150, 150, 4, 8.0f, 1.0f / 10.0f};
+  sprite_textures[GOBLIN][TAKE_DEMAGE] =
+      (SpriteTexture){LoadTexture("assets/goblin/Take Hit.png"),
+                      150,
+                      150,
+                      4,
+                      8.0f,
+                      1.0f / 10.0f};
   sprite_textures[GOBLIN][SPAWNING] = (SpriteTexture){
       LoadTexture("assets/goblin/Idle.png"), 150, 150, 4, 8.0f, 1.0f / 10.0f};
   sprite_textures[GOBLIN][IDLE] = (SpriteTexture){

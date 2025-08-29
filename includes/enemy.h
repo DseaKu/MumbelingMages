@@ -20,24 +20,25 @@ typedef struct DynamicPath {
 } DynamicPath;
 
 typedef struct Enemy {
+  Animation animation;
   SpriteID sprite;
   DynamicPath dynamic_path;
   Vector2 position;
-  Color color;
-
-  // Properties
   Vector2 hit_box;
+  Color color;
+  u8 last_state;
+  u16 damage;
+  u32 health;
+  float exposed_force;
+  float weight;
   float speed;
-  float spawn_timer;
+  float spawn_duration;
+  float stagger_duration;
+  float dying_duration;
+  float timer;
   float spawn_distance;
-  int health;
-  int damage;
   float hit_cooldown;
   float attack_speed;
-
-  // Visual
-  Animation animation;
-
 } Enemy;
 
 typedef u8 EnemyState;
