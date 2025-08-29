@@ -7,6 +7,7 @@
 #include "map.h"
 #include "orb.h"
 #include "player.h"
+#include "resource_tracker.h"
 #include "window.h"
 #include <raylib.h>
 #include <stdbool.h>
@@ -24,6 +25,7 @@ void GameLoop() {
   //----------------------------------------------------------------------------------
   // INIT
   //----------------------------------------------------------------------------------
+  StartPerformanceTracker("Init");
   int screen_width = GetDisplayWidth();
   int screen_height = GetDisplayHeigth();
 
@@ -31,7 +33,6 @@ void GameLoop() {
 
   Player player = InitPlayer(screen_width, screen_height);
   Bullet bullets[MAX_BULLETS] = {0};
-  // Enemy enemies[MAX_ENEMIES] = {0};
   EnemyData enemy_data = {0};
   PowerUp powerUps[MAX_POWERUPS];
   Orb orbs[MAX_ORBS];
@@ -48,19 +49,24 @@ void GameLoop() {
 
   // SetTargetFPS(60);
 
+  EndPerformanceTracker("Init");
   //----------------------------------------------------------------------------------
   // Game loop
   //----------------------------------------------------------------------------------
 
   do {
+    StartPerformanceTracker("Complete Game Loop");
     //----------------------------------------------------------------------------------
     // Check inputs
     //----------------------------------------------------------------------------------
+    StartPerformanceTracker("Get Inputs");
     GetInputs(&io_flags);
+    EndPerformanceTracker("Get Inputs");
 
     //----------------------------------------------------------------------------------
     // Spawning
     //----------------------------------------------------------------------------------
+    StartPerformanceTracker("Spawning");
     if (fireTimer >= player.fireRate &&
         ((IsMouseButtonDown(MOUSE_LEFT_BUTTON)) || io_flags & AUTO_AIM)) {
       FireBullet(bullets, &player, player.fireRate, io_flags & AUTO_AIM,
@@ -76,10 +82,12 @@ void GameLoop() {
       SpawnPowerUp(powerUps);
       powerUpSpawnTimer = 0.0f;
     }
+    EndPerformanceTracker("Spawning");
 
     //----------------------------------------------------------------------------------
     // Update
     //----------------------------------------------------------------------------------
+    StartPerformanceTracker("Update");
     if (io_flags & TOGGLE_FULLSCREEN) {
       ToggleRealFullscreen(screen_width, screen_height);
       io_flags -= TOGGLE_FULLSCREEN;
@@ -99,10 +107,12 @@ void GameLoop() {
       UpdateBullets(bullets, map);
       UpdateOrbs(orbs);
     }
+    EndPerformanceTracker("Update");
 
     //----------------------------------------------------------------------------------
     // Collision
     //----------------------------------------------------------------------------------
+    StartPerformanceTracker("Collision");
     CheckBulletCollision(bullets, &enemy_data, orbs);
     CheckOrbPickup(&player, orbs, &exp);
     if (!is_game_over) {
@@ -111,10 +121,11 @@ void GameLoop() {
         is_game_over = true;
       }
     }
-
+    EndPerformanceTracker("Collision");
     //----------------------------------------------------------------------------------
     // Draw
     //----------------------------------------------------------------------------------
+    StartPerformanceTracker("Drawing");
     BeginDrawing();
     ClearBackground(RAYWHITE);
 
@@ -122,7 +133,7 @@ void GameLoop() {
       BeginMode2D(player.camera);
       DrawMap(map);
       DrawBullets(bullets);
-      DrawPlayer(player);
+      DrawPlayer(player, io_flags & PAUSE_GAME);
       DrawPowerUps(powerUps);
       DrawOrbs(orbs);
       DrawEnemies(&enemy_data, io_flags & PAUSE_GAME);
@@ -157,12 +168,18 @@ void GameLoop() {
                GetDisplayWidth() / 2 - MeasureText("Nice try, noob!", 40) / 2,
                GetDisplayHeigth() / 2 - 20, 40, RED);
     }
-    EndDrawing();
+    EndPerformanceTracker("Drawing");
 
+    StartPerformanceTracker("End Drawing");
+    EndDrawing();
+    EndPerformanceTracker("End Drawing");
+
+    EndPerformanceTracker("Complete Game Loop");
   } while (!WindowShouldClose());
 
   UnloadGame(player, map);
   CloseWindow();
+  PrintPerformanceTrackers();
 }
 
 void InitGame(Bullet *bullets, EnemyData *enemy_data, PowerUp *powerUps,
@@ -178,7 +195,6 @@ void InitGame(Bullet *bullets, EnemyData *enemy_data, PowerUp *powerUps,
   LoadEnemyProperties();
 }
 void UnloadGame(Player player, Map map) {
-  UnloadTexture(player.texture);
   UnloadTextures();
   UnloadMap(map);
 }

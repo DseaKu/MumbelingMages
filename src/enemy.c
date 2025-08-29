@@ -157,18 +157,10 @@ void DrawEnemies(EnemyData *enemy_data, bool is_paused) {
     if (enemies[i].last_state != enemy_data->state[i]) {
       enemies[i].animation.current_frame = 0;
     }
-    if (enemy_data->state[i] != INACTIVE) {
-      bool is_looping = true;
-      if (enemy_data->state[i] == SPAWNING ||
-          enemy_data->state[i] == TAKE_DEMAGE ||
-          enemy_data->state[i] == DYING) {
-        is_looping = false;
-      }
-      PlayAnimation(enemies[i].hit_box, enemies[i].position,
-                    &enemies[i].animation, enemies[i].sprite,
-                    enemy_data->state[i], is_paused);
-      enemies[i].last_state = enemy_data->state[i];
-    }
+    PlayAnimation(enemies[i].hit_box, enemies[i].position,
+                  &enemies[i].animation, enemies[i].sprite,
+                  enemy_data->state[i], is_paused);
+    enemies[i].last_state = enemy_data->state[i];
   }
 }
 int GetClosestEnemy(EnemyData *enemy_data, Vector2 position) {

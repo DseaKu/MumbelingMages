@@ -25,7 +25,6 @@ typedef struct Enemy {
   DynamicPath dynamic_path;
   Vector2 position;
   Vector2 hit_box;
-  Color color;
   u8 last_state;
   u16 damage;
   u32 health;

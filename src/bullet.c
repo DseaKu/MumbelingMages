@@ -42,9 +42,9 @@ void FireBullet(Bullet *bullets, Player *player, float fireRate,
           direction =
               Vector2Subtract(enemies[closest_enemy].position, playerPosition);
           if (direction.x > 0) {
-            player->is_facing_right = true;
+            player->animation.is_facing_right = true;
           } else {
-            player->is_facing_right = false;
+            player->animation.is_facing_right = false;
           }
         }
         // Manual aiming
