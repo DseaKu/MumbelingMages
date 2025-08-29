@@ -12,7 +12,8 @@
 
 void GameLoop();
 void InitGame(Bullet *bullets, EnemyData *enemy_data, PowerUp *powerUps,
-              Orb *orbs, int *exp, Map *map, IO_Flags *io_flags);
+              Orb *orbs, int *exp, Map *map, IO_Flags *io_flags,
+              Player *player);
 void DrawGame(Player player, Bullet *bullets, Enemy *enemies, PowerUp *powerUps,
               Orb *orbs, int exp, bool gameOver);
 

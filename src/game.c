@@ -2,8 +2,10 @@
 #include "IO_handler.h"
 #include "animation_handler.h"
 #include "bullet.h"
+#include "camera.h"
 #include "enemy.h"
 #include "enemy_properties.h"
+#include "mage_properties.h"
 #include "map.h"
 #include "orb.h"
 #include "player.h"
@@ -31,7 +33,7 @@ void GameLoop() {
 
   InitWindow(screen_width, screen_height, "Mumbeling Mages");
 
-  Player player = InitPlayer(screen_width, screen_height);
+  Player player;
   Bullet bullets[MAX_BULLETS] = {0};
   EnemyData enemy_data = {0};
   PowerUp powerUps[MAX_POWERUPS];
@@ -41,7 +43,8 @@ void GameLoop() {
 
   srand(time(NULL));
 
-  InitGame(bullets, &enemy_data, powerUps, orbs, &exp, &map, &io_flags);
+  InitGame(bullets, &enemy_data, powerUps, orbs, &exp, &map, &io_flags,
+           &player);
 
   float fireTimer = 0.0f;
   float enemySpawnTimer = 0.0f;
@@ -105,6 +108,7 @@ void GameLoop() {
       UpdatePowerUps(powerUps, &player);
       UpdateBullets(bullets, map);
       UpdateOrbs(orbs);
+      UpdatePlayerCamera(&player);
     }
     EndPerformanceTracker("Update");
 
@@ -182,16 +186,20 @@ void GameLoop() {
 }
 
 void InitGame(Bullet *bullets, EnemyData *enemy_data, PowerUp *powerUps,
-              Orb *orbs, int *exp, Map *map, IO_Flags *io_flags) {
+              Orb *orbs, int *exp, Map *map, IO_Flags *io_flags,
+              Player *player) {
+  LoadTextures();
+  LoadEnemyProperties();
+  LoadMageProperties();
   InitIO_Flags(io_flags);
   InitBullets(bullets);
   InitEnemies(enemy_data);
   InitPowerUps(powerUps);
   InitOrbs(orbs);
-  *exp = 0;
   InitMap(map);
-  LoadTextures();
-  LoadEnemyProperties();
+  InitPlayer(player);
+  InitCamera(player);
+  *exp = 0;
 }
 void UnloadGame(Player player, Map map) {
   UnloadTextures();

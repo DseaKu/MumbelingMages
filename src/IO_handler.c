@@ -17,6 +17,9 @@ void GetInputs(IO_Flags *io_flags) {
   if (IsKeyReleased(KEY_F2)) {
     *io_flags ^= DRAW_DEBUG_INFO;
   }
+  if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+    *io_flags ^= IS_MOUSE_LEFT_PRESSED;
+  }
 }
 void InitIO_Flags(IO_Flags *io_flags) {
 

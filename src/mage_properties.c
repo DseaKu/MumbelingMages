@@ -12,7 +12,8 @@ void LoadMageProperties() {
       .hit_box = (Vector2){120, 160},
       .speed = 500.0f,
       .fireRate = 0.2f,
+      .pickupRange = 150.0f,
       .health = 100,
-
   };
 };
+Player GetMageProperties(int mage_id) { return mage_properties[mage_id]; }
