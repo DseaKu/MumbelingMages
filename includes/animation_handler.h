@@ -22,7 +22,7 @@ void LoadTextures(void);
 void UnloadTextures(void);
 SpriteTexture GetTexture(int sprite_id, int animation_id);
 void PlayAnimation(Vector2 hit_box, Vector2 position, Animation *animation,
-                   int sprite_id, int animation_id);
+                   int sprite_id, int animation_id, bool is_paused);
 void UpdateAnimation(Animation *animation, int sprite_id, int state_id);
 
 #endif /* ifndef ANIMATION_HANDLER_H */

@@ -1,7 +1,7 @@
 
 #include "powerup.h"
-#include "raymath.h"
 #include "player.h"
+#include "raymath.h"
 #include <stdlib.h>
 
 void InitPowerUps(PowerUp *powerUps) {
@@ -29,7 +29,7 @@ void UpdatePowerUps(PowerUp *powerUps, Player *player) {
       float distance = Vector2Distance(player->position, powerUps[i].position);
       if (distance < player->pickupRange) {
         powerUps[i].active = false;
-        player->fireRate *= 0.95f;
+        player->fireRate *= 0.55f;
       }
     }
   }

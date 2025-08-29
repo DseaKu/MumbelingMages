@@ -124,7 +124,7 @@ void GameLoop() {
       DrawPlayer(player);
       DrawPowerUps(powerUps);
       DrawOrbs(orbs);
-      DrawEnemies(&enemy_data);
+      DrawEnemies(&enemy_data, io_flags & PAUSE_GAME);
       EndMode2D();
 
       // Draw UI

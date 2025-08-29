@@ -16,10 +16,12 @@ void UpdateAnimation(Animation *animation, int sprite_id, int state_id) {
 }
 
 void PlayAnimation(Vector2 hit_box, Vector2 position, Animation *animation,
-                   int sprite_id, int animation_id) {
+                   int sprite_id, int animation_id, bool is_paused) {
 
   SpriteTexture texture = GetTexture(sprite_id, animation_id);
-  UpdateAnimation(animation, sprite_id, animation_id);
+  if (!is_paused) {
+    UpdateAnimation(animation, sprite_id, animation_id);
+  }
 
   // Ger current frame from animation
   Rectangle sourceRec = {(float)animation->current_frame * texture.width, 0,

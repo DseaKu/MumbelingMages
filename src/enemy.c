@@ -1,7 +1,6 @@
 #include "enemy.h"
 #include "animation_handler.h"
 #include "enemy_properties.h"
-#include "orb.h"
 #include "raymath.h"
 #include "sprite.h"
 #include <float.h>
@@ -80,7 +79,13 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition) {
     case TAKE_DEMAGE:
       enemies[i].timer += delta;
       enemy_data->state[i] = TAKE_DEMAGE;
+
       // Generating pushback
+      direction = Vector2Subtract(enemies[i].position, playerPosition);
+      direction = Vector2Normalize(direction);
+      enemies[i].position.x += direction.x * delta * enemies[i].exposed_force;
+      enemies[i].position.y += direction.y * delta * enemies[i].exposed_force;
+
       if (enemies[i].timer >= enemies[i].stagger_duration) {
         enemy_data->state[i] = IDLE;
         enemies[i].timer = 0;
@@ -91,9 +96,11 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition) {
       enemies[i].timer += delta;
       enemy_data->state[i] = DYING;
       if (enemies[i].timer >= enemies[i].dying_duration) {
-        enemy_data->state[i] = INACTIVE;
+        enemies[i] = GetEnemyProperties(enemies[i].sprite);
+        enemy_data->state[i] = SPAWNING;
         enemies[i].timer = 0;
       }
+      break;
     }
   }
 
@@ -129,7 +136,7 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition) {
   }
 }
 
-void DrawEnemies(EnemyData *enemy_data) {
+void DrawEnemies(EnemyData *enemy_data, bool is_paused) {
   Enemy *enemies = enemy_data->enemies;
   for (int i = 0; i < MAX_ENEMIES; i++) {
 
@@ -140,7 +147,7 @@ void DrawEnemies(EnemyData *enemy_data) {
     if (enemy_data->state[i] != INACTIVE) {
       PlayAnimation(enemies[i].hit_box, enemies[i].position,
                     &enemies[i].animation, enemies[i].sprite,
-                    enemy_data->state[i]);
+                    enemy_data->state[i], is_paused);
       enemies[i].last_state = enemy_data->state[i];
     }
   }

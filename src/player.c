@@ -18,7 +18,7 @@ Player InitPlayer(int screen_width, int screen_height) {
   player.fireRate = 0.2f;
   player.pickupRange = 150.0f;
   player.texture = LoadTexture("assets/mage.png");
-  player.health = 100;
+  player.health = 1000;
   player.camera.target = player.position;
   player.camera.offset =
       (Vector2){GetDisplayWidth() / 2.0f, GetDisplayHeigth() / 2.0f};

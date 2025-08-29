@@ -28,7 +28,7 @@ void FireBullet(Bullet *bullets, Player *player, float fireRate,
       bullets[i].position = playerPosition;
       bullets[i].size = (Vector2){10, 10};
       bullets[i].color = BLACK;
-      bullets[i].weight = 0;
+      bullets[i].force = 0;
       bullets[i].last_hitted_enemy = -1;
       Vector2 direction;
 
@@ -100,40 +100,40 @@ void DrawBullets(Bullet *bullets) {
 void CheckBulletCollision(Bullet *bullets, EnemyData *enemy_data, Orb *orbs) {
   Enemy *enemies = enemy_data->enemies;
   int bullet_demage = 20;
-  float force = 0.3;
+  float force = 3;
 
   for (int i = 0; i < MAX_BULLETS; i++) {
     if (bullets[i].active) {
       for (int j = 0; j < MAX_ENEMIES; j++) {
-        if (enemy_data->state[j] != INACTIVE &&
-            CheckCollisionRecs(
-                (Rectangle){bullets[i].position.x, bullets[i].position.y,
-                            bullets[i].size.x, bullets[i].size.y},
-                (Rectangle){enemies[j].position.x, enemies[j].position.y,
-                            enemies[j].hit_box.x, enemies[j].hit_box.y})) {
+        if (enemy_data->state[j] == WALKING)
+          if (CheckCollisionRecs(
+                  (Rectangle){bullets[i].position.x, bullets[i].position.y,
+                              bullets[i].size.x, bullets[i].size.y},
+                  (Rectangle){enemies[j].position.x, enemies[j].position.y,
+                              enemies[j].hit_box.x, enemies[j].hit_box.y})) {
 
-          // If bullet has already hit this enemy, skip.
-          if (bullets[i].last_hitted_enemy == j) {
-            continue;
+            // If bullet has already hit this enemy, skip.
+            if (bullets[i].last_hitted_enemy == j) {
+              continue;
+            }
+
+            // Enemy is hit by bullet
+            enemy_data->state[j] = TAKE_DEMAGE;
+            enemies[j].health -= bullet_demage;
+            enemies[j].exposed_force += force;
+            bullets[i].last_hitted_enemy = j;
+            bullets[i].pierce--;
+
+            if (enemies[j].health <= 0) {
+              enemy_data->state[j] = DYING;
+              SpawnOrb(orbs, enemies[j].position);
+            }
+
+            if (bullets[i].pierce <= 0) {
+              bullets[i].active = false;
+              break; // Exit enemy loop, bullet is done.
+            }
           }
-
-          // Enemy is hit by bullet
-          enemy_data->state[j] = TAKE_DEMAGE;
-          enemies[j].health -= bullet_demage;
-          enemies[j].exposed_force += force;
-          bullets[i].last_hitted_enemy = j;
-          bullets[i].pierce--;
-
-          if (enemies[j].health <= 0) {
-            enemy_data->state[j] = DYING;
-            SpawnOrb(orbs, enemies[j].position);
-          }
-
-          if (bullets[i].pierce <= 0) {
-            bullets[i].active = false;
-            break; // Exit enemy loop, bullet is done.
-          }
-        }
       }
     }
   }

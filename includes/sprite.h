@@ -7,6 +7,7 @@ typedef enum {
   TAKE_DEMAGE,
   DYING,
   SPAWNING,
+  DEAD,
   PROCESSES_ACTING_FORCES,
   SIZE_STATE_ID,
 } StateID;
