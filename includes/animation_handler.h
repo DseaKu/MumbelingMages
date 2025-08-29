@@ -1,7 +1,5 @@
 #ifndef ANIMATION_HANDLER_H
 #define ANIMATION_HANDLER_H
-
-#include "sprite.h"
 #include <raylib.h>
 
 typedef struct SpriteTexture {
@@ -23,8 +21,8 @@ typedef struct Animation {
 void LoadTextures(void);
 void UnloadTextures(void);
 SpriteTexture GetTexture(int sprite_id, int animation_id);
-void DrawSprite(Vector2 hit_box, Vector2 position, Animation *animation,
-                int sprite_id, int state_id);
+void PlayAnimation(Vector2 hit_box, Vector2 position, Animation *animation,
+                   int sprite_id, int animation_id);
 void UpdateAnimation(Animation *animation, int sprite_id, int state_id);
 
 #endif /* ifndef ANIMATION_HANDLER_H */

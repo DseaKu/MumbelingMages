@@ -1,13 +1,13 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 typedef enum {
-  INACTIVE = 1 << 0,
-  WALK = 1 << 1,
-  IDLE = 1 << 2,
-  TAKE_DEMAGE = 1 << 3,
-  DEAD = 1 << 4,
-  SPAWNING = 1 << 5,
-
+  INACTIVE = 0,
+  WALK,
+  IDLE,
+  TAKE_DEMAGE,
+  DYING,
+  SPAWNING,
+  SIZE_STATE_ID,
 } StateID;
 
 typedef enum {

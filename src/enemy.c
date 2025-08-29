@@ -6,6 +6,7 @@
 #include <float.h>
 #include <math.h>
 #include <raylib.h>
+#include <stdbool.h>
 #include <stdlib.h>
 
 void InitEnemies(Enemy *enemies) {
@@ -15,11 +16,10 @@ void InitEnemies(Enemy *enemies) {
 }
 
 void SpawnEnemy(Enemy *enemies, Map map, Vector2 player_position) {
-  // Block enemy[0] to spawn, this index is reserved for other logic e.g.
 
+  // Block enemy[0] to spawn, this index is reserved for other logic e.g.
   for (int i = 1; i < MAX_ENEMIES; i++) {
-    if (!enemies[i].active && !(enemies[i].state & SPAWNING)) {
-      enemies[i].state |= SPAWNING;
+    if (!enemies[i].active && enemies[i].state != SPAWNING) {
       enemies[i] = GetEnemyProperties(enemies[i].sprite);
       enemies[i].state = SPAWNING;
       Vector2 spawn_position;
@@ -42,16 +42,17 @@ void UpdateEnemies(Enemy *enemies, Vector2 playerPosition) {
   for (int i = 0; i < MAX_ENEMIES; i++) {
 
     // Spawning
-    if (enemies[i].state & SPAWNING) {
+    if (enemies[i].state == SPAWNING) {
       enemies[i].spawn_timer -= delta;
-
       // Spawning finshed
       if (enemies[i].spawn_timer <= 0) {
+        enemies[i].state = WALK;
         enemies[i].active = true;
-        enemies[i].state -= SPAWNING;
       }
-      // Walking
-    } else if (enemies[i].active) {
+    }
+
+    // Walking
+    if (enemies[i].active) {
       Vector2 direction = Vector2Subtract(playerPosition, enemies[i].position);
       enemies[i].animation.is_facing_right = (direction.x > 0);
 
@@ -64,7 +65,6 @@ void UpdateEnemies(Enemy *enemies, Vector2 playerPosition) {
       if (enemies[i].hit_cooldown > 0) {
         enemies[i].hit_cooldown -= delta;
       }
-      enemies[i].state |= WALK;
     }
   }
 
@@ -103,18 +103,8 @@ void UpdateEnemies(Enemy *enemies, Vector2 playerPosition) {
 void DrawEnemies(Enemy *enemies) {
   for (int i = 0; i < MAX_ENEMIES; i++) {
     if (enemies[i].active) {
-
-      if (enemies[i].state & SPAWNING) {
-        DrawSprite(enemies[i].hit_box, enemies[i].position,
-                   &enemies[i].animation, enemies[i].sprite, SPAWNING);
-        continue;
-      }
-
-      if (enemies[i].state & WALK) {
-        DrawSprite(enemies[i].hit_box, enemies[i].position,
-                   &enemies[i].animation, enemies[i].sprite, WALK);
-        continue;
-      }
+      PlayAnimation(enemies[i].hit_box, enemies[i].position,
+                    &enemies[i].animation, enemies[i].sprite, enemies[i].state);
     }
   }
 }

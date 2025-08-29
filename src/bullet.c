@@ -2,6 +2,7 @@
 #include "bullet.h"
 #include "enemy.h"
 #include "player.h"
+#include "sprite.h"
 #include <iso646.h>
 #include <math.h>
 #include <raylib.h>
@@ -119,6 +120,7 @@ void CheckBulletCollision(Bullet *bullets, Enemy *enemies, Orb *orbs) {
 
           if (enemies[j].health <= 0) {
             enemies[j].active = false;
+            enemies[j].state = INACTIVE;
             SpawnOrb(orbs, enemies[j].position);
           }
 

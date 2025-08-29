@@ -7,7 +7,7 @@
 #include "raylib.h"
 #include "sprite.h"
 
-#define MAX_ENEMIES 2
+#define MAX_ENEMIES 20
 
 typedef struct DynamicPath {
   bool is_active;

@@ -1,7 +1,7 @@
 #include "animation_handler.h"
 #include "sprite.h"
 #include <raylib.h>
-static SpriteTexture sprite_textures[sizeof(SpriteID)][sizeof(StateID)];
+static SpriteTexture sprite_textures[SIZE_SPRITE_ID][SIZE_STATE_ID];
 
 void UpdateAnimation(Animation *animation, int sprite_id, int state_id) {
   SpriteTexture texture = GetTexture(sprite_id, state_id);
@@ -15,11 +15,11 @@ void UpdateAnimation(Animation *animation, int sprite_id, int state_id) {
   }
 }
 
-void DrawSprite(Vector2 hit_box, Vector2 position, Animation *animation,
-                int sprite_id, int state_id) {
+void PlayAnimation(Vector2 hit_box, Vector2 position, Animation *animation,
+                   int sprite_id, int animation_id) {
 
-  SpriteTexture texture = GetTexture(sprite_id, state_id);
-  UpdateAnimation(animation, sprite_id, state_id);
+  SpriteTexture texture = GetTexture(sprite_id, animation_id);
+  UpdateAnimation(animation, sprite_id, animation_id);
 
   // Ger current frame from animation
   Rectangle sourceRec = {(float)animation->current_frame * texture.width, 0,
@@ -53,8 +53,8 @@ void LoadTextures(void) {
 }
 
 void UnloadTextures(void) {
-  for (int i = 0; i < sizeof(SpriteID); i++) {
-    for (int j = 0; j < sizeof(StateID); j++) {
+  for (int i = 0; i < SIZE_SPRITE_ID; i++) {
+    for (int j = 0; j < SIZE_STATE_ID; j++) {
       UnloadTexture(sprite_textures[i][j].texture);
     }
   }
