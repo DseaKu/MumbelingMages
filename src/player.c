@@ -18,7 +18,7 @@ Player InitPlayer(int screen_width, int screen_height) {
   player.speed = 500.0f;
   player.fireRate = 0.2f;
   player.pickupRange = 150.0f;
-  player.health = 1000;
+  player.health = 100;
   player.camera.target = player.position;
   player.camera.offset =
       (Vector2){GetDisplayWidth() / 2.0f, GetDisplayHeigth() / 2.0f};
@@ -73,9 +73,9 @@ void UpdatePlayer(Player *player, float fireTimer, bool is_auto_aim, Map map) {
       (Vector2){GetDisplayWidth() / 2.0f, GetDisplayHeigth() / 2.0f};
 }
 
-void DrawPlayer(Player player, bool is_pause) {
-  PlayAnimation(player.hit_box, player.position, &player.animation, player.id,
-                player.state, is_pause);
+void DrawPlayer(Player *player, bool is_pause) {
+  PlayAnimation(player->hit_box, player->position, &player->animation,
+                player->id, player->state, is_pause);
 }
 
 void CheckPlayerCollision(Player *player, EnemyData *enemy_data) {

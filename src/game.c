@@ -53,7 +53,6 @@ void GameLoop() {
   //----------------------------------------------------------------------------------
   // Game loop
   //----------------------------------------------------------------------------------
-
   do {
     StartPerformanceTracker("Complete Game Loop");
     //----------------------------------------------------------------------------------
@@ -133,7 +132,7 @@ void GameLoop() {
       BeginMode2D(player.camera);
       DrawMap(map);
       DrawBullets(bullets);
-      DrawPlayer(player, io_flags & PAUSE_GAME);
+      DrawPlayer(&player, io_flags & PAUSE_GAME);
       DrawPowerUps(powerUps);
       DrawOrbs(orbs);
       DrawEnemies(&enemy_data, io_flags & PAUSE_GAME);

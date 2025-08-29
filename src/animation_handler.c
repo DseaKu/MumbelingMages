@@ -52,7 +52,7 @@ void PlayAnimation(Vector2 hit_box, Vector2 position, Animation *animation,
 void LoadTextures(void) {
   // Mage
   sprite_textures[MAGE][WALKING] = (AnimationData){
-      LoadTexture("assets/mage/MAGE.png"), 400, 600, 7, 0.9f, 0.1f, true};
+      LoadTexture("assets/mage/Mage.png"), 400, 600, 7, 0.9f, 0.05f, true};
 
   sprite_textures[GOBLIN][WALKING] = (AnimationData){
       LoadTexture("assets/goblin/Run.png"), 150, 150, 8, 8.0f, .1f, true};
