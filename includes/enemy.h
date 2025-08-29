@@ -8,7 +8,7 @@
 #include "sprite.h"
 #include "std_includes.h"
 
-#define MAX_ENEMIES 3
+#define MAX_ENEMIES 30
 
 typedef struct DynamicPath {
   bool is_active;
@@ -51,7 +51,10 @@ typedef struct EnemyData {
 
 void InitEnemies(EnemyData *enemy_data);
 void SpawnEnemy(EnemyData *enemy_data, Map map, Vector2 player_position);
-void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition);
+
+Vector2 GenerateSpawnPosition(Map map, Vector2 player_position,
+                              float spawn_distance);
+void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map);
 void DrawEnemies(EnemyData *enemy_data, bool is_pause);
 int GetClosestEnemy(EnemyData *enemy_data, Vector2 position);
 

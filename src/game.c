@@ -93,7 +93,7 @@ void GameLoop() {
       enemySpawnTimer += GetFrameTime();
       powerUpSpawnTimer += GetFrameTime();
       UpdatePlayer(&player, fireTimer, io_flags & AUTO_AIM, map);
-      UpdateEnemies(&enemy_data, player.position);
+      UpdateEnemies(&enemy_data, player.position, map);
       UpdatePowerUps(powerUps, &player);
       UpdateBullets(bullets, map);
       UpdateOrbs(orbs);

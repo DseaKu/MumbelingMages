@@ -26,21 +26,24 @@ void SpawnEnemy(EnemyData *enemy_data, Map map, Vector2 player_position) {
     if (enemy_data->state[i] == INACTIVE) {
       enemies[i] = GetEnemyProperties(enemies[i].sprite);
       enemy_data->state[i] = SPAWNING;
-      Vector2 spawn_position;
-      do {
-        spawn_position = (Vector2){rand() % map.width, rand() % map.height};
-      } while (Vector2DistanceSqr(player_position, spawn_position) <
-               pow(enemies->spawn_distance, 2.0f));
-
-      enemies[i].position = spawn_position;
-      enemies[i].color = RED;
+      enemies[i].position =
+          GenerateSpawnPosition(map, player_position, enemies->spawn_distance);
 
       break;
     }
   }
 }
 
-void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition) {
+Vector2 GenerateSpawnPosition(Map map, Vector2 player_position,
+                              float spawn_distance) {
+  Vector2 spawn_position;
+  do {
+    spawn_position = (Vector2){rand() % map.width, rand() % map.height};
+  } while (Vector2DistanceSqr(player_position, spawn_position) <
+           pow(spawn_distance, 2.0f));
+  return spawn_position;
+}
+void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map) {
   float delta = GetFrameTime();
   Enemy *enemies = enemy_data->enemies;
   float safe_zone_distance = 80.0f;
@@ -98,6 +101,8 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition) {
       if (enemies[i].timer >= enemies[i].dying_duration) {
         enemies[i] = GetEnemyProperties(enemies[i].sprite);
         enemy_data->state[i] = SPAWNING;
+        enemies[i].position = GenerateSpawnPosition(map, playerPosition,
+                                                    enemies[i].spawn_distance);
         enemies[i].timer = 0;
       }
       break;
@@ -145,6 +150,12 @@ void DrawEnemies(EnemyData *enemy_data, bool is_paused) {
       enemies[i].animation.current_frame = 0;
     }
     if (enemy_data->state[i] != INACTIVE) {
+      bool is_looping = true;
+      if (enemy_data->state[i] == SPAWNING ||
+          enemy_data->state[i] == TAKE_DEMAGE ||
+          enemy_data->state[i] == DYING) {
+        is_looping = false;
+      }
       PlayAnimation(enemies[i].hit_box, enemies[i].position,
                     &enemies[i].animation, enemies[i].sprite,
                     enemy_data->state[i], is_paused);
@@ -158,7 +169,8 @@ int GetClosestEnemy(EnemyData *enemy_data, Vector2 position) {
   int closest_enemy_index = -1;
 
   for (int i = 0; i < MAX_ENEMIES; i++) {
-    if (enemy_data->state[i] != INACTIVE) {
+    if (enemy_data->state[i] == WALKING || enemy_data->state[i] == IDLE ||
+        enemy_data->state[i] == TAKE_DEMAGE) {
       float current_distance_sq =
           Vector2DistanceSqr(enemies[i].position, position);
       if (current_distance_sq < closest_distance_sq) {
