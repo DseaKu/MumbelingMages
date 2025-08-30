@@ -49,9 +49,9 @@ void FireBullet(Bullet *bullets, Player *player, float fireRate,
         }
         // Manual aiming
       } else {
-        Vector2 mouse_pos = GetMousePosition();
-        direction = Vector2Subtract(
-            (Vector2){mouse_pos.x * 2.0f, mouse_pos.y * 2.0f}, playerPosition);
+        Vector2 mouse_pos_world =
+            GetScreenToWorld2D(GetMousePosition(), player->camera);
+        direction = Vector2Subtract(mouse_pos_world, playerPosition);
       }
       bullets[i].active = true;
       bullets[i].range = range;

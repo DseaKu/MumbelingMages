@@ -57,7 +57,7 @@ void GameLoop() {
   // Game loop
   //----------------------------------------------------------------------------------
   do {
-    StartPerformanceTracker("Complete Game Loop");
+    StartPerformanceTracker("CompleteLoop");
     //----------------------------------------------------------------------------------
     // Check inputs
     //----------------------------------------------------------------------------------
@@ -177,7 +177,7 @@ void GameLoop() {
     EndDrawing();
     EndPerformanceTracker("End Drawing");
 
-    EndPerformanceTracker("Complete Game Loop");
+    EndPerformanceTracker("CompleteLoop");
   } while (!WindowShouldClose());
 
   UnloadGame(player, map);
