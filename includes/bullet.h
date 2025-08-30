@@ -2,7 +2,7 @@
 #ifndef BULLET_H
 #define BULLET_H
 
-#include "enemy.h"
+#include "enemy/enemy.h"
 #include "orb.h"
 #include "raylib.h"
 

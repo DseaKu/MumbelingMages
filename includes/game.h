@@ -4,7 +4,7 @@
 
 #include "IO_handler.h"
 #include "bullet.h"
-#include "enemy.h"
+#include "enemy/enemy.h"
 #include "map.h"
 #include "orb.h"
 #include "player.h"

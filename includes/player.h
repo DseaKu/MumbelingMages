@@ -3,7 +3,7 @@
 #define PLAYER_H
 
 #include "animation_handler.h"
-#include "enemy.h"
+#include "enemy/enemy.h"
 #include "map.h"
 #include "raylib.h"
 #include "sprite.h"

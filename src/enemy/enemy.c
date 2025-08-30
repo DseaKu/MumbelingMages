@@ -1,6 +1,6 @@
-#include "enemy.h"
+#include "enemy/enemy.h"
 #include "animation_handler.h"
-#include "enemy_properties.h"
+#include "enemy/enemy_properties.h"
 #include "raymath.h"
 #include "sprite.h"
 #include <float.h>
