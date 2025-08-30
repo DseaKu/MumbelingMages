@@ -1,6 +1,6 @@
 
 #include "bullet.h"
-#include "enemy.h"
+#include "enemy/enemy.h"
 #include "player.h"
 #include "sprite.h"
 #include <iso646.h>

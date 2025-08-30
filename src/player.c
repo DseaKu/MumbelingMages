@@ -1,7 +1,7 @@
 
 #include "player.h"
 #include "animation_handler.h"
-#include "enemy.h"
+#include "enemy/enemy.h"
 #include "mage_properties.h"
 #include "map.h"
 #include "raymath.h"

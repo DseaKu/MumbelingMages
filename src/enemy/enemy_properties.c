@@ -1,5 +1,5 @@
-#include "enemy_properties.h"
-#include "enemy.h"
+#include "enemy/enemy_properties.h"
+#include "enemy/enemy.h"
 #include "sprite.h"
 static Enemy enemy_properties[SIZE_SPRITE_ID];
 

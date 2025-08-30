@@ -12,7 +12,8 @@ find_package(raylib CONFIG REQUIRED)
 
 set(SOURCES
 src/bullet.c
-src/enemy.c
+src/enemy/enemy.c
+src/enemy/enemy_properties.c
 src/game.c
 src/main.c
 src/player.c
@@ -20,7 +21,6 @@ src/powerup.c
 src/orb.c
 src/window.c
 src/map.c
-src/enemy_properties.c
 src/IO_handler.c
 src/animation_handler.c
 src/resource_tracker.c
