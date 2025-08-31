@@ -1,5 +1,5 @@
-#ifndef SPRITE_H
-#define SPRITE_H
+#ifndef ENEMY_SPRITE_H
+#define ENEMY_SPRITE_H
 typedef enum {
   INACTIVE = 0,
   WALKING,
@@ -14,17 +14,10 @@ typedef enum {
 
 typedef enum {
   NONE = 0,
-  MAGE,
   GOBLIN,
   SKELLETON,
   BAT,
   SIZE_SPRITE_ID,
 } SpriteID;
 
-typedef enum {
-  FIREBALL,
-  ICELANCE,
-  BLIZZARD,
-
-} SpellSpriteID;
-#endif // !SPRITE_H
+#endif // !ENEMY_SPRITE_H

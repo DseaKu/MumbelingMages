@@ -21,6 +21,16 @@ typedef enum {
   SIZE_SPRITE_ID,
 } SpriteID;
 
+// typedef enum{
+//   GOBLIN,
+//   SKELLETON,
+//   BAT,
+//   SIZE_SPRITE_ID,
+//
+//
+//
+// } EnemySpriteID;
+
 typedef enum {
   FIREBALL,
   ICELANCE,
