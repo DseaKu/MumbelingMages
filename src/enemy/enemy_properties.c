@@ -1,5 +1,6 @@
 #include "enemy/enemy_properties.h"
 #include "enemy/enemy.h"
+#include "enemy/enemy_texture.h"
 #include "sprite.h"
 static Enemy enemy_properties[SIZE_SPRITE_ID];
 
@@ -18,6 +19,7 @@ void LoadEnemyProperties() {
       .attack_speed = 1.0f,
       .weight = 40.0f,
       .timer = 0.0f,
+      .get_animation_data = GetEnemyAnimationData,
 
   };
 }

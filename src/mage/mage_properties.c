@@ -1,4 +1,5 @@
 #include "mage_properties.h"
+#include "mage/mage_texture.h"
 #include "player.h"
 #include "sprite.h"
 #include <raylib.h>
@@ -14,6 +15,7 @@ void LoadMageProperties() {
       .fireRate = 0.2f,
       .pickupRange = 150.0f,
       .health = 100,
+      .get_animation_data = GetMageAnimationData,
   };
 };
 Player GetMageProperties(int mage_id) { return mage_properties[mage_id]; }

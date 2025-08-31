@@ -152,14 +152,17 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map) {
 void DrawEnemies(EnemyData *enemy_data, bool is_paused) {
   Enemy *enemies = enemy_data->enemies;
   for (int i = 0; i < MAX_ENEMIES; i++) {
-
+    if (enemy_data->state[i] == INACTIVE || enemy_data->state[i] == DEAD) {
+      continue;
+    }
     // Reset animations if animations are switched
     if (enemies[i].last_state != enemy_data->state[i]) {
       enemies[i].animation.current_frame = 0;
     }
     PlayAnimation(enemies[i].hit_box, enemies[i].position,
                   &enemies[i].animation, enemies[i].sprite,
-                  enemy_data->state[i], is_paused);
+                  enemy_data->state[i], is_paused,
+                  enemies[i].get_animation_data);
     enemies[i].last_state = enemy_data->state[i];
   }
 }

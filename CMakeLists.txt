@@ -14,6 +14,7 @@ set(SOURCES
 src/bullet.c
 src/enemy/enemy.c
 src/enemy/enemy_properties.c
+src/enemy/enemy_texture.c
 src/game.c
 src/main.c
 src/player.c
@@ -25,6 +26,7 @@ src/IO_handler.c
 src/animation_handler.c
 src/resource_tracker.c
 src/mage_properties.c
+src/mage/mage_texture.c
 src/camera.c
 )
 

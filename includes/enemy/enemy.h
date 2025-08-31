@@ -39,6 +39,7 @@ typedef struct Enemy {
   float spawn_distance;
   float hit_cooldown;
   float attack_speed;
+  GetAnimationDataFunc get_animation_data;
 } Enemy;
 
 typedef u8 EnemyState;

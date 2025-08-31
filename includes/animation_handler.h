@@ -19,11 +19,11 @@ typedef struct Animation {
 
 } Animation;
 
-void LoadTextures(void);
-void UnloadTextures(void);
-AnimationData GetAnimationData(int sprite_id, int animation_id);
+typedef AnimationData (*GetAnimationDataFunc)(int, int);
+
 void PlayAnimation(Vector2 hit_box, Vector2 position, Animation *animation,
-                   int sprite_id, int animation_id, bool is_pause);
+                   int sprite_id, int animation_id, bool is_pause,
+                   GetAnimationDataFunc get_animation_data);
 void UpdateAnimation(AnimationData animation_data, Animation *animation,
                      int sprite_id, int state_id);
 

@@ -1,8 +1,6 @@
 #include "animation_handler.h"
-#include "sprite.h"
 #include <raylib.h>
 #include <stdbool.h>
-static AnimationData sprite_textures[SIZE_SPRITE_ID][SIZE_STATE_ID];
 
 void UpdateAnimation(AnimationData animation_data, Animation *animation,
                      int sprite_id, int state_id) {
@@ -21,9 +19,10 @@ void UpdateAnimation(AnimationData animation_data, Animation *animation,
 }
 
 void PlayAnimation(Vector2 hit_box, Vector2 position, Animation *animation,
-                   int sprite_id, int animation_id, bool is_paused) {
+                   int sprite_id, int animation_id, bool is_paused,
+                   GetAnimationDataFunc get_animation_data) {
 
-  AnimationData animation_data = GetAnimationData(sprite_id, animation_id);
+  AnimationData animation_data = get_animation_data(sprite_id, animation_id);
   if (!is_paused) {
     UpdateAnimation(animation_data, animation, sprite_id, animation_id);
   }
@@ -47,57 +46,4 @@ void PlayAnimation(Vector2 hit_box, Vector2 position, Animation *animation,
   Vector2 origin = {visual_width / 2.0f, visual_heigth / 2.0f};
 
   DrawTexturePro(animation_data.texture, sourceRec, destRec, origin, 0, WHITE);
-}
-
-void LoadTextures(void) {
-  // Mage
-  sprite_textures[MAGE][WALKING] = (AnimationData){
-      LoadTexture("assets/mage/Mage.png"), 400, 600, 7, 0.9f, 0.05f, true};
-
-  sprite_textures[GOBLIN][WALKING] = (AnimationData){
-      LoadTexture("assets/goblin/Run.png"), 150, 150, 8, 8.0f, .1f, true};
-  sprite_textures[GOBLIN][TAKE_DEMAGE] =
-      (AnimationData){LoadTexture("assets/goblin/Take Hit.png"),
-                      150,
-                      150,
-                      4,
-                      8.0f,
-                      1.0f / 10.0f,
-                      false};
-  sprite_textures[GOBLIN][SPAWNING] =
-      (AnimationData){LoadTexture("assets/goblin/Idle.png"),
-                      150,
-                      150,
-                      4,
-                      8.0f,
-                      1.0f / 10.0f,
-                      false};
-  sprite_textures[GOBLIN][IDLE] =
-      (AnimationData){LoadTexture("assets/goblin/Idle.png"),
-                      150,
-                      150,
-                      4,
-                      8.0f,
-                      1.0f / 10.0f,
-                      true};
-  sprite_textures[GOBLIN][DYING] =
-      (AnimationData){LoadTexture("assets/goblin/Death.png"),
-                      150,
-                      150,
-                      4,
-                      8.0f,
-                      1.0f / 10.0f,
-                      false};
-}
-
-void UnloadTextures(void) {
-  for (int i = 0; i < SIZE_SPRITE_ID; i++) {
-    for (int j = 0; j < SIZE_STATE_ID; j++) {
-      UnloadTexture(sprite_textures[i][j].texture);
-    }
-  }
-}
-
-AnimationData GetAnimationData(int sprite_id, int animation_id) {
-  return sprite_textures[sprite_id][animation_id];
 }

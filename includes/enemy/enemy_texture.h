@@ -1,7 +1,6 @@
 #ifndef ENEMY_TEXTURE_H
 #define ENEMY_TEXTURE_H
 #include "animation_handler.h"
-#include "enemy/enemy_sprite.h"
 
 void LoadEnemyTextures(void);
 void UnloadEnemyTextures(void);

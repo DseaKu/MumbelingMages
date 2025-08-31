@@ -21,6 +21,7 @@ typedef struct Player {
   float fireRate;
   float pickupRange;
   int health;
+  GetAnimationDataFunc get_animation_data;
 } Player;
 
 void InitPlayer(Player *player);

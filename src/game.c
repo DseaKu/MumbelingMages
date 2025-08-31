@@ -6,6 +6,8 @@
 #include "enemy/enemy.h"
 #include "enemy/enemy_properties.h"
 #include "mage_properties.h"
+#include "enemy/enemy_texture.h"
+#include "mage/mage_texture.h"
 #include "map.h"
 #include "orb.h"
 #include "player.h"
@@ -188,7 +190,8 @@ void GameLoop() {
 void InitGame(Bullet *bullets, EnemyData *enemy_data, PowerUp *powerUps,
               Orb *orbs, int *exp, Map *map, IO_Flags *io_flags,
               Player *player) {
-  LoadTextures();
+  LoadMageTextures();
+  LoadEnemyTextures();
   LoadEnemyProperties();
   LoadMageProperties();
   InitIO_Flags(io_flags);
@@ -202,6 +205,7 @@ void InitGame(Bullet *bullets, EnemyData *enemy_data, PowerUp *powerUps,
   *exp = 0;
 }
 void UnloadGame(Player player, Map map) {
-  UnloadTextures();
+  UnloadMageTextures();
+  UnloadEnemyTextures();
   UnloadMap(map);
 }

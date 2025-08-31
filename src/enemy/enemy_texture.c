@@ -1,5 +1,6 @@
 
 #include "enemy/enemy_texture.h"
+#include "enemy/enemy_sprite.h"
 static AnimationData sprite_textures[SIZE_SPRITE_ID][SIZE_STATE_ID];
 void LoadEnemyTextures(void) {
 

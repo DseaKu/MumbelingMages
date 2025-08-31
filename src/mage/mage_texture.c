@@ -1,4 +1,5 @@
 #include "mage/mage_texture.h"
+#include "mage/mage_sprite.h"
 
 static AnimationData sprite_textures[SIZE_SPRITE_ID][SIZE_STATE_ID];
 void LoadMageTextures(void) {
