@@ -10,8 +10,8 @@
 #include "enemy/enemy.h"
 #include "enemy/enemy_properties.h"
 #include "enemy/enemy_texture.h"
-#include "mage/mage_properties.h"
-#include "mage/mage_texture.h"
+#include "player/player_properties.h"
+#include "player/player_texture.h"
 #include <raylib.h>
 #include <stdbool.h>
 #include <stdio.h>

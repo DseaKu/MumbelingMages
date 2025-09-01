@@ -1,9 +1,9 @@
-#include "mage/mage_properties.h"
+#include "player/player_properties.h"
 #include "core/player.h"
-#include "mage/mage_sprite.h"
-#include "mage/mage_texture.h"
+#include "player/player_sprite.h"
+#include "player/player_texture.h"
 #include <raylib.h>
-static Player mage_properties[SIZE_MAGE_SPRITE_ID];
+static Player mage_properties[SIZE_PLAYER_SPRITE_ID];
 
 void LoadMageProperties() {
   mage_properties[MAGE] = (Player){

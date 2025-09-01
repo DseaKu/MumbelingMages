@@ -1,7 +1,8 @@
-#include "mage/mage_texture.h"
-#include "mage/mage_sprite.h"
+#include "player/player_texture.h"
+#include "player/player_sprite.h"
 
-static AnimationData sprite_textures[SIZE_MAGE_SPRITE_ID][SIZE_MAGE_STATE_ID];
+static AnimationData sprite_textures[SIZE_PLAYER_SPRITE_ID]
+                                    [SIZE_PLAYER_STATE_ID];
 void LoadMageTextures(void) {
   // Mage
   sprite_textures[MAGE][MAGE_WALKING] = (AnimationData){
@@ -11,8 +12,8 @@ void LoadMageTextures(void) {
 void UnloadMageTextures(void) {
   // for (int i = 0; i < SIZE_SPRITE_ID; i++) {
   //   for (int j = 0; j < SIZE_STATE_ID; j++) {
-  for (int i = 0; i < SIZE_MAGE_SPRITE_ID; i++) {
-    for (int j = 0; j < SIZE_MAGE_STATE_ID; j++) {
+  for (int i = 0; i < SIZE_PLAYER_SPRITE_ID; i++) {
+    for (int j = 0; j < SIZE_PLAYER_STATE_ID; j++) {
       UnloadTexture(sprite_textures[i][j].texture);
     }
   }

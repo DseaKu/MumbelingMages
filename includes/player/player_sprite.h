@@ -7,13 +7,13 @@ typedef enum {
   MAGE_DYING,
   MAGE_SPAWNING,
   MAGE_DEAD,
-  SIZE_MAGE_STATE_ID,
-} MageStateID;
+  SIZE_PLAYER_STATE_ID,
+} PlayerStateID;
 
 typedef enum {
-  MAGE_NONE = 0,
+  PLAYER_NONE = 0,
   MAGE,
-  SIZE_MAGE_SPRITE_ID,
-} MageSpriteID;
+  SIZE_PLAYER_SPRITE_ID,
+} PlayerSpriteID;
 
 #endif // !SPRITE_H
