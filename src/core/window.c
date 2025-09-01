@@ -1,15 +1,12 @@
 #include "core/window.h"
 #include <raylib.h>
 
-void ToggleRealFullscreen(int screen_width, int screen_height) {
+void ToggleRealFullscreen() {
   if (!IsWindowFullscreen()) {
     int monitor = GetCurrentMonitor();
     SetWindowSize(GetMonitorWidth(monitor), GetMonitorHeight(monitor));
-    ToggleFullscreen();
-  } else {
-    ToggleFullscreen();
-    SetWindowSize(screen_width, screen_height);
   }
+  ToggleFullscreen();
 }
 int GetDisplayWidth() {
   if (IsWindowFullscreen()) {

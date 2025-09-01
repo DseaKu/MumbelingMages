@@ -29,6 +29,7 @@ void GameLoop() {
   // INIT
   //----------------------------------------------------------------------------------
   StartPerformanceTracker("Init");
+  SetConfigFlags(FLAG_WINDOW_HIGHDPI);
   int screen_width = GetDisplayWidth();
   int screen_height = GetDisplayHeigth();
 
@@ -92,8 +93,13 @@ void GameLoop() {
     //----------------------------------------------------------------------------------
     StartPerformanceTracker("Update");
     if (io_flags & TOGGLE_FULLSCREEN) {
-      ToggleRealFullscreen(screen_width, screen_height);
+      ToggleRealFullscreen();
+      UpdateCameraOffset(&player);
+      
       io_flags -= TOGGLE_FULLSCREEN;
+    }
+    if (IsWindowResized()) {
+      UpdateCameraOffset(&player);
     }
     if (io_flags & AUTO_AIM) {
       HideCursor();

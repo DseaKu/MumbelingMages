@@ -9,6 +9,10 @@ void InitCamera(Player *player) {
   player->camera.rotation = 0.0f;
   player->camera.zoom = 1.0f;
 }
+void UpdateCameraOffset(Player *player) {
+  player->camera.offset =
+      (Vector2){GetDisplayWidth() / 2.0f, GetDisplayHeigth() / 2.0f};
+}
 
 void UpdatePlayerCamera(Player *player) {
   player->camera.target =
