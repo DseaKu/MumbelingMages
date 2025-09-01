@@ -1,7 +1,6 @@
 
 #include "core/IO_handler.h"
 
-#include <ranlib.h>
 #include <raylib.h>
 void GetInputs(IO_Flags *io_flags) {
 

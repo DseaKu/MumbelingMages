@@ -1,5 +1,5 @@
 .cache/
-Build/**
+build/
 
 # Build artifacts
 *.o
