@@ -1,17 +1,19 @@
-#ifndef MAGE_SPRITE_H
-#define MAGE_SPRITE_H
+#ifndef SPRITE_H
+#define SPRITE_H
 typedef enum {
-  INACTIVE = 0,
-  WALKING,
-  IDLE,
-  TAKE_DEMAGE,
-  DYING,
-  SIZE_STATE_ID,
-} StateID;
+  MAGE_INACTIVE = 0,
+  MAGE_WALKING,
+  MAGE_TAKE_DEMAGE,
+  MAGE_DYING,
+  MAGE_SPAWNING,
+  MAGE_DEAD,
+  SIZE_MAGE_STATE_ID,
+} MageStateID;
 
 typedef enum {
+  MAGE_NONE = 0,
   MAGE,
-  SIZE_SPRITE_ID,
-} SpriteID;
+  SIZE_MAGE_SPRITE_ID,
+} MageSpriteID;
 
-#endif // !MAGE_SPRITE_H
+#endif // !SPRITE_H

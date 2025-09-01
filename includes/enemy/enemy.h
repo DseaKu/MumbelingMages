@@ -3,9 +3,9 @@
 #define ENEMY_H
 #include "animation_handler.h"
 
+#include "enemy/enemy_sprite.h"
 #include "map.h"
 #include "raylib.h"
-#include "sprite.h"
 #include "std_includes.h"
 
 #define MAX_ENEMIES 30
@@ -21,7 +21,7 @@ typedef struct DynamicPath {
 
 typedef struct Enemy {
   Animation animation;
-  SpriteID sprite;
+  EnemySpriteID sprite;
   DynamicPath dynamic_path;
   Vector2 position;
   Vector2 hit_box;

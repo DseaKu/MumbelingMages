@@ -1,8 +1,8 @@
 #include "enemy/enemy.h"
 #include "animation_handler.h"
 #include "enemy/enemy_properties.h"
+#include "enemy/enemy_sprite.h"
 #include "raymath.h"
-#include "sprite.h"
 #include <float.h>
 #include <math.h>
 #include <raylib.h>
@@ -12,7 +12,7 @@
 void InitEnemies(EnemyData *enemy_data) {
 
   for (int i = 0; i < MAX_ENEMIES; i++) {
-    enemy_data->state[i] = INACTIVE;
+    enemy_data->state[i] = ENEMY_INACTIVE;
     enemy_data->enemies[i].sprite = GOBLIN;
   }
 }
@@ -23,9 +23,9 @@ void SpawnEnemy(EnemyData *enemy_data, Map map, Vector2 player_position) {
   // Block enemy[0] to spawn, this index is reserved for other logic e.g.
   for (int i = 1; i < MAX_ENEMIES; i++) {
 
-    if (enemy_data->state[i] == INACTIVE) {
+    if (enemy_data->state[i] == ENEMY_INACTIVE) {
       enemies[i] = GetEnemyProperties(enemies[i].sprite);
-      enemy_data->state[i] = SPAWNING;
+      enemy_data->state[i] = ENEMY_SPAWNING;
       enemies[i].position =
           GenerateSpawnPosition(map, player_position, enemies->spawn_distance);
 
@@ -51,20 +51,20 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map) {
   for (int i = 0; i < MAX_ENEMIES; i++) {
 
     switch (enemy_data->state[i]) {
-    case IDLE:
-      enemy_data->state[i] = WALKING;
+    case ENEMY_IDLE:
+      enemy_data->state[i] = ENEMY_WALKING;
       break;
 
-    case SPAWNING:
+    case ENEMY_SPAWNING:
       enemies[i].timer += delta;
-      enemy_data->state[i] = SPAWNING;
+      enemy_data->state[i] = ENEMY_SPAWNING;
       if (enemies[i].timer >= enemies[i].spawn_duration) {
-        enemy_data->state[i] = IDLE;
+        enemy_data->state[i] = ENEMY_IDLE;
         enemies[i].timer = 0;
       }
       break;
 
-    case WALKING:
+    case ENEMY_WALKING:
       direction = Vector2Subtract(playerPosition, enemies[i].position);
       enemies[i].animation.is_facing_right = (direction.x > 0);
 
@@ -79,9 +79,9 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map) {
       }
       break;
 
-    case TAKE_DEMAGE:
+    case ENEMY_TAKE_DEMAGE:
       enemies[i].timer += delta;
-      enemy_data->state[i] = TAKE_DEMAGE;
+      enemy_data->state[i] = ENEMY_TAKE_DEMAGE;
 
       // Generating pushback
       direction = Vector2Subtract(enemies[i].position, playerPosition);
@@ -90,25 +90,25 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map) {
       enemies[i].position.y += direction.y * delta * enemies[i].exposed_force;
 
       if (enemies[i].timer >= enemies[i].stagger_duration) {
-        enemy_data->state[i] = IDLE;
+        enemy_data->state[i] = ENEMY_IDLE;
         enemies[i].timer = 0;
       }
       break;
 
-    case DYING:
+    case ENEMY_DYING:
       enemies[i].timer += delta;
-      enemy_data->state[i] = DYING;
+      enemy_data->state[i] = ENEMY_DYING;
       if (enemies[i].timer >= enemies[i].dying_duration) {
-        enemy_data->state[i] = DEAD;
+        enemy_data->state[i] = ENEMY_DEAD;
         enemies[i].timer = 0;
       }
       break;
-    case DEAD:
+    case ENEMY_DEAD:
       enemies[i].timer += delta;
-      enemy_data->state[i] = DEAD;
+      enemy_data->state[i] = ENEMY_DEAD;
       if (enemies[i].timer >= enemies[i].dying_duration) {
         enemies[i] = GetEnemyProperties(enemies[i].sprite);
-        enemy_data->state[i] = SPAWNING;
+        enemy_data->state[i] = ENEMY_SPAWNING;
         enemies[i].position = GenerateSpawnPosition(map, playerPosition,
                                                     enemies[i].spawn_distance);
         enemies[i].timer = 0;
@@ -120,10 +120,10 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map) {
   // Enemy collision logic to prevent stacking
   float separation_force = 1.5f;
   for (int i = 0; i < MAX_ENEMIES; i++) {
-    if (enemy_data->state[i] == INACTIVE)
+    if (enemy_data->state[i] == ENEMY_INACTIVE)
       continue;
     for (int j = i + 1; j < MAX_ENEMIES; j++) {
-      if (enemy_data->state[j] == INACTIVE)
+      if (enemy_data->state[j] == ENEMY_INACTIVE)
         continue;
 
       Rectangle rect_i = {enemies[i].position.x, enemies[i].position.y,
@@ -152,7 +152,8 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map) {
 void DrawEnemies(EnemyData *enemy_data, bool is_paused) {
   Enemy *enemies = enemy_data->enemies;
   for (int i = 0; i < MAX_ENEMIES; i++) {
-    if (enemy_data->state[i] == INACTIVE || enemy_data->state[i] == DEAD) {
+    if (enemy_data->state[i] == ENEMY_INACTIVE ||
+        enemy_data->state[i] == ENEMY_DEAD) {
       continue;
     }
     // Reset animations if animations are switched
@@ -172,8 +173,9 @@ int GetClosestEnemy(EnemyData *enemy_data, Vector2 position) {
   int closest_enemy_index = -1;
 
   for (int i = 0; i < MAX_ENEMIES; i++) {
-    if (enemy_data->state[i] == WALKING || enemy_data->state[i] == IDLE ||
-        enemy_data->state[i] == TAKE_DEMAGE) {
+    if (enemy_data->state[i] == ENEMY_WALKING ||
+        enemy_data->state[i] == ENEMY_IDLE ||
+        enemy_data->state[i] == ENEMY_TAKE_DEMAGE) {
       float current_distance_sq =
           Vector2DistanceSqr(enemies[i].position, position);
       if (current_distance_sq < closest_distance_sq) {

@@ -2,10 +2,10 @@
 #include "player.h"
 #include "animation_handler.h"
 #include "enemy/enemy.h"
-#include "mage_properties.h"
+#include "mage/mage_properties.h"
+#include "mage/mage_sprite.h"
 #include "map.h"
 #include "raymath.h"
-#include "sprite.h"
 #include <raylib.h>
 #include <stdbool.h>
 
@@ -63,7 +63,7 @@ void CheckPlayerCollision(Player *player, EnemyData *enemy_data) {
 
   // Check if player is hitted
   for (int i = 0; i < MAX_ENEMIES; i++) {
-    if (enemy_data->state[i] != INACTIVE &&
+    if (enemy_data->state[i] != ENEMY_INACTIVE &&
         CheckCollisionRecs(
             (Rectangle){player->position.x - player->hit_box.x / 2,
                         player->position.y - player->hit_box.y / 2,

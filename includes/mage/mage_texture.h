@@ -3,6 +3,6 @@
 
 #include "animation_handler.h"
 void LoadMageTextures(void);
-void UnloadMageTextures(void);
-AnimationData GetMageAnimationData(int sprite_id, int animation_id);
+void UnloadMageTextures();
+AnimationData GetMageAnimationData(int mage_id, int animation_id);
 #endif // !MAGE_TEXTURE_H

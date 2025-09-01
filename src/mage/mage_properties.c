@@ -1,13 +1,13 @@
-#include "mage_properties.h"
+#include "mage/mage_properties.h"
+#include "mage/mage_sprite.h"
 #include "mage/mage_texture.h"
 #include "player.h"
-#include "sprite.h"
 #include <raylib.h>
-static Player mage_properties[SIZE_SPRITE_ID];
+static Player mage_properties[SIZE_MAGE_SPRITE_ID];
 
 void LoadMageProperties() {
   mage_properties[MAGE] = (Player){
-      .state = WALKING,
+      .state = MAGE_WALKING,
       .id = MAGE,
       .position = (Vector2){400, 225},
       .hit_box = (Vector2){120, 160},

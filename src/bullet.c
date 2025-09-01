@@ -1,8 +1,8 @@
 
 #include "bullet.h"
 #include "enemy/enemy.h"
+#include "enemy/enemy_sprite.h"
 #include "player.h"
-#include "sprite.h"
 #include <iso646.h>
 #include <math.h>
 #include <raylib.h>
@@ -105,7 +105,7 @@ void CheckBulletCollision(Bullet *bullets, EnemyData *enemy_data, Orb *orbs) {
   for (int i = 0; i < MAX_BULLETS; i++) {
     if (bullets[i].active) {
       for (int j = 0; j < MAX_ENEMIES; j++) {
-        if (enemy_data->state[j] == WALKING)
+        if (enemy_data->state[j] == ENEMY_WALKING)
           if (CheckCollisionRecs(
                   (Rectangle){bullets[i].position.x, bullets[i].position.y,
                               bullets[i].size.x, bullets[i].size.y},
@@ -118,14 +118,14 @@ void CheckBulletCollision(Bullet *bullets, EnemyData *enemy_data, Orb *orbs) {
             }
 
             // Enemy is hit by bullet
-            enemy_data->state[j] = TAKE_DEMAGE;
+            enemy_data->state[j] = ENEMY_TAKE_DEMAGE;
             enemies[j].health -= bullet_demage;
             enemies[j].exposed_force += force;
             bullets[i].last_hitted_enemy = j;
             bullets[i].pierce--;
 
             if (enemies[j].health <= 0) {
-              enemy_data->state[j] = DYING;
+              enemy_data->state[j] = ENEMY_DYING;
               SpawnOrb(orbs, enemies[j].position);
             }
 
