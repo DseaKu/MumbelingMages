@@ -1,6 +1,6 @@
 #ifndef MAGE_PROPERTIES_H
 #define MAGE_PROPERTIES_H
-#include "player.h"
+#include "core/player.h"
 
 void LoadMageProperties();
 Player GetMageProperties(int mage_id);

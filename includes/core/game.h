@@ -2,13 +2,13 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "IO_handler.h"
-#include "bullet.h"
+#include "core/IO_handler.h"
+#include "core/bullet.h"
+#include "core/map.h"
+#include "core/orb.h"
+#include "core/powerup.h"
 #include "enemy/enemy.h"
-#include "map.h"
-#include "orb.h"
 #include "player.h"
-#include "powerup.h"
 
 void GameLoop();
 void InitGame(Bullet *bullets, EnemyData *enemy_data, PowerUp *powerUps,

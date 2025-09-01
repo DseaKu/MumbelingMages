@@ -1,5 +1,5 @@
-#include "map.h"
-#include "window.h"
+#include "core/map.h"
+#include "core/window.h"
 #include <raylib.h>
 #include <stdlib.h>
 #include <time.h>
@@ -15,11 +15,11 @@ void InitMap(Map *map) {
 }
 
 void DrawMap(Map map) {
-  DrawTexturePro(map.texture,
-                 (Rectangle){0, 0, (float)map.texture.width,
-                             (float)map.texture.height},
-                 (Rectangle){0, 0, (float)map.width, (float)map.height},
-                 (Vector2){0, 0}, 0, WHITE);
+  DrawTexturePro(
+      map.texture,
+      (Rectangle){0, 0, (float)map.texture.width, (float)map.texture.height},
+      (Rectangle){0, 0, (float)map.width, (float)map.height}, (Vector2){0, 0},
+      0, WHITE);
 }
 
 void UnloadMap(Map map) { UnloadTexture(map.texture); }

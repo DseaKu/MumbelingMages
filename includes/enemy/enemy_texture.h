@@ -1,6 +1,6 @@
 #ifndef ENEMY_TEXTURE_H
 #define ENEMY_TEXTURE_H
-#include "animation_handler.h"
+#include "core/animation_handler.h"
 
 void LoadEnemyTextures(void);
 void UnloadEnemyTextures(void);

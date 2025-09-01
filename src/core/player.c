@@ -1,10 +1,10 @@
 
-#include "player.h"
-#include "animation_handler.h"
+#include "core/player.h"
+#include "core/animation_handler.h"
+#include "core/map.h"
 #include "enemy/enemy.h"
 #include "mage/mage_properties.h"
 #include "mage/mage_sprite.h"
-#include "map.h"
 #include "raymath.h"
 #include <raylib.h>
 #include <stdbool.h>

@@ -1,12 +1,11 @@
 
 #ifndef ENEMY_H
 #define ENEMY_H
-#include "animation_handler.h"
-
+#include "core/animation_handler.h"
+#include "core/map.h"
+#include "core/std_includes.h"
 #include "enemy/enemy_sprite.h"
-#include "map.h"
 #include "raylib.h"
-#include "std_includes.h"
 
 #define MAX_ENEMIES 30
 

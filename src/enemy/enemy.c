@@ -1,5 +1,5 @@
 #include "enemy/enemy.h"
-#include "animation_handler.h"
+#include "core/animation_handler.h"
 #include "enemy/enemy_properties.h"
 #include "enemy/enemy_sprite.h"
 #include "raymath.h"

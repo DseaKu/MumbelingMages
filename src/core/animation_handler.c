@@ -1,4 +1,4 @@
-#include "animation_handler.h"
+#include "core/animation_handler.h"
 #include <raylib.h>
 #include <stdbool.h>
 

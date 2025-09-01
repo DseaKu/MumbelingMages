@@ -1,7 +1,7 @@
 #include "mage/mage_properties.h"
+#include "core/player.h"
 #include "mage/mage_sprite.h"
 #include "mage/mage_texture.h"
-#include "player.h"
 #include <raylib.h>
 static Player mage_properties[SIZE_MAGE_SPRITE_ID];
 

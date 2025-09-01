@@ -1,4 +1,4 @@
-#include "resource_tracker.h"
+#include "core/resource_tracker.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -47,7 +47,8 @@ void EndPerformanceTracker(const char *name) {
     clock_gettime(CLOCK_MONOTONIC, &trackers[index].end_time);
     trackers[index].elapsed_time =
         (trackers[index].end_time.tv_sec - trackers[index].start_time.tv_sec) +
-        (trackers[index].end_time.tv_nsec - trackers[index].start_time.tv_nsec) /
+        (trackers[index].end_time.tv_nsec -
+         trackers[index].start_time.tv_nsec) /
             1e9;
     trackers[index].total_elapsed_time += trackers[index].elapsed_time;
     trackers[index].runs++;

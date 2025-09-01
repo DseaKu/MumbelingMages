@@ -11,23 +11,23 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 find_package(raylib CONFIG REQUIRED)
 
 set(SOURCES
-src/bullet.c
+src/core/bullet.c
 src/enemy/enemy.c
 src/enemy/enemy_properties.c
 src/enemy/enemy_texture.c
-src/game.c
+src/core/game.c
 src/main.c
-src/player.c
-src/powerup.c
-src/orb.c
-src/window.c
-src/map.c
-src/IO_handler.c
-src/animation_handler.c
-src/resource_tracker.c
+src/core/player.c
+src/core/powerup.c
+src/core/orb.c
+src/core/window.c
+src/core/map.c
+src/core/IO_handler.c
+src/core/animation_handler.c
+src/core/resource_tracker.c
 src/mage/mage_properties.c
 src/mage/mage_texture.c
-src/camera.c
+src/core/camera.c
 )
 
 add_executable(game src/main.c ${SOURCES})

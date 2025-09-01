@@ -1,4 +1,4 @@
-#include "window.h"
+#include "core/window.h"
 #include <raylib.h>
 
 void ToggleRealFullscreen(int screen_width, int screen_height) {

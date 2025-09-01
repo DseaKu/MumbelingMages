@@ -1,6 +1,6 @@
 #ifndef SPELL_H
 #define SPELL_H
-#include "animation_handler.h"
+#include "core/animation_handler.h"
 #include <raylib.h>
 
 typedef struct Spell {
