@@ -16,7 +16,6 @@ typedef struct Player {
   PlayerSpriteID id;
   Vector2 position;
   Vector2 hit_box;
-  Camera2D camera;
   float speed;
   float fireRate;
   float pickupRange;

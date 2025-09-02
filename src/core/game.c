@@ -41,12 +41,12 @@ void GameLoop() {
   PowerUp powerUps[MAX_POWERUPS];
   Orb orbs[MAX_ORBS];
   IO_Flags io_flags = 0;
+  Camera2D camera;
   bool is_game_over = false;
-
   srand(time(NULL));
 
-  InitGame(bullets, &enemy_data, powerUps, orbs, &exp, &map, &io_flags,
-           &player);
+  InitGame(bullets, &enemy_data, powerUps, orbs, &exp, &map, &io_flags, &player,
+           &camera);
 
   float fireTimer = 0.0f;
   float enemySpawnTimer = 0.0f;
@@ -74,7 +74,7 @@ void GameLoop() {
     if (fireTimer >= player.fireRate &&
         ((IsMouseButtonDown(MOUSE_LEFT_BUTTON)) || io_flags & AUTO_AIM)) {
       FireBullet(bullets, &player, player.fireRate, io_flags & AUTO_AIM,
-                 &enemy_data);
+                 &enemy_data, camera);
       fireTimer = 0;
     }
 
@@ -94,12 +94,12 @@ void GameLoop() {
     StartPerformanceTracker("Update");
     if (io_flags & TOGGLE_FULLSCREEN) {
       ToggleRealFullscreen();
-      UpdateCameraOffset(&player);
-      
+      UpdateCameraOffset(&camera, &player);
+
       io_flags -= TOGGLE_FULLSCREEN;
     }
     if (IsWindowResized()) {
-      UpdateCameraOffset(&player);
+      UpdateCameraOffset(&camera, &player);
     }
     if (io_flags & AUTO_AIM) {
       HideCursor();
@@ -115,7 +115,7 @@ void GameLoop() {
       UpdatePowerUps(powerUps, &player);
       UpdateBullets(bullets, map);
       UpdateOrbs(orbs);
-      UpdatePlayerCamera(&player);
+      UpdatePlayerCamera(&camera, &player);
     }
     EndPerformanceTracker("Update");
 
@@ -140,7 +140,7 @@ void GameLoop() {
     ClearBackground(RAYWHITE);
 
     if (!is_game_over) {
-      BeginMode2D(player.camera);
+      BeginMode2D(camera);
       DrawMap(map);
       DrawBullets(bullets);
       DrawPlayer(&player, io_flags & PAUSE_GAME);
@@ -193,8 +193,8 @@ void GameLoop() {
 }
 
 void InitGame(Bullet *bullets, EnemyData *enemy_data, PowerUp *powerUps,
-              Orb *orbs, int *exp, Map *map, IO_Flags *io_flags,
-              Player *player) {
+              Orb *orbs, int *exp, Map *map, IO_Flags *io_flags, Player *player,
+              Camera2D *camera) {
   LoadMageTextures();
   LoadEnemyTextures();
   LoadEnemyProperties();
@@ -206,7 +206,7 @@ void InitGame(Bullet *bullets, EnemyData *enemy_data, PowerUp *powerUps,
   InitOrbs(orbs);
   InitMap(map);
   InitPlayer(player);
-  InitCamera(player);
+  InitCamera(camera, player);
   *exp = 0;
 }
 void UnloadGame(Player player, Map map) {

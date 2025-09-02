@@ -3,8 +3,8 @@
 
 #include "player.h"
 
-void InitCamera(Player *player);
-void UpdateCameraOffset(Player *player);
-void UpdatePlayerCamera(Player *player);
+void InitCamera(Camera2D *camera, Player *player);
+void UpdateCameraOffset(Camera2D *camera, Player *player);
+void UpdatePlayerCamera(Camera2D *camera, Player *player);
 
 #endif // CAMERA_H
