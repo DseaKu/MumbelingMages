@@ -8,7 +8,7 @@
 #include "core/orb.h"
 #include "core/powerup.h"
 #include "enemy/enemy.h"
-#include "player.h"
+#include "player/player.h"
 #include "raylib.h"
 
 void GameLoop();

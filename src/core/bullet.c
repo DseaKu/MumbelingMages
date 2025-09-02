@@ -1,8 +1,8 @@
 
 #include "core/bullet.h"
-#include "core/player.h"
 #include "enemy/enemy.h"
 #include "enemy/enemy_sprite.h"
+#include "player/player.h"
 #include <iso646.h>
 #include <math.h>
 #include <raylib.h>

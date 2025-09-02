@@ -2,8 +2,8 @@
 #ifndef BULLET_H
 #define BULLET_H
 
+#include "core/orb.h"
 #include "enemy/enemy.h"
-#include "orb.h"
 #include "raylib.h"
 
 #define MAX_BULLETS 100

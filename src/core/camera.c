@@ -1,5 +1,4 @@
 #include "core/camera.h"
-#include "core/player.h"
 #include "core/window.h"
 #include "raylib.h"
 

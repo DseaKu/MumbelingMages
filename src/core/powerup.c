@@ -1,6 +1,6 @@
 
 #include "core/powerup.h"
-#include "core/player.h"
+#include "player/player.h"
 #include "raymath.h"
 #include <stdlib.h>
 

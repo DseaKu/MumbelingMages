@@ -2,9 +2,9 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "animation_handler.h"
+#include "core/animation_handler.h"
+#include "core/map.h"
 #include "enemy/enemy.h"
-#include "map.h"
 #include "player/player_sprite.h"
 #include "raylib.h"
 

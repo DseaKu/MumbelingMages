@@ -4,12 +4,12 @@
 #include "core/camera.h"
 #include "core/map.h"
 #include "core/orb.h"
-#include "core/player.h"
 #include "core/resource_tracker.h"
 #include "core/window.h"
 #include "enemy/enemy.h"
 #include "enemy/enemy_properties.h"
 #include "enemy/enemy_texture.h"
+#include "player/player.h"
 #include "player/player_properties.h"
 #include "player/player_texture.h"
 #include <raylib.h>

@@ -1,5 +1,5 @@
 #include "player/player_properties.h"
-#include "core/player.h"
+#include "player/player.h"
 #include "player/player_sprite.h"
 #include "player/player_texture.h"
 #include <raylib.h>

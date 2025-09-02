@@ -1,5 +1,5 @@
 
-#include "core/player.h"
+#include "player/player.h"
 #include "core/animation_handler.h"
 #include "core/map.h"
 #include "enemy/enemy.h"

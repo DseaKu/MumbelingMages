@@ -1,7 +1,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "player.h"
+#include "player/player.h"
 
 void InitCamera(Camera2D *camera, Player *player);
 void UpdateCameraOffset(Camera2D *camera, Player *player);
