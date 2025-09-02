@@ -44,9 +44,12 @@ Vector2 GenerateSpawnPosition(Map map, Vector2 player_position,
   return spawn_position;
 }
 void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map) {
+
   float delta = GetFrameTime();
-  Enemy *enemies = enemy_data->enemies;
+  float distance_between_closest_enemy;
   float safe_zone_distance = 80.0f;
+  Enemy *enemies = enemy_data->enemies;
+  u16 closest_enemy;
   Vector2 direction;
   for (int i = 0; i < MAX_ENEMIES; i++) {
 
@@ -68,6 +71,16 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map) {
       direction = Vector2Subtract(playerPosition, enemies[i].position);
       enemies[i].animation.is_facing_right = (direction.x > 0);
 
+      // Avoid stacking on each other
+      closest_enemy =
+          GetClosestEnemy(enemy_data, enemy_data->enemies[i].position);
+      distance_between_closest_enemy =
+          Vector2DistanceSqr(enemy_data->enemies[i].position,
+                             enemy_data->enemies[closest_enemy].position);
+      if (distance_between_closest_enemy > pow(safe_zone_distance, 2)) {
+      }
+
+      // Avoid stacking on player
       if (Vector2Length(direction) > safe_zone_distance) {
         direction = Vector2Normalize(direction);
         enemies[i].position.x += direction.x * delta * enemies[i].speed;

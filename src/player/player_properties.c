@@ -14,7 +14,7 @@ void LoadMageProperties() {
       .speed = 500.0f,
       .fireRate = 0.2f,
       .pickupRange = 150.0f,
-      .health = 100,
+      .health = 1000000,
       .get_animation_data = GetMageAnimationData,
   };
 };
