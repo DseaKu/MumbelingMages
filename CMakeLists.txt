@@ -42,7 +42,7 @@ add_executable(game src/main.c ${SOURCES})
 target_include_directories(game PRIVATE includes)
 
 # The target_link_libraries command will now automatically use the fetched raylib
-target_link_libraries(game PRIVATE raylib m)
+target_link_libraries(game PRIVATE raylib)
 
 add_custom_command(TARGET game POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory

@@ -10,4 +10,5 @@ RoguedDeluxe
 # IDE-specific files
 .vscode/
 .idea/
+CMakeLists.txt
 
