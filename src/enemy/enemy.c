@@ -2,6 +2,7 @@
 #include "core/animation_handler.h"
 #include "enemy/enemy_properties.h"
 #include "enemy/enemy_sprite.h"
+#include "player/player.h"
 #include "raymath.h"
 #include <float.h>
 #include <math.h>
@@ -69,6 +70,53 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map) {
       direction = Vector2Subtract(playerPosition, enemies[i].position);
       enemies[i].animation.is_facing_right = (direction.x > 0);
 
+      // Avoid stacking enemies on each other
+      Rectangle rect_i = {enemies[i].position.x, enemies[i].position.y,
+                          enemies[i].hit_box.x, enemies[i].hit_box.y};
+      for (int j = i + 1; j < MAX_ENEMIES; j++) {
+        if (enemy_data->state[j] == ENEMY_INACTIVE)
+          continue;
+
+        Rectangle rect_j = {enemies[j].position.x, enemies[j].position.y,
+                            enemies[j].hit_box.x, enemies[j].hit_box.y};
+
+        if (CheckCollisionRecs(rect_i, rect_j)) {
+          Vector2 push_direction =
+              Vector2Subtract(enemies[i].position, enemies[j].position);
+          if (push_direction.x == 0 && push_direction.y == 0) {
+            push_direction.x = (float)(rand() % 100 - 50);
+            push_direction.y = (float)(rand() % 100 - 50);
+          }
+          Vector2 normalized_push = Vector2Normalize(push_direction);
+
+          enemies[i].position.x +=
+              normalized_push.x * ENEMY_ENEMY_COLLISION_DISTANCE * delta;
+          enemies[i].position.y +=
+              normalized_push.y * ENEMY_ENEMY_COLLISION_DISTANCE * delta;
+          enemies[j].position.x -=
+              normalized_push.x * ENEMY_ENEMY_COLLISION_DISTANCE * delta;
+          enemies[j].position.y -=
+              normalized_push.y * ENEMY_ENEMY_COLLISION_DISTANCE * delta;
+        }
+      }
+      // Avoid stacking on player
+      Rectangle rect_player = {playerPosition.x, playerPosition.y,
+                               SAFE_ZONE_DISTANCE, SAFE_ZONE_DISTANCE};
+      if (CheckCollisionRecs(rect_i, rect_player)) {
+        Vector2 push_direction =
+            Vector2Subtract(enemies[i].position, playerPosition);
+        if (push_direction.x == 0 && push_direction.y == 0) {
+          push_direction.x = (float)(rand() % 100 - 50);
+          push_direction.y = (float)(rand() % 100 - 50);
+        }
+        Vector2 normalized_push = Vector2Normalize(push_direction);
+
+        enemies[i].position.x +=
+            normalized_push.x * ENEMY_ENEMY_COLLISION_DISTANCE * delta;
+        enemies[i].position.y +=
+            normalized_push.y * ENEMY_ENEMY_COLLISION_DISTANCE * delta;
+      }
+
       // Avoid stacking on player
       if (Vector2Length(direction) > safe_zone_distance) {
         direction = Vector2Normalize(direction);
@@ -116,37 +164,6 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map) {
         enemies[i].timer = 0;
       }
       break;
-    }
-  }
-
-  // Enemy collision logic to prevent stacking
-  float separation_force = 90.0f;
-  for (int i = 0; i < MAX_ENEMIES; i++) {
-    if (enemy_data->state[i] == ENEMY_INACTIVE)
-      continue;
-    for (int j = i + 1; j < MAX_ENEMIES; j++) {
-      if (enemy_data->state[j] == ENEMY_INACTIVE)
-        continue;
-
-      Rectangle rect_i = {enemies[i].position.x, enemies[i].position.y,
-                          enemies[i].hit_box.x, enemies[i].hit_box.y};
-      Rectangle rect_j = {enemies[j].position.x, enemies[j].position.y,
-                          enemies[j].hit_box.x, enemies[j].hit_box.y};
-
-      if (CheckCollisionRecs(rect_i, rect_j)) {
-        Vector2 push_direction =
-            Vector2Subtract(enemies[i].position, enemies[j].position);
-        if (push_direction.x == 0 && push_direction.y == 0) {
-          push_direction.x = (float)(rand() % 100 - 50);
-          push_direction.y = (float)(rand() % 100 - 50);
-        }
-        Vector2 normalized_push = Vector2Normalize(push_direction);
-
-        enemies[i].position.x += normalized_push.x * separation_force * delta;
-        enemies[i].position.y += normalized_push.y * separation_force * delta;
-        enemies[j].position.x -= normalized_push.x * separation_force * delta;
-        enemies[j].position.y -= normalized_push.y * separation_force * delta;
-      }
     }
   }
 }

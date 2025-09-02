@@ -9,6 +9,7 @@
 #include "raylib.h"
 
 #define MAX_BULLETS 100
+#define SAFE_ZONE_DISTANCE 75.0f
 
 typedef struct Player {
   Animation animation;

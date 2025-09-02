@@ -8,6 +8,7 @@
 #include "raylib.h"
 
 #define MAX_ENEMIES 30
+#define ENEMY_ENEMY_COLLISION_DISTANCE 100.0f
 
 typedef struct DynamicPath {
   bool is_active;
