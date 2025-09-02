@@ -1,5 +1,5 @@
-#ifndef SPELL_H
-#define SPELL_H
+#ifndef MUMBLE_H
+#define MUMBLE_H
 #include "core/animation_handler.h"
 #include <raylib.h>
 
@@ -13,8 +13,8 @@ typedef struct Spell {
   bool is_buff;
   bool is_debuff;
 
+  GetAnimationDataFunc get_animation_data;
 } Spell;
-
 void InitSpells(Spell *spells);
 
-#endif
+#endif // MUMBLE_H
