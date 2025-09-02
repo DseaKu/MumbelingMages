@@ -2,9 +2,16 @@
 #define CAMERA_H
 
 #include "player/player.h"
+#include "raylib.h"
 
-void InitCamera(Camera2D *camera, Player *player);
-void UpdateCameraOffset(Camera2D *camera, Player *player);
-void UpdatePlayerCamera(Camera2D *camera, Player *player);
+typedef struct GameCamera {
+  Camera2D properties;
+  Rectangle view;
+  Vector2 *target;
+} GameCamera;
+
+void InitCamera(GameCamera *camera, Player *player);
+void UpdateCameraOffset(GameCamera *camera);
+void UpdateGameCamera(GameCamera *camera);
 
 #endif // CAMERA_H

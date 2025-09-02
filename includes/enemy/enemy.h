@@ -54,7 +54,7 @@ void SpawnEnemy(EnemyData *enemy_data, Map map, Vector2 player_position);
 Vector2 GenerateSpawnPosition(Map map, Vector2 player_position,
                               float spawn_distance);
 void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map);
-void DrawEnemies(EnemyData *enemy_data, bool is_pause);
+void DrawEnemies(EnemyData *enemy_data, bool is_pause, Rectangle camera_view);
 int GetClosestEnemy(EnemyData *enemy_data, Vector2 position);
 
 #endif

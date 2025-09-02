@@ -149,7 +149,7 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map) {
   }
 }
 
-void DrawEnemies(EnemyData *enemy_data, bool is_paused) {
+void DrawEnemies(EnemyData *enemy_data, bool is_paused, Rectangle camera_view) {
   Enemy *enemies = enemy_data->enemies;
   for (int i = 0; i < MAX_ENEMIES; i++) {
     if (enemy_data->state[i] == ENEMY_INACTIVE ||
@@ -163,7 +163,7 @@ void DrawEnemies(EnemyData *enemy_data, bool is_paused) {
     PlayAnimation(enemies[i].hit_box, enemies[i].position,
                   &enemies[i].animation, enemies[i].sprite,
                   enemy_data->state[i], is_paused,
-                  enemies[i].get_animation_data);
+                  enemies[i].get_animation_data, camera_view);
     enemies[i].last_state = enemy_data->state[i];
   }
 }

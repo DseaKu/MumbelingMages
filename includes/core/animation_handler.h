@@ -23,7 +23,8 @@ typedef AnimationData (*GetAnimationDataFunc)(int, int);
 
 void PlayAnimation(Vector2 hit_box, Vector2 position, Animation *animation,
                    int sprite_id, int animation_id, bool is_pause,
-                   GetAnimationDataFunc get_animation_data);
+                   GetAnimationDataFunc get_animation_data,
+                   Rectangle camera_view);
 void UpdateAnimation(AnimationData animation_data, Animation *animation,
                      int sprite_id, int state_id);
 

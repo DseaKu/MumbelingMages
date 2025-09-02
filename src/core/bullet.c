@@ -1,5 +1,6 @@
 
 #include "core/bullet.h"
+#include "core/camera.h"
 #include "enemy/enemy.h"
 #include "enemy/enemy_sprite.h"
 #include "player/player.h"
@@ -17,7 +18,7 @@ void InitBullets(Bullet *bullets) {
 }
 
 void FireBullet(Bullet *bullets, Player *player, float fireRate,
-                bool is_auto_aim, EnemyData *enemy_data, Camera2D camera) {
+                bool is_auto_aim, EnemyData *enemy_data, GameCamera camera) {
   Vector2 playerPosition = player->position;
   Enemy *enemies = enemy_data->enemies;
 
@@ -50,7 +51,7 @@ void FireBullet(Bullet *bullets, Player *player, float fireRate,
         // Manual aiming
       } else {
         Vector2 mouse_pos_world =
-            GetScreenToWorld2D(GetMousePosition(), camera);
+            GetScreenToWorld2D(GetMousePosition(), camera.properties);
         direction = Vector2Subtract(mouse_pos_world, playerPosition);
       }
       bullets[i].active = true;

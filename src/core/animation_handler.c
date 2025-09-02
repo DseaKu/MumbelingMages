@@ -1,6 +1,7 @@
 #include "core/animation_handler.h"
 #include <raylib.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 void UpdateAnimation(AnimationData animation_data, Animation *animation,
                      int sprite_id, int state_id) {
@@ -20,7 +21,14 @@ void UpdateAnimation(AnimationData animation_data, Animation *animation,
 
 void PlayAnimation(Vector2 hit_box, Vector2 position, Animation *animation,
                    int sprite_id, int animation_id, bool is_paused,
-                   GetAnimationDataFunc get_animation_data) {
+                   GetAnimationDataFunc get_animation_data,
+                   Rectangle camera_view) {
+
+  // Check if sprite is in camera view
+  if (!CheckCollisionPointRec(position, camera_view)) {
+    animation->current_frame++;
+    return;
+  }
 
   AnimationData animation_data = get_animation_data(sprite_id, animation_id);
   if (!is_paused) {
