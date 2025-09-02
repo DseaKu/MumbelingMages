@@ -1,4 +1,5 @@
 #include "core/resource_tracker.h"
+#include <raylib.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -38,18 +39,15 @@ void StartPerformanceTracker(const char *name) {
       return;
     }
   }
-  clock_gettime(CLOCK_MONOTONIC, &trackers[index].start_time);
+  trackers[index].start_time = GetTime();
 }
 
 void EndPerformanceTracker(const char *name) {
   int index = FindTracker(name);
   if (index != -1) {
-    clock_gettime(CLOCK_MONOTONIC, &trackers[index].end_time);
+    trackers[index].end_time = GetTime();
     trackers[index].elapsed_time =
-        (trackers[index].end_time.tv_sec - trackers[index].start_time.tv_sec) +
-        (trackers[index].end_time.tv_nsec -
-         trackers[index].start_time.tv_nsec) /
-            1e9;
+        (trackers[index].end_time - trackers[index].start_time);
     trackers[index].total_elapsed_time += trackers[index].elapsed_time;
     trackers[index].runs++;
   }
