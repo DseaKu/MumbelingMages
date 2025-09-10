@@ -17,6 +17,7 @@ typedef struct Mumble {
   bool is_area;
   bool is_buff;
   bool is_debuff;
+  bool is_facing_right;
   u32 damage;
   u32 last_hitted_enemy;
   float range;

@@ -59,7 +59,7 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map) {
 
     case ENEMY_SPAWNING:
       enemies[i].timer += delta;
-      enemy_data->state[i] = ENEMY_SPAWNING;
+      // enemy_data->state[i] = ENEMY_SPAWNING;
       if (enemies[i].timer >= enemies[i].spawn_duration) {
         enemy_data->state[i] = ENEMY_IDLE;
         enemies[i].timer = 0;
@@ -70,7 +70,7 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map) {
       direction = Vector2Subtract(playerPosition, enemies[i].position);
       enemies[i].animation.is_facing_right = (direction.x > 0);
 
-      // Avoid stacking enemies on each other
+      /* Avoid stacking enemies on each other */
       Rectangle rect_i = {enemies[i].position.x, enemies[i].position.y,
                           enemies[i].hit_box.x, enemies[i].hit_box.y};
       for (int j = i + 1; j < MAX_ENEMIES; j++) {
@@ -99,7 +99,7 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map) {
               normalized_push.y * ENEMY_ENEMY_COLLISION_DISTANCE * delta;
         }
       }
-      // Avoid stacking on player
+      /* Avoid stacking on player */
       Rectangle rect_player = {playerPosition.x, playerPosition.y,
                                SAFE_ZONE_DISTANCE, SAFE_ZONE_DISTANCE};
       if (CheckCollisionRecs(rect_i, rect_player)) {
@@ -131,7 +131,7 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map) {
 
     case ENEMY_TAKE_DEMAGE:
       enemies[i].timer += delta;
-      enemy_data->state[i] = ENEMY_TAKE_DEMAGE;
+      // enemy_data->state[i] = ENEMY_TAKE_DEMAGE;
 
       // Generating pushback
       direction = Vector2Subtract(enemies[i].position, playerPosition);
@@ -147,7 +147,7 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map) {
 
     case ENEMY_DYING:
       enemies[i].timer += delta;
-      enemy_data->state[i] = ENEMY_DYING;
+      // enemy_data->state[i] = ENEMY_DYING;
       if (enemies[i].timer >= enemies[i].dying_duration) {
         enemy_data->state[i] = ENEMY_DEAD;
         enemies[i].timer = 0;
@@ -155,7 +155,7 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map) {
       break;
     case ENEMY_DEAD:
       enemies[i].timer += delta;
-      enemy_data->state[i] = ENEMY_DEAD;
+      // enemy_data->state[i] = ENEMY_DEAD;
       if (enemies[i].timer >= enemies[i].dying_duration) {
         enemies[i] = GetEnemyProperties(enemies[i].sprite);
         enemy_data->state[i] = ENEMY_SPAWNING;
