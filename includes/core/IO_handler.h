@@ -10,6 +10,7 @@ typedef enum {
   DRAW_DEBUG_INFO = 1 << 3,
   TOGGLE_FULLSCREEN = 1 << 4,
   IS_MOUSE_LEFT_PRESSED = 1 << 5,
+  CAST_MUMBLE = 1 << 6,
 } IO_Flags_Definition;
 
 typedef uint64_t IO_Flags;

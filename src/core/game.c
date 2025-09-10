@@ -9,6 +9,7 @@
 #include "enemy/enemy.h"
 #include "enemy/enemy_properties.h"
 #include "enemy/enemy_texture.h"
+#include "mumble/mumble.h"
 #include "player/player.h"
 #include "player/player_properties.h"
 #include "player/player_texture.h"
@@ -37,6 +38,7 @@ void GameLoop() {
 
   Player player;
   Bullet bullets[MAX_BULLETS] = {0};
+  MumbleData mumble_data = {0};
   EnemyData enemy_data = {0};
   PowerUp powerUps[MAX_POWERUPS];
   Orb orbs[MAX_ORBS];
@@ -72,10 +74,14 @@ void GameLoop() {
     //----------------------------------------------------------------------------------
     StartPerformanceTracker("Spawning");
     if (fireTimer >= player.fireRate &&
-        ((IsMouseButtonDown(MOUSE_LEFT_BUTTON)) || io_flags & AUTO_AIM)) {
+        (io_flags & IS_MOUSE_LEFT_PRESSED || io_flags & AUTO_AIM)) {
       FireBullet(bullets, &player, player.fireRate, io_flags & AUTO_AIM,
                  &enemy_data, camera);
       fireTimer = 0;
+    }
+
+    if (io_flags & CAST_MUMBLE) {
+      CastFireball(&mumble_data);
     }
 
     if (enemySpawnTimer >= 1.0f) {
@@ -98,9 +104,6 @@ void GameLoop() {
 
       io_flags -= TOGGLE_FULLSCREEN;
     }
-    // if (IsWindowResized()) {
-    //   UpdateCameraOffset(&camera, &player);
-    // }
     if (io_flags & AUTO_AIM) {
       HideCursor();
     } else {
@@ -112,6 +115,7 @@ void GameLoop() {
       powerUpSpawnTimer += GetFrameTime();
       UpdatePlayer(&player, fireTimer, io_flags & AUTO_AIM, map);
       UpdateEnemies(&enemy_data, player.position, map);
+      UpdateMumbles(&mumble_data, &player, &enemy_data);
       UpdatePowerUps(powerUps, &player);
       UpdateBullets(bullets, map);
       UpdateOrbs(orbs);

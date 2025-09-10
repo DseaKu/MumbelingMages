@@ -2,10 +2,13 @@
 #define MUMBLE_H
 #include "core/animation_handler.h"
 #include "core/std_includes.h"
+#include "mumble/mumble_sprite.h"
+#include "player/player.h"
 #include <raylib.h>
 
-#define MAX_MUMBLES 20
+#define MAX_MUMBLES 40
 typedef struct Mumble {
+  MumbleSpriteID id;
   Animation animation;
   Vector2 position;
   Vector2 speed;
@@ -17,6 +20,8 @@ typedef struct Mumble {
   u32 damage;
   u32 last_hitted_enemy;
   float range;
+  float timer;
+  float casting_duration;
   GetAnimationDataFunc get_animation_data;
 } Mumble;
 
@@ -28,5 +33,8 @@ typedef struct MumbleData {
 } MumbleData;
 
 void InitMumble(MumbleData *mumble_data);
+void CastFireball(MumbleData *mumble_data);
+void UpdateMumbles(MumbleData *mumble_data, Player *player,
+                   EnemyData *enemy_data);
 
 #endif // MUMBLE_H

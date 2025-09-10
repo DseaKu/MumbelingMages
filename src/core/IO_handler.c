@@ -17,7 +17,15 @@ void GetInputs(IO_Flags *io_flags) {
     *io_flags ^= DRAW_DEBUG_INFO;
   }
   if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-    *io_flags ^= IS_MOUSE_LEFT_PRESSED;
+    *io_flags |= IS_MOUSE_LEFT_PRESSED;
+  }
+  if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+    *io_flags &= ~IS_MOUSE_LEFT_PRESSED;
+  }
+  if (IsKeyReleased(KEY_ONE)) {
+    *io_flags |= CAST_MUMBLE;
+  } else {
+    *io_flags &= ~CAST_MUMBLE;
   }
 }
 void InitIO_Flags(IO_Flags *io_flags) {
