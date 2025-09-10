@@ -34,16 +34,16 @@ void UpdateMumbles(MumbleData *mumble_data, Player *player,
   for (u16 i = 0; i < MAX_MUMBLES; i++) {
     if (mumble_data->state[i] != MUMBLE_INACTIVE) {
       Mumble mumble = mumble_data->mumbles[i];
-      MumbleState mumble_state = mumble_data->state[i];
+      MumbleState state = mumble_data->state[i];
 
       /* Mumble state mashine */
-      switch (mumble_state) {
+      switch (state) {
 
       case CASTING_MUMBLE:
         mumble.timer += delta;
         mumble.position = player_position;
         if (mumble.timer >= mumble.casting_duration) {
-          mumble_state = MUMBLE_MOVE_TO_TARGET;
+          state = MUMBLE_MOVE_TO_TARGET;
           mumble.timer = 0;
         }
         break;
