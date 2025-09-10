@@ -29,7 +29,7 @@ void GameLoop() {
   // INIT
   //----------------------------------------------------------------------------------
   StartPerformanceTracker("Init");
-  SetConfigFlags(FLAG_WINDOW_HIGHDPI);
+  // SetConfigFlags(FLAG_WINDOW_HIGHDPI);
   int screen_width = GetDisplayWidth();
   int screen_height = GetDisplayHeigth();
 
