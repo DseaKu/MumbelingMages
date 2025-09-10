@@ -1,7 +1,7 @@
 #ifndef ORB_H
 #define ORB_H
 
-#include "player.h"
+#include "player/player.h"
 #include "raylib.h"
 
 #define MAX_ORBS MAX_ENEMIES

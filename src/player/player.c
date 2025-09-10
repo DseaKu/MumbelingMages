@@ -1,5 +1,5 @@
 
-#include "core/player.h"
+#include "player/player.h"
 #include "core/animation_handler.h"
 #include "core/map.h"
 #include "enemy/enemy.h"
@@ -52,10 +52,10 @@ void UpdatePlayer(Player *player, float fireTimer, bool is_auto_aim, Map map) {
   }
 }
 
-void DrawPlayer(Player *player, bool is_pause) {
+void DrawPlayer(Player *player, bool is_pause, Rectangle camera_view) {
   PlayAnimation(player->hit_box, player->position, &player->animation,
-                player->id, player->state, is_pause,
-                player->get_animation_data);
+                player->id, player->state, is_pause, player->get_animation_data,
+                camera_view);
 }
 
 void CheckPlayerCollision(Player *player, EnemyData *enemy_data) {

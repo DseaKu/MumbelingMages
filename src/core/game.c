@@ -4,12 +4,12 @@
 #include "core/camera.h"
 #include "core/map.h"
 #include "core/orb.h"
-#include "core/player.h"
 #include "core/resource_tracker.h"
 #include "core/window.h"
 #include "enemy/enemy.h"
 #include "enemy/enemy_properties.h"
 #include "enemy/enemy_texture.h"
+#include "player/player.h"
 #include "player/player_properties.h"
 #include "player/player_texture.h"
 #include <raylib.h>
@@ -29,7 +29,7 @@ void GameLoop() {
   // INIT
   //----------------------------------------------------------------------------------
   StartPerformanceTracker("Init");
-  SetConfigFlags(FLAG_WINDOW_HIGHDPI);
+  // SetConfigFlags(FLAG_WINDOW_HIGHDPI);
   int screen_width = GetDisplayWidth();
   int screen_height = GetDisplayHeigth();
 
@@ -41,7 +41,7 @@ void GameLoop() {
   PowerUp powerUps[MAX_POWERUPS];
   Orb orbs[MAX_ORBS];
   IO_Flags io_flags = 0;
-  Camera2D camera;
+  GameCamera camera;
   bool is_game_over = false;
   srand(time(NULL));
 
@@ -94,13 +94,13 @@ void GameLoop() {
     StartPerformanceTracker("Update");
     if (io_flags & TOGGLE_FULLSCREEN) {
       ToggleRealFullscreen();
-      UpdateCameraOffset(&camera, &player);
+      UpdateCameraOffset(&camera);
 
       io_flags -= TOGGLE_FULLSCREEN;
     }
-    if (IsWindowResized()) {
-      UpdateCameraOffset(&camera, &player);
-    }
+    // if (IsWindowResized()) {
+    //   UpdateCameraOffset(&camera, &player);
+    // }
     if (io_flags & AUTO_AIM) {
       HideCursor();
     } else {
@@ -115,7 +115,7 @@ void GameLoop() {
       UpdatePowerUps(powerUps, &player);
       UpdateBullets(bullets, map);
       UpdateOrbs(orbs);
-      UpdatePlayerCamera(&camera, &player);
+      UpdateGameCamera(&camera);
     }
     EndPerformanceTracker("Update");
 
@@ -140,13 +140,14 @@ void GameLoop() {
     ClearBackground(RAYWHITE);
 
     if (!is_game_over) {
-      BeginMode2D(camera);
+      BeginMode2D(camera.properties);
       DrawMap(map);
       DrawBullets(bullets);
-      DrawPlayer(&player, io_flags & PAUSE_GAME);
+      DrawPlayer(&player, io_flags & PAUSE_GAME, camera.view);
       DrawPowerUps(powerUps);
       DrawOrbs(orbs);
-      DrawEnemies(&enemy_data, io_flags & PAUSE_GAME);
+      DrawEnemies(&enemy_data, io_flags & PAUSE_GAME, camera.view);
+
       EndMode2D();
 
       // Draw UI
@@ -194,7 +195,7 @@ void GameLoop() {
 
 void InitGame(Bullet *bullets, EnemyData *enemy_data, PowerUp *powerUps,
               Orb *orbs, int *exp, Map *map, IO_Flags *io_flags, Player *player,
-              Camera2D *camera) {
+              GameCamera *camera) {
   LoadMageTextures();
   LoadEnemyTextures();
   LoadEnemyProperties();
