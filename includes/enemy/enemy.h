@@ -21,13 +21,13 @@ typedef struct DynamicPath {
 
 typedef struct Enemy {
   Animation animation;
-  EnemySpriteID sprite;
+  EnemySpriteID id;
   DynamicPath dynamic_path;
   Vector2 position;
   Vector2 hit_box;
   u8 last_state;
   u16 damage;
-  u32 health;
+  s64 health;
   float exposed_force;
   float weight;
   float speed;
@@ -57,6 +57,6 @@ Vector2 GenerateSpawnPosition(Map map, Vector2 player_position,
 void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map);
 void DrawEnemies(EnemyData *enemy_data, bool is_pause, Rectangle camera_view);
 int GetClosestEnemy(EnemyData *enemy_data, Vector2 position);
-void EnemyTakeDemage(EnemyData *enemy_data, const u64 index, const u64 demage);
+void EnemyTakeDemage(Enemy *enemy, EnemyState *state, const u64 damage);
 
 #endif

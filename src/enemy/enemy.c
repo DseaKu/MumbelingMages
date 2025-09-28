@@ -15,7 +15,7 @@ void InitEnemies(EnemyData *enemy_data) {
 
   for (int i = 0; i < MAX_ENEMIES; i++) {
     enemy_data->state[i] = ENEMY_INACTIVE;
-    enemy_data->enemies[i].sprite = GOBLIN;
+    enemy_data->enemies[i].id = GOBLIN;
   }
 }
 
@@ -26,7 +26,7 @@ void SpawnEnemy(EnemyData *enemy_data, Map map, Vector2 player_position) {
   for (int i = 1; i < MAX_ENEMIES; i++) {
 
     if (enemy_data->state[i] == ENEMY_INACTIVE) {
-      enemies[i] = GetEnemyProperties(enemies[i].sprite);
+      enemies[i] = GetEnemyProperties(enemies[i].id);
       enemy_data->state[i] = ENEMY_SPAWNING;
       enemies[i].position =
           GenerateSpawnPosition(map, player_position, enemies->spawn_distance);
@@ -158,7 +158,7 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map) {
     case ENEMY_DEAD:
       enemy->timer += delta;
       if (enemy->timer >= enemy->dying_duration) {
-        *enemy = GetEnemyProperties(enemy->sprite);
+        *enemy = GetEnemyProperties(enemy->id);
         *state = ENEMY_SPAWNING;
         enemy->position =
             GenerateSpawnPosition(map, playerPosition, enemy->spawn_distance);
@@ -181,9 +181,8 @@ void DrawEnemies(EnemyData *enemy_data, bool is_paused, Rectangle camera_view) {
       enemies[i].animation.current_frame = 0;
     }
     PlayAnimation(enemies[i].hit_box, enemies[i].position,
-                  &enemies[i].animation, enemies[i].sprite,
-                  enemy_data->state[i], is_paused,
-                  enemies[i].get_animation_data, camera_view);
+                  &enemies[i].animation, enemies[i].id, enemy_data->state[i],
+                  is_paused, enemies[i].get_animation_data, camera_view);
     enemies[i].last_state = enemy_data->state[i];
   }
 }
@@ -208,18 +207,15 @@ int GetClosestEnemy(EnemyData *enemy_data, Vector2 position) {
   return closest_enemy_index;
 }
 
-void EnemyTakeDemage(EnemyData *enemy_data, const u64 index, const u64 demage) {
-
-  Enemy enemy = enemy_data->enemies[index];
-  EnemyState state = enemy_data->state[index];
+void EnemyTakeDemage(Enemy *enemy, EnemyState *state, const u64 damage) {
 
   // enemy.exposed_force += force;
-  state = ENEMY_TAKE_DEMAGE;
-  enemy.health -= demage;
+  *state = ENEMY_TAKE_DEMAGE;
+  enemy->health -= damage;
 
   /* Kill enemy */
-  if (enemy.health <= 0) {
-    state = ENEMY_DYING;
-    SpawnOrb(enemy.position);
+  if (enemy->health <= 0) {
+    *state = ENEMY_DYING;
+    SpawnOrb(enemy->position);
   }
 }

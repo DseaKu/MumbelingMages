@@ -10,6 +10,7 @@
 #include "enemy/enemy_properties.h"
 #include "enemy/enemy_texture.h"
 #include "mumble/mumble.h"
+#include "mumble/mumble_properties.h"
 #include "player/player.h"
 #include "player/player_properties.h"
 #include "player/player_texture.h"
@@ -116,7 +117,7 @@ void GameLoop() {
       powerUpSpawnTimer += GetFrameTime();
       UpdatePlayer(&player, fireTimer, io_flags & AUTO_AIM, map);
       UpdateEnemies(&enemy_data, player.position, map);
-      UpdateMumbles(&mumble_data, &player, &enemy_data);
+      UpdateMumbles(&mumble_data, player.position, &enemy_data);
       UpdatePowerUps(powerUps, &player);
       UpdateBullets(bullets, map);
       UpdateOrbs();
@@ -206,6 +207,7 @@ void InitGame(Bullet *bullets, EnemyData *enemy_data, PowerUp *powerUps,
   LoadEnemyTextures();
   LoadEnemyProperties();
   LoadMageProperties();
+  LoadMumbleProperties();
   InitIO_Flags(io_flags);
   InitBullets(bullets);
   InitEnemies(enemy_data);

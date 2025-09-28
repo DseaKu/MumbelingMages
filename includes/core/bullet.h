@@ -13,6 +13,7 @@ typedef struct Bullet {
   Vector2 size;
   Color color;
   Vector2 speed;
+  u64 damage;
   bool active;
   int pierce;
   int last_hitted_enemy;

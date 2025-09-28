@@ -2,8 +2,8 @@
 #define MUMBLE_H
 #include "core/animation_handler.h"
 #include "core/std_includes.h"
+#include "enemy/enemy.h"
 #include "mumble/mumble_sprite.h"
-#include "player/player.h"
 #include <raylib.h>
 
 #define MAX_MUMBLES 40
@@ -35,7 +35,7 @@ typedef struct MumbleData {
 
 void InitMumble(MumbleData *mumble_data);
 void CastFireball(MumbleData *mumble_data);
-void UpdateMumbles(MumbleData *mumble_data, Player *player,
+void UpdateMumbles(MumbleData *mumble_data, const Vector2 casting_position,
                    EnemyData *enemy_data);
 
 #endif // MUMBLE_H

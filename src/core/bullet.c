@@ -1,7 +1,6 @@
 
 #include "core/bullet.h"
 #include "core/camera.h"
-#include "core/orb.h"
 #include "enemy/enemy.h"
 #include "enemy/enemy_sprite.h"
 #include "player/player.h"
@@ -15,6 +14,7 @@ void InitBullets(Bullet *bullets) {
   for (int i = 0; i < MAX_BULLETS; i++) {
     bullets[i].active = false;
     bullets[i].last_hitted_enemy = -1;
+    bullets[i].damage = 20;
   }
 }
 
@@ -101,7 +101,6 @@ void DrawBullets(Bullet *bullets) {
 }
 void CheckBulletCollision(Bullet *bullets, EnemyData *enemy_data) {
   Enemy *enemies = enemy_data->enemies;
-  int bullet_demage = 20;
   float force = 9;
 
   for (int i = 0; i < MAX_BULLETS; i++) {
@@ -124,20 +123,14 @@ void CheckBulletCollision(Bullet *bullets, EnemyData *enemy_data) {
             }
 
             // Enemy is hit by bullet
-            *enemy_state = ENEMY_TAKE_DEMAGE;
-            enemy->health -= bullet_demage;
-            enemy->exposed_force += force;
+            EnemyTakeDemage(enemy, enemy_state, bullet->damage);
+
+            // Decrease bullet pierce
             bullet->last_hitted_enemy = j;
             bullet->pierce--;
-
-            if (enemy->health <= 0) {
-              *enemy_state = ENEMY_DYING;
-              SpawnOrb(enemy->position);
-            }
-
             if (bullet->pierce <= 0) {
               bullet->active = false;
-              break; // Exit enemy loop, bullet is done.
+              break;
             }
           }
         }
