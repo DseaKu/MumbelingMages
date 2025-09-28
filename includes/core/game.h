@@ -13,12 +13,12 @@
 
 void GameLoop();
 void InitGame(Bullet *bullets, EnemyData *enemy_data, PowerUp *powerUps,
-              Orb *orbs, int *exp, Map *map, IO_Flags *io_flags, Player *player,
+              int *exp, Map *map, IO_Flags *io_flags, Player *player,
               GameCamera *camera);
 void DrawGame(Player player, Bullet *bullets, Enemy *enemies, PowerUp *powerUps,
               Orb *orbs, int exp, bool gameOver);
 
-void CheckBulletCollision(Bullet *bullets, EnemyData *enemy_data, Orb *orbs);
-void CheckOrbPickup(Player *player, Orb *orbs, int *exp);
+// void CheckBulletCollision(Bullet *bullets, EnemyData *enemy_data);
+void CheckOrbPickup(Player *player, int *exp);
 void UnloadGame(Player player, Map map);
 #endif

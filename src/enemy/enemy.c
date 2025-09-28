@@ -1,5 +1,6 @@
 #include "enemy/enemy.h"
 #include "core/animation_handler.h"
+#include "core/orb.h"
 #include "enemy/enemy_properties.h"
 #include "enemy/enemy_sprite.h"
 #include "player/player.h"
@@ -74,8 +75,8 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map) {
       enemy->animation.is_facing_right = (direction.x > 0);
 
       /* Avoid stacking enemies on each other */
-      Rectangle rect_i = {enemy->position.x, enemy->position.y, enemy->hit_box.x,
-                          enemy->hit_box.y};
+      Rectangle rect_i = {enemy->position.x, enemy->position.y,
+                          enemy->hit_box.x, enemy->hit_box.y};
       for (int j = i + 1; j < MAX_ENEMIES; j++) {
         if (enemy_data->state[j] == ENEMY_INACTIVE)
           continue;
@@ -205,4 +206,20 @@ int GetClosestEnemy(EnemyData *enemy_data, Vector2 position) {
   }
 
   return closest_enemy_index;
+}
+
+void EnemyTakeDemage(EnemyData *enemy_data, const u64 index, const u64 demage) {
+
+  Enemy enemy = enemy_data->enemies[index];
+  EnemyState state = enemy_data->state[index];
+
+  // enemy.exposed_force += force;
+  state = ENEMY_TAKE_DEMAGE;
+  enemy.health -= demage;
+
+  if (enemy.health <= 0) {
+    state = ENEMY_DYING;
+    // make SpawnOrb without pointer
+    // SpawnOrb(Orb *orbs, Vector2 position);
+  }
 }

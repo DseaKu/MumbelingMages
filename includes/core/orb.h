@@ -13,10 +13,10 @@ typedef struct Orb {
   bool active;
 } Orb;
 
-void InitOrbs(Orb *orbs);
-void SpawnOrb(Orb *orbs, Vector2 position);
-void UpdateOrbs(Orb *orbs);
-void DrawOrbs(Orb *orbs);
+void InitOrbs();
+void SpawnOrb(Vector2 position);
+void UpdateOrbs();
+void DrawOrbs();
 
-void CheckOrbPickup(Player *player, Orb *orbs, int *exp);
+void CheckOrbPickup(Player *player, int *exp);
 #endif

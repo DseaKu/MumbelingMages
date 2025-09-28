@@ -61,8 +61,11 @@ void UpdateMumbles(MumbleData *mumble_data, Player *player,
         Rectangle rect_mumble = {mumble.position.x, mumble.position.y,
                                  mumble.hit_box.x, mumble.hit_box.y};
         if (CheckCollisionRecs(rect_mumble, rect_enemy)) {
+          state = MUMBLE_HIT_TARGET;
         }
+        break;
 
+      case MUMBLE_HIT_TARGET:
         break;
       }
     }

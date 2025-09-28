@@ -1,6 +1,7 @@
 
 #include "core/bullet.h"
 #include "core/camera.h"
+#include "core/orb.h"
 #include "enemy/enemy.h"
 #include "enemy/enemy_sprite.h"
 #include "player/player.h"
@@ -98,7 +99,7 @@ void DrawBullets(Bullet *bullets) {
     }
   }
 }
-void CheckBulletCollision(Bullet *bullets, EnemyData *enemy_data, Orb *orbs) {
+void CheckBulletCollision(Bullet *bullets, EnemyData *enemy_data) {
   Enemy *enemies = enemy_data->enemies;
   int bullet_demage = 20;
   float force = 9;
@@ -127,7 +128,7 @@ void CheckBulletCollision(Bullet *bullets, EnemyData *enemy_data, Orb *orbs) {
 
             if (enemies[j].health <= 0) {
               enemy_data->state[j] = ENEMY_DYING;
-              SpawnOrb(orbs, enemies[j].position);
+              SpawnOrb(enemies[j].position);
             }
 
             if (bullets[i].pierce <= 0) {

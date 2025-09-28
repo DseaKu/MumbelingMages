@@ -41,13 +41,12 @@ void GameLoop() {
   MumbleData mumble_data = {0};
   EnemyData enemy_data = {0};
   PowerUp powerUps[MAX_POWERUPS];
-  Orb orbs[MAX_ORBS];
   IO_Flags io_flags = 0;
   GameCamera camera;
   bool is_game_over = false;
   srand(time(NULL));
 
-  InitGame(bullets, &enemy_data, powerUps, orbs, &exp, &map, &io_flags, &player,
+  InitGame(bullets, &enemy_data, powerUps, &exp, &map, &io_flags, &player,
            &camera);
 
   float fireTimer = 0.0f;
@@ -118,7 +117,7 @@ void GameLoop() {
       UpdateMumbles(&mumble_data, &player, &enemy_data);
       UpdatePowerUps(powerUps, &player);
       UpdateBullets(bullets, map);
-      UpdateOrbs(orbs);
+      UpdateOrbs();
       UpdateGameCamera(&camera);
     }
     EndPerformanceTracker("Update");
@@ -127,8 +126,9 @@ void GameLoop() {
     // Collision
     //----------------------------------------------------------------------------------
     StartPerformanceTracker("Collision");
-    CheckBulletCollision(bullets, &enemy_data, orbs);
-    CheckOrbPickup(&player, orbs, &exp);
+    CheckBulletCollision(bullets, &enemy_data);
+    // CheckBulletColision(bullets, &enemy_data);
+    CheckOrbPickup(&player, &exp);
     if (!is_game_over) {
       CheckPlayerCollision(&player, &enemy_data);
       if (player.health <= 0) {
@@ -149,7 +149,7 @@ void GameLoop() {
       DrawBullets(bullets);
       DrawPlayer(&player, io_flags & PAUSE_GAME, camera.view);
       DrawPowerUps(powerUps);
-      DrawOrbs(orbs);
+      DrawOrbs();
       DrawEnemies(&enemy_data, io_flags & PAUSE_GAME, camera.view);
 
       EndMode2D();
@@ -198,7 +198,7 @@ void GameLoop() {
 }
 
 void InitGame(Bullet *bullets, EnemyData *enemy_data, PowerUp *powerUps,
-              Orb *orbs, int *exp, Map *map, IO_Flags *io_flags, Player *player,
+              int *exp, Map *map, IO_Flags *io_flags, Player *player,
               GameCamera *camera) {
   LoadMageTextures();
   LoadEnemyTextures();
@@ -208,7 +208,7 @@ void InitGame(Bullet *bullets, EnemyData *enemy_data, PowerUp *powerUps,
   InitBullets(bullets);
   InitEnemies(enemy_data);
   InitPowerUps(powerUps);
-  InitOrbs(orbs);
+  InitOrbs();
   InitMap(map);
   InitPlayer(player);
   InitCamera(camera, player);
