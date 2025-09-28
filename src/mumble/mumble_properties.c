@@ -1,6 +1,8 @@
 #include "mumble/mumble_properties.h"
 #include "mumble/mumble.h"
 #include "mumble/mumble_sprite.h"
+#include "mumble/mumble_texture.h"
+
 static Mumble mumble_properties[SIZE_MUMBLE_SPRITE_ID];
 
 void LoadMumbleProperties() {
@@ -10,6 +12,7 @@ void LoadMumbleProperties() {
       .speed = (Vector2){350.0f, 350.0f},
       .casting_duration = 1.0f,
       .hit_box = (Vector2){20, 20},
+      .get_animation_data = GetMumbleAnimationData,
   };
 }
 

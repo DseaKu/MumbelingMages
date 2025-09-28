@@ -1,11 +1,17 @@
 #include "mumble/mumble.h"
+#include "core/animation_handler.h"
 #include "enemy/enemy.h"
 #include "mumble/mumble_properties.h"
 #include "mumble/mumble_sprite.h"
 #include "raylib.h"
 #include "raymath.h"
+#include <stdbool.h>
 
-void InitMumble(MumbleData *mumble_data) {}
+void InitMumble(MumbleData *mumble_data) {
+  for (u16 i = 0; i < MAX_MUMBLES; i++) {
+    mumble_data->state[i] = MUMBLE_INACTIVE;
+  }
+}
 
 void CastFireball(MumbleData *mumble_data) {
   u16 i = 0;
@@ -75,9 +81,36 @@ void UpdateMumbles(MumbleData *mumble_data, const Vector2 casting_position,
       case MUMBLE_HIT_TARGET:
         EnemyTakeDemage(&enemies[closest_enemy_index],
                         &enemy_states[closest_enemy_index], mumble->damage);
-        *state = MUMBLE_INACTIVE;
+
+        *state = MUMBLE_COOLDOWN;
+        break;
+
+      /* Wait some time, to prevent the same mumble will reused, without
+       * finishing the hitting animation */
+      case MUMBLE_COOLDOWN:
+        mumble->timer += delta;
+        if (mumble->timer > MUMBLE_ANIMATION_COOLDOWN) {
+          *state = MUMBLE_INACTIVE;
+          mumble->timer = 0;
+        }
         break;
       }
     }
+  }
+}
+
+void DrawSpells(MumbleData *mumble_data, bool is_paused,
+                Rectangle camera_view) {
+  for (u32 i = 0; i < MAX_MUMBLES; i++) {
+    Mumble *mumble = &mumble_data->mumbles[i];
+    MumbleState *state = &mumble_data->state[i];
+
+    if (*state == MUMBLE_INACTIVE || *state == MUMBLE_COOLDOWN) {
+      continue;
+    }
+
+    PlayAnimation(mumble->hit_box, mumble->position, &mumble->animation,
+                  mumble->id, *state, is_paused, *mumble->get_animation_data,
+                  camera_view);
   }
 }

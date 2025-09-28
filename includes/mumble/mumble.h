@@ -7,6 +7,7 @@
 #include <raylib.h>
 
 #define MAX_MUMBLES 40
+#define MUMBLE_ANIMATION_COOLDOWN 4.0f
 typedef struct Mumble {
   MumbleSpriteID id;
   Animation animation;
@@ -38,4 +39,5 @@ void CastFireball(MumbleData *mumble_data);
 void UpdateMumbles(MumbleData *mumble_data, const Vector2 casting_position,
                    EnemyData *enemy_data);
 
+void DrawSpells(MumbleData *mumble_data, bool is_paused, Rectangle camera_view);
 #endif // MUMBLE_H

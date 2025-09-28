@@ -11,6 +11,7 @@
 #include "enemy/enemy_texture.h"
 #include "mumble/mumble.h"
 #include "mumble/mumble_properties.h"
+#include "mumble/mumble_texture.h"
 #include "player/player.h"
 #include "player/player_properties.h"
 #include "player/player_texture.h"
@@ -49,8 +50,8 @@ void GameLoop() {
   bool is_game_over = false;
   srand(time(NULL));
 
-  InitGame(bullets, &enemy_data, powerUps, &exp, &map, &io_flags, &player,
-           &camera);
+  InitGame(bullets, &enemy_data, &mumble_data, powerUps, &exp, &map, &io_flags,
+           &player, &camera);
 
   float fireTimer = 0.0f;
   float enemySpawnTimer = 0.0f;
@@ -154,6 +155,7 @@ void GameLoop() {
       DrawPowerUps(powerUps);
       DrawOrbs();
       DrawEnemies(&enemy_data, io_flags & PAUSE_GAME, camera.view);
+      DrawSpells(&mumble_data, io_flags & PAUSE_GAME, camera.view);
 
       EndMode2D();
 
@@ -200,17 +202,25 @@ void GameLoop() {
   PrintPerformanceTrackers();
 }
 
-void InitGame(Bullet *bullets, EnemyData *enemy_data, PowerUp *powerUps,
-              int *exp, Map *map, IO_Flags *io_flags, Player *player,
-              GameCamera *camera) {
+void InitGame(Bullet *bullets, EnemyData *enemy_data, MumbleData *mumble_data,
+              PowerUp *powerUps, int *exp, Map *map, IO_Flags *io_flags,
+              Player *player, GameCamera *camera) {
+
+  /* Loading textures */
   LoadMageTextures();
   LoadEnemyTextures();
+  LoadMumbleTextures();
+
+  /* Loading properties */
   LoadEnemyProperties();
   LoadMageProperties();
   LoadMumbleProperties();
+
+  /* Init values */
   InitIO_Flags(io_flags);
   InitBullets(bullets);
   InitEnemies(enemy_data);
+  InitMumble(mumble_data);
   InitPowerUps(powerUps);
   InitOrbs();
   InitMap(map);
@@ -221,5 +231,6 @@ void InitGame(Bullet *bullets, EnemyData *enemy_data, PowerUp *powerUps,
 void UnloadGame(Player player, Map map) {
   UnloadMageTextures();
   UnloadEnemyTextures();
+  UnloadMumbleTextures();
   UnloadMap(map);
 }
