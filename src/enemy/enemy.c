@@ -217,9 +217,9 @@ void EnemyTakeDemage(EnemyData *enemy_data, const u64 index, const u64 demage) {
   state = ENEMY_TAKE_DEMAGE;
   enemy.health -= demage;
 
+  /* Kill enemy */
   if (enemy.health <= 0) {
     state = ENEMY_DYING;
-    // make SpawnOrb without pointer
-    // SpawnOrb(Orb *orbs, Vector2 position);
+    SpawnOrb(enemy.position);
   }
 }

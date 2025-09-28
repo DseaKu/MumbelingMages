@@ -105,37 +105,42 @@ void CheckBulletCollision(Bullet *bullets, EnemyData *enemy_data) {
   float force = 9;
 
   for (int i = 0; i < MAX_BULLETS; i++) {
+    Bullet *bullet = &bullets[i];
     if (bullets[i].active) {
+
       for (int j = 0; j < MAX_ENEMIES; j++) {
-        if (enemy_data->state[j] == ENEMY_WALKING)
+        Enemy *enemy = &enemy_data->enemies[j];
+        EnemyState *enemy_state = &enemy_data->state[j];
+        if (*enemy_state == ENEMY_WALKING) {
           if (CheckCollisionRecs(
-                  (Rectangle){bullets[i].position.x, bullets[i].position.y,
-                              bullets[i].size.x, bullets[i].size.y},
-                  (Rectangle){enemies[j].position.x, enemies[j].position.y,
-                              enemies[j].hit_box.x, enemies[j].hit_box.y})) {
+                  (Rectangle){bullet->position.x, bullet->position.y,
+                              bullet->size.x, bullet->size.y},
+                  (Rectangle){enemy->position.x, enemy->position.y,
+                              enemy->hit_box.x, enemy->hit_box.y})) {
 
             // If bullet has already hit this enemy, skip.
-            if (bullets[i].last_hitted_enemy == j) {
+            if (bullet->last_hitted_enemy == j) {
               continue;
             }
 
             // Enemy is hit by bullet
-            enemy_data->state[j] = ENEMY_TAKE_DEMAGE;
-            enemies[j].health -= bullet_demage;
-            enemies[j].exposed_force += force;
-            bullets[i].last_hitted_enemy = j;
-            bullets[i].pierce--;
+            *enemy_state = ENEMY_TAKE_DEMAGE;
+            enemy->health -= bullet_demage;
+            enemy->exposed_force += force;
+            bullet->last_hitted_enemy = j;
+            bullet->pierce--;
 
-            if (enemies[j].health <= 0) {
-              enemy_data->state[j] = ENEMY_DYING;
-              SpawnOrb(enemies[j].position);
+            if (enemy->health <= 0) {
+              *enemy_state = ENEMY_DYING;
+              SpawnOrb(enemy->position);
             }
 
-            if (bullets[i].pierce <= 0) {
-              bullets[i].active = false;
+            if (bullet->pierce <= 0) {
+              bullet->active = false;
               break; // Exit enemy loop, bullet is done.
             }
           }
+        }
       }
     }
   }

@@ -31,8 +31,10 @@ void GameLoop() {
   //----------------------------------------------------------------------------------
   StartPerformanceTracker("Init");
   // SetConfigFlags(FLAG_WINDOW_HIGHDPI);
-  int screen_width = GetDisplayWidth();
-  int screen_height = GetDisplayHeigth();
+  int screen_width = 1200;
+  int screen_height = 800;
+  // int screen_width = GetDisplayWidth();
+  // int screen_height = GetDisplayHeigth();
 
   InitWindow(screen_width, screen_height, "Mumbeling Mages");
 
