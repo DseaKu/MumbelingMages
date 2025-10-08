@@ -11,6 +11,7 @@ void LoadMumbleTextures(void) {
       .width = 64,
       .height = 64,
       .frame_count = 14,
+      .scale = 8.0f,
       .frame_speed = 1.0f / 10.0f,
       .is_looping = true};
 
@@ -19,6 +20,7 @@ void LoadMumbleTextures(void) {
       .width = 64,
       .height = 64,
       .frame_count = 4,
+      .scale = 8.0f,
       .frame_speed = 1.0f / 10.0f,
       .is_looping = true};
 }

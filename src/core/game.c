@@ -140,6 +140,7 @@ void GameLoop() {
       }
     }
     EndPerformanceTracker("Collision");
+
     //----------------------------------------------------------------------------------
     // Draw
     //----------------------------------------------------------------------------------
@@ -147,6 +148,9 @@ void GameLoop() {
     BeginDrawing();
     ClearBackground(RAYWHITE);
 
+    //----------------------------------------------------------------------------------
+    // Draw In-Game Elemts
+    //----------------------------------------------------------------------------------
     if (!is_game_over) {
       BeginMode2D(camera.properties);
       DrawMap(map);
@@ -159,14 +163,15 @@ void GameLoop() {
 
       EndMode2D();
 
+      //----------------------------------------------------------------------------------
       // Draw UI
+      //----------------------------------------------------------------------------------
       DrawFPS(GetDisplayWidth() - 100, 10);
       char healthText[20];
       sprintf(healthText, "Health: %d", player.health);
       DrawText(healthText, 20, 20, 20, GREEN);
 
       DrawDebugText();
-
       if (io_flags & AUTO_AIM) {
         DrawText("Auto Aim", 20, 60, 20, GREEN);
       } else {
@@ -188,6 +193,7 @@ void GameLoop() {
                GetDisplayWidth() / 2 - MeasureText("Nice try, noob!", 40) / 2,
                GetDisplayHeigth() / 2 - 20, 40, RED);
     }
+
     EndPerformanceTracker("Drawing");
 
     StartPerformanceTracker("End Drawing");
