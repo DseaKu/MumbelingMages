@@ -1,5 +1,6 @@
 #include "enemy/enemy.h"
 #include "core/animation_handler.h"
+#include "core/orb.h"
 #include "enemy/enemy_properties.h"
 #include "enemy/enemy_sprite.h"
 #include "player/player.h"
@@ -14,7 +15,7 @@ void InitEnemies(EnemyData *enemy_data) {
 
   for (int i = 0; i < MAX_ENEMIES; i++) {
     enemy_data->state[i] = ENEMY_INACTIVE;
-    enemy_data->enemies[i].sprite = GOBLIN;
+    enemy_data->enemies[i].id = GOBLIN;
   }
 }
 
@@ -25,7 +26,7 @@ void SpawnEnemy(EnemyData *enemy_data, Map map, Vector2 player_position) {
   for (int i = 1; i < MAX_ENEMIES; i++) {
 
     if (enemy_data->state[i] == ENEMY_INACTIVE) {
-      enemies[i] = GetEnemyProperties(enemies[i].sprite);
+      enemies[i] = GetEnemyProperties(enemies[i].id);
       enemy_data->state[i] = ENEMY_SPAWNING;
       enemies[i].position =
           GenerateSpawnPosition(map, player_position, enemies->spawn_distance);
@@ -52,27 +53,30 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map) {
   Vector2 direction;
   for (int i = 0; i < MAX_ENEMIES; i++) {
 
-    switch (enemy_data->state[i]) {
+    Enemy *enemy = &enemy_data->enemies[i];
+    EnemyState *state = &enemy_data->state[i];
+
+    /* Enemy state mashine */
+    switch (*state) {
     case ENEMY_IDLE:
-      enemy_data->state[i] = ENEMY_WALKING;
+      *state = ENEMY_WALKING;
       break;
 
     case ENEMY_SPAWNING:
-      enemies[i].timer += delta;
-      enemy_data->state[i] = ENEMY_SPAWNING;
-      if (enemies[i].timer >= enemies[i].spawn_duration) {
-        enemy_data->state[i] = ENEMY_IDLE;
-        enemies[i].timer = 0;
+      enemy->timer += delta;
+      if (enemy->timer >= enemy->spawn_duration) {
+        *state = ENEMY_IDLE;
+        enemy->timer = 0;
       }
       break;
 
     case ENEMY_WALKING:
-      direction = Vector2Subtract(playerPosition, enemies[i].position);
-      enemies[i].animation.is_facing_right = (direction.x > 0);
+      direction = Vector2Subtract(playerPosition, enemy->position);
+      enemy->animation.is_facing_right = (direction.x > 0);
 
-      // Avoid stacking enemies on each other
-      Rectangle rect_i = {enemies[i].position.x, enemies[i].position.y,
-                          enemies[i].hit_box.x, enemies[i].hit_box.y};
+      /* Avoid stacking enemies on each other */
+      Rectangle rect_i = {enemy->position.x, enemy->position.y,
+                          enemy->hit_box.x, enemy->hit_box.y};
       for (int j = i + 1; j < MAX_ENEMIES; j++) {
         if (enemy_data->state[j] == ENEMY_INACTIVE)
           continue;
@@ -82,16 +86,16 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map) {
 
         if (CheckCollisionRecs(rect_i, rect_j)) {
           Vector2 push_direction =
-              Vector2Subtract(enemies[i].position, enemies[j].position);
+              Vector2Subtract(enemy->position, enemies[j].position);
           if (push_direction.x == 0 && push_direction.y == 0) {
             push_direction.x = (float)(rand() % 100 - 50);
             push_direction.y = (float)(rand() % 100 - 50);
           }
           Vector2 normalized_push = Vector2Normalize(push_direction);
 
-          enemies[i].position.x +=
+          enemy->position.x +=
               normalized_push.x * ENEMY_ENEMY_COLLISION_DISTANCE * delta;
-          enemies[i].position.y +=
+          enemy->position.y +=
               normalized_push.y * ENEMY_ENEMY_COLLISION_DISTANCE * delta;
           enemies[j].position.x -=
               normalized_push.x * ENEMY_ENEMY_COLLISION_DISTANCE * delta;
@@ -99,69 +103,66 @@ void UpdateEnemies(EnemyData *enemy_data, Vector2 playerPosition, Map map) {
               normalized_push.y * ENEMY_ENEMY_COLLISION_DISTANCE * delta;
         }
       }
-      // Avoid stacking on player
+      /* Avoid stacking on player */
       Rectangle rect_player = {playerPosition.x, playerPosition.y,
                                SAFE_ZONE_DISTANCE, SAFE_ZONE_DISTANCE};
       if (CheckCollisionRecs(rect_i, rect_player)) {
         Vector2 push_direction =
-            Vector2Subtract(enemies[i].position, playerPosition);
+            Vector2Subtract(enemy->position, playerPosition);
         if (push_direction.x == 0 && push_direction.y == 0) {
           push_direction.x = (float)(rand() % 100 - 50);
           push_direction.y = (float)(rand() % 100 - 50);
         }
         Vector2 normalized_push = Vector2Normalize(push_direction);
 
-        enemies[i].position.x +=
+        enemy->position.x +=
             normalized_push.x * ENEMY_ENEMY_COLLISION_DISTANCE * delta;
-        enemies[i].position.y +=
+        enemy->position.y +=
             normalized_push.y * ENEMY_ENEMY_COLLISION_DISTANCE * delta;
       }
 
       // Avoid stacking on player
       if (Vector2Length(direction) > safe_zone_distance) {
         direction = Vector2Normalize(direction);
-        enemies[i].position.x += direction.x * delta * enemies[i].speed;
-        enemies[i].position.y += direction.y * delta * enemies[i].speed;
+        enemy->position.x += direction.x * delta * enemy->speed;
+        enemy->position.y += direction.y * delta * enemy->speed;
       }
 
-      if (enemies[i].hit_cooldown > 0) {
-        enemies[i].hit_cooldown -= delta;
+      if (enemy->hit_cooldown > 0) {
+        enemy->hit_cooldown -= delta;
       }
       break;
 
     case ENEMY_TAKE_DEMAGE:
-      enemies[i].timer += delta;
-      enemy_data->state[i] = ENEMY_TAKE_DEMAGE;
+      enemy->timer += delta;
 
       // Generating pushback
-      direction = Vector2Subtract(enemies[i].position, playerPosition);
+      direction = Vector2Subtract(enemy->position, playerPosition);
       direction = Vector2Normalize(direction);
-      enemies[i].position.x += direction.x * delta * enemies[i].exposed_force;
-      enemies[i].position.y += direction.y * delta * enemies[i].exposed_force;
+      enemy->position.x += direction.x * delta * enemy->exposed_force;
+      enemy->position.y += direction.y * delta * enemy->exposed_force;
 
-      if (enemies[i].timer >= enemies[i].stagger_duration) {
-        enemy_data->state[i] = ENEMY_IDLE;
-        enemies[i].timer = 0;
+      if (enemy->timer >= enemy->stagger_duration) {
+        *state = ENEMY_IDLE;
+        enemy->timer = 0;
       }
       break;
 
     case ENEMY_DYING:
-      enemies[i].timer += delta;
-      enemy_data->state[i] = ENEMY_DYING;
-      if (enemies[i].timer >= enemies[i].dying_duration) {
-        enemy_data->state[i] = ENEMY_DEAD;
-        enemies[i].timer = 0;
+      enemy->timer += delta;
+      if (enemy->timer >= enemy->dying_duration) {
+        *state = ENEMY_DEAD;
+        enemy->timer = 0;
       }
       break;
     case ENEMY_DEAD:
-      enemies[i].timer += delta;
-      enemy_data->state[i] = ENEMY_DEAD;
-      if (enemies[i].timer >= enemies[i].dying_duration) {
-        enemies[i] = GetEnemyProperties(enemies[i].sprite);
-        enemy_data->state[i] = ENEMY_SPAWNING;
-        enemies[i].position = GenerateSpawnPosition(map, playerPosition,
-                                                    enemies[i].spawn_distance);
-        enemies[i].timer = 0;
+      enemy->timer += delta;
+      if (enemy->timer >= enemy->dying_duration) {
+        *enemy = GetEnemyProperties(enemy->id);
+        *state = ENEMY_SPAWNING;
+        enemy->position =
+            GenerateSpawnPosition(map, playerPosition, enemy->spawn_distance);
+        enemy->timer = 0;
       }
       break;
     }
@@ -180,9 +181,8 @@ void DrawEnemies(EnemyData *enemy_data, bool is_paused, Rectangle camera_view) {
       enemies[i].animation.current_frame = 0;
     }
     PlayAnimation(enemies[i].hit_box, enemies[i].position,
-                  &enemies[i].animation, enemies[i].sprite,
-                  enemy_data->state[i], is_paused,
-                  enemies[i].get_animation_data, camera_view);
+                  &enemies[i].animation, enemies[i].id, enemy_data->state[i],
+                  is_paused, enemies[i].get_animation_data, camera_view);
     enemies[i].last_state = enemy_data->state[i];
   }
 }
@@ -205,4 +205,17 @@ int GetClosestEnemy(EnemyData *enemy_data, Vector2 position) {
   }
 
   return closest_enemy_index;
+}
+
+void EnemyTakeDemage(Enemy *enemy, EnemyState *state, const u64 damage) {
+
+  // enemy.exposed_force += force;
+  *state = ENEMY_TAKE_DEMAGE;
+  enemy->health -= damage;
+
+  /* Kill enemy */
+  if (enemy->health <= 0) {
+    *state = ENEMY_DYING;
+    SpawnOrb(enemy->position);
+  }
 }

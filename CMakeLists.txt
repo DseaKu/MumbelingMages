@@ -36,6 +36,8 @@ set(SOURCES
     src/core/resource_tracker.c
     src/core/camera.c
     src/mumble/mumble.c
+    src/mumble/mumble_properties.c
+    src/mumble/mumble_texture.c
 )
 
 add_executable(game src/main.c ${SOURCES})

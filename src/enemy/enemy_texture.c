@@ -5,9 +5,9 @@ static AnimationData sprite_textures[SIZE_ENEMY_SPRITE_ID][SIZE_ENEMY_STATE_ID];
 void LoadEnemyTextures(void) {
 
   sprite_textures[GOBLIN][ENEMY_WALKING] = (AnimationData){
-      LoadTexture("assets/goblin/Run.png"), 150, 150, 8, 8.0f, .1f, true};
+      LoadTexture("assets/enemy/goblin/Run.png"), 150, 150, 8, 8.0f, .1f, true};
   sprite_textures[GOBLIN][ENEMY_TAKE_DEMAGE] =
-      (AnimationData){LoadTexture("assets/goblin/Take Hit.png"),
+      (AnimationData){LoadTexture("assets/enemy/goblin/Take Hit.png"),
                       150,
                       150,
                       4,
@@ -15,7 +15,7 @@ void LoadEnemyTextures(void) {
                       1.0f / 10.0f,
                       false};
   sprite_textures[GOBLIN][ENEMY_SPAWNING] =
-      (AnimationData){LoadTexture("assets/goblin/Idle.png"),
+      (AnimationData){LoadTexture("assets/enemy/goblin/Idle.png"),
                       150,
                       150,
                       4,
@@ -23,7 +23,7 @@ void LoadEnemyTextures(void) {
                       1.0f / 10.0f,
                       false};
   sprite_textures[GOBLIN][ENEMY_IDLE] =
-      (AnimationData){LoadTexture("assets/goblin/Idle.png"),
+      (AnimationData){LoadTexture("assets/enemy/goblin/Idle.png"),
                       150,
                       150,
                       4,
@@ -31,7 +31,7 @@ void LoadEnemyTextures(void) {
                       1.0f / 10.0f,
                       true};
   sprite_textures[GOBLIN][ENEMY_DYING] =
-      (AnimationData){LoadTexture("assets/goblin/Death.png"),
+      (AnimationData){LoadTexture("assets/enemy/goblin/Death.png"),
                       150,
                       150,
                       4,

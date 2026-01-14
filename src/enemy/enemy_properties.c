@@ -6,7 +6,7 @@ static Enemy enemy_properties[SIZE_ENEMY_SPRITE_ID];
 
 void LoadEnemyProperties() {
   enemy_properties[GOBLIN] = (Enemy){
-      .sprite = GOBLIN,
+      .id = GOBLIN,
       .health = 100,
       .spawn_duration = 1.0f,
       .stagger_duration = 0.5f,

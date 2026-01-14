@@ -9,6 +9,9 @@
 #include "enemy/enemy.h"
 #include "enemy/enemy_properties.h"
 #include "enemy/enemy_texture.h"
+#include "mumble/mumble.h"
+#include "mumble/mumble_properties.h"
+#include "mumble/mumble_texture.h"
 #include "player/player.h"
 #include "player/player_properties.h"
 #include "player/player_texture.h"
@@ -30,23 +33,25 @@ void GameLoop() {
   //----------------------------------------------------------------------------------
   StartPerformanceTracker("Init");
   // SetConfigFlags(FLAG_WINDOW_HIGHDPI);
-  int screen_width = GetDisplayWidth();
-  int screen_height = GetDisplayHeigth();
+  int screen_width = 1200;
+  int screen_height = 800;
+  // int screen_width = GetDisplayWidth();
+  // int screen_height = GetDisplayHeigth();
 
   InitWindow(screen_width, screen_height, "Mumbeling Mages");
 
   Player player;
   Bullet bullets[MAX_BULLETS] = {0};
+  MumbleData mumble_data = {0};
   EnemyData enemy_data = {0};
   PowerUp powerUps[MAX_POWERUPS];
-  Orb orbs[MAX_ORBS];
   IO_Flags io_flags = 0;
   GameCamera camera;
   bool is_game_over = false;
   srand(time(NULL));
 
-  InitGame(bullets, &enemy_data, powerUps, orbs, &exp, &map, &io_flags, &player,
-           &camera);
+  InitGame(bullets, &enemy_data, &mumble_data, powerUps, &exp, &map, &io_flags,
+           &player, &camera);
 
   float fireTimer = 0.0f;
   float enemySpawnTimer = 0.0f;
@@ -72,10 +77,14 @@ void GameLoop() {
     //----------------------------------------------------------------------------------
     StartPerformanceTracker("Spawning");
     if (fireTimer >= player.fireRate &&
-        ((IsMouseButtonDown(MOUSE_LEFT_BUTTON)) || io_flags & AUTO_AIM)) {
+        (io_flags & IS_MOUSE_LEFT_PRESSED || io_flags & AUTO_AIM)) {
       FireBullet(bullets, &player, player.fireRate, io_flags & AUTO_AIM,
                  &enemy_data, camera);
       fireTimer = 0;
+    }
+
+    if (io_flags & CAST_MUMBLE) {
+      CastFireball(&mumble_data);
     }
 
     if (enemySpawnTimer >= 1.0f) {
@@ -98,9 +107,6 @@ void GameLoop() {
 
       io_flags -= TOGGLE_FULLSCREEN;
     }
-    // if (IsWindowResized()) {
-    //   UpdateCameraOffset(&camera, &player);
-    // }
     if (io_flags & AUTO_AIM) {
       HideCursor();
     } else {
@@ -112,9 +118,10 @@ void GameLoop() {
       powerUpSpawnTimer += GetFrameTime();
       UpdatePlayer(&player, fireTimer, io_flags & AUTO_AIM, map);
       UpdateEnemies(&enemy_data, player.position, map);
+      UpdateMumbles(&mumble_data, player.position, &enemy_data);
       UpdatePowerUps(powerUps, &player);
       UpdateBullets(bullets, map);
-      UpdateOrbs(orbs);
+      UpdateOrbs();
       UpdateGameCamera(&camera);
     }
     EndPerformanceTracker("Update");
@@ -123,8 +130,9 @@ void GameLoop() {
     // Collision
     //----------------------------------------------------------------------------------
     StartPerformanceTracker("Collision");
-    CheckBulletCollision(bullets, &enemy_data, orbs);
-    CheckOrbPickup(&player, orbs, &exp);
+    CheckBulletCollision(bullets, &enemy_data);
+    // CheckBulletColision(bullets, &enemy_data);
+    CheckOrbPickup(&player, &exp);
     if (!is_game_over) {
       CheckPlayerCollision(&player, &enemy_data);
       if (player.health <= 0) {
@@ -132,6 +140,7 @@ void GameLoop() {
       }
     }
     EndPerformanceTracker("Collision");
+
     //----------------------------------------------------------------------------------
     // Draw
     //----------------------------------------------------------------------------------
@@ -139,25 +148,30 @@ void GameLoop() {
     BeginDrawing();
     ClearBackground(RAYWHITE);
 
+    //----------------------------------------------------------------------------------
+    // Draw In-Game Elemts
+    //----------------------------------------------------------------------------------
     if (!is_game_over) {
       BeginMode2D(camera.properties);
       DrawMap(map);
       DrawBullets(bullets);
       DrawPlayer(&player, io_flags & PAUSE_GAME, camera.view);
       DrawPowerUps(powerUps);
-      DrawOrbs(orbs);
+      DrawOrbs();
       DrawEnemies(&enemy_data, io_flags & PAUSE_GAME, camera.view);
+      DrawSpells(&mumble_data, io_flags & PAUSE_GAME, camera.view);
 
       EndMode2D();
 
+      //----------------------------------------------------------------------------------
       // Draw UI
+      //----------------------------------------------------------------------------------
       DrawFPS(GetDisplayWidth() - 100, 10);
       char healthText[20];
       sprintf(healthText, "Health: %d", player.health);
       DrawText(healthText, 20, 20, 20, GREEN);
 
       DrawDebugText();
-
       if (io_flags & AUTO_AIM) {
         DrawText("Auto Aim", 20, 60, 20, GREEN);
       } else {
@@ -179,6 +193,7 @@ void GameLoop() {
                GetDisplayWidth() / 2 - MeasureText("Nice try, noob!", 40) / 2,
                GetDisplayHeigth() / 2 - 20, 40, RED);
     }
+
     EndPerformanceTracker("Drawing");
 
     StartPerformanceTracker("End Drawing");
@@ -193,18 +208,27 @@ void GameLoop() {
   PrintPerformanceTrackers();
 }
 
-void InitGame(Bullet *bullets, EnemyData *enemy_data, PowerUp *powerUps,
-              Orb *orbs, int *exp, Map *map, IO_Flags *io_flags, Player *player,
-              GameCamera *camera) {
+void InitGame(Bullet *bullets, EnemyData *enemy_data, MumbleData *mumble_data,
+              PowerUp *powerUps, int *exp, Map *map, IO_Flags *io_flags,
+              Player *player, GameCamera *camera) {
+
+  /* Loading textures */
   LoadMageTextures();
   LoadEnemyTextures();
+  LoadMumbleTextures();
+
+  /* Loading properties */
   LoadEnemyProperties();
   LoadMageProperties();
+  LoadMumbleProperties();
+
+  /* Init values */
   InitIO_Flags(io_flags);
   InitBullets(bullets);
   InitEnemies(enemy_data);
+  InitMumble(mumble_data);
   InitPowerUps(powerUps);
-  InitOrbs(orbs);
+  InitOrbs();
   InitMap(map);
   InitPlayer(player);
   InitCamera(camera, player);
@@ -213,5 +237,6 @@ void InitGame(Bullet *bullets, EnemyData *enemy_data, PowerUp *powerUps,
 void UnloadGame(Player player, Map map) {
   UnloadMageTextures();
   UnloadEnemyTextures();
+  UnloadMumbleTextures();
   UnloadMap(map);
 }

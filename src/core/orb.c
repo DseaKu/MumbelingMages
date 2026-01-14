@@ -2,13 +2,15 @@
 #include "raymath.h"
 #include <raylib.h>
 
-void InitOrbs(Orb *orbs) {
+static Orb orbs[MAX_ORBS];
+
+void InitOrbs() {
   for (int i = 0; i < MAX_ORBS; i++) {
     orbs[i].active = false;
   }
 }
 
-void SpawnOrb(Orb *orbs, Vector2 position) {
+void SpawnOrb(Vector2 position) {
   for (int i = 0; i < MAX_ORBS; i++) {
     if (!orbs[i].active) {
       orbs[i].active = true;
@@ -20,18 +22,18 @@ void SpawnOrb(Orb *orbs, Vector2 position) {
   }
 }
 
-void UpdateOrbs(Orb *orbs) {
-  // Orbs don't have any complex update logic for now
+void UpdateOrbs() {
+  // Orbs don't have any update logic for now
 }
 
-void DrawOrbs(Orb *orbs) {
+void DrawOrbs() {
   for (int i = 0; i < MAX_ORBS; i++) {
     if (orbs[i].active) {
       DrawRectangleV(orbs[i].position, orbs[i].size, orbs[i].color);
     }
   }
 }
-void CheckOrbPickup(Player *player, Orb *orbs, int *exp) {
+void CheckOrbPickup(Player *player, int *exp) {
   for (int i = 0; i < MAX_ORBS; i++) {
     if (orbs[i].active) {
       float distance = Vector2Distance(player->position, orbs[i].position);

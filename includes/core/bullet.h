@@ -3,7 +3,6 @@
 #define BULLET_H
 
 #include "core/camera.h"
-#include "core/orb.h"
 #include "enemy/enemy.h"
 #include "raylib.h"
 
@@ -14,6 +13,7 @@ typedef struct Bullet {
   Vector2 size;
   Color color;
   Vector2 speed;
+  u64 damage;
   bool active;
   int pierce;
   int last_hitted_enemy;
@@ -26,6 +26,6 @@ void FireBullet(Bullet *bullets, Player *player, float fireRate,
                 bool is_auto_aim, EnemyData *enemy_data, GameCamera camera);
 void UpdateBullets(Bullet *bullets, Map map);
 void DrawBullets(Bullet *bullets);
-void CheckBulletCollision(Bullet *bullets, EnemyData *enemy_data, Orb *orbs);
+void CheckBulletCollision(Bullet *bullets, EnemyData *enemy_data);
 
 #endif
